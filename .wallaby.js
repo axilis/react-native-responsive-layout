@@ -1,12 +1,12 @@
 module.exports = function (wallaby) {
   return {
     files: [
-      'react-native-responsive-grid/src/**/*.js',
-      '!react-native-responsive-grid/src/**/*.test.js'
+      '/src/**/*.js',
+      '!/src/**/*.test.js'
     ],
 
     tests: [
-      'react-native-responsive-grid/src/**/*.test.js'
+      '/src/**/*.test.js'
     ],
 
     env: {

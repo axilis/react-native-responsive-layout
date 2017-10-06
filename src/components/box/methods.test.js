@@ -42,26 +42,26 @@ describe('determineSize', () => {
   });
 
   it('returns provided size based on sizing class', () => {
-    expect(determineSize('sm', { smSize: '1/2' }, SIZE_CLASSES)).toBeCloseTo(0.5);
+    expect(determineSize('sm', { smSize: '1/2' }, SIZE_CLASSES)).toBeCloseTo(50);
   });
 
   it('returns common size unless overridden', () => {
-    expect(determineSize('sm', { size: '1/3' }, SIZE_CLASSES)).toBeCloseTo(0.3333);
+    expect(determineSize('sm', { size: '1/3' }, SIZE_CLASSES)).toBeCloseTo(33.33);
   });
 
   it('returns provided value when overriding common size', () => {
-    expect(determineSize('sm', { size: '1/3', smSize: '1/2' }, SIZE_CLASSES)).toBeCloseTo(0.5);
+    expect(determineSize('sm', { size: '1/3', smSize: '1/2' }, SIZE_CLASSES)).toBeCloseTo(50);
   });
 
   it('cascades from smaller to larger size', () => {
-    expect(determineSize('md', { smSize: '1/2' }, SIZE_CLASSES)).toBeCloseTo(0.5);
+    expect(determineSize('md', { smSize: '1/2' }, SIZE_CLASSES)).toBeCloseTo(50);
   });
 
   it('respects overriding cascading sizes', () => {
-    expect(determineSize('md', { smSize: '1/2', mdSize: '1/3' }, SIZE_CLASSES)).toBeCloseTo(0.3333);
+    expect(determineSize('md', { smSize: '1/2', mdSize: '1/3' }, SIZE_CLASSES)).toBeCloseTo(33.33);
   });
 
   it('ignores overrides that do not apply', () => {
-    expect(determineSize('md', { mdSize: '1/2', xlSize: '1/3' }, SIZE_CLASSES)).toBeCloseTo(0.5);
+    expect(determineSize('md', { mdSize: '1/2', xlSize: '1/3' }, SIZE_CLASSES)).toBeCloseTo(50);
   });
 });
