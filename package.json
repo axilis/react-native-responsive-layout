@@ -1,0 +1,34 @@
+{
+  "name": "react-native-responsive-layout",
+  "version": "1.0.0",
+  "description": "Easy way to implement responsive layouts and grids.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.42.0",
+    "react": ">=15.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "grid",
+    "layout",
+    "bootstrap"
+  ],
+  "author": "Axilis",
+  "license": "MIT",
+  "dependencies": {
+    "prop-types": "^15.6.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.1",
+    "babel-preset-react-native": "^4.0.0",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.4.0",
+    "jest": "^21.2.1"
+  }
+}
