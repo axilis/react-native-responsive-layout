@@ -12,4 +12,3 @@ export const calculateStretchLength = (totalLength, minimalElementLength) => {
   const w = (100 / Math.floor(totalLength / minimalElementLength));
   return roundPercentage(w);
 };
-

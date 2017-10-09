@@ -13,18 +13,24 @@ export const SizeProp = (props, propName) => {
     if (isFraction(size) || size === 'auto') {
       return undefined;
     }
-    return new Error(`${propName} string argument should be valid fraction or auto. \nGot: "${size}."`);
+    return new Error(
+      `${propName} string argument should be valid fraction or auto. \nGot: "${size}."`,
+    );
   }
 
   if (typeof size === 'number') {
     if (withinRange(size)) {
       return undefined;
     }
-    return new Error(`${propName} should be within 0 and 100 percent. \nGot: ${size}%.`);
+    return new Error(
+      `${propName} should be within 0 and 100 percent. \nGot: ${size}%.`,
+    );
   }
 
   if (size !== undefined) {
-    return new Error(`${propName} should be either string fraction or numerical percentage. \nGot: ${size}`);
+    return new Error(
+      `${propName} should be either string fraction or numerical percentage. \nGot: ${size}`,
+    );
   }
 };
 
