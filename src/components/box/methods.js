@@ -1,9 +1,9 @@
 import { BREAKPOINTS, GRID_UNITS, roundPercentage } from '../../shared';
 
 /**
- * Generated list of valid fractions that can be used in components.
+ * Generated list of valid fractions that can be used as size arguments.
  */
-const VALID_FRACTIONS = (() => {
+export const VALID_FRACTIONS = (() => {
   const fractions = ['1'];
   for (let i = 1; i <= GRID_UNITS; i += 1) {
     for (let j = i; j <= GRID_UNITS; j += 1) {
@@ -15,7 +15,7 @@ const VALID_FRACTIONS = (() => {
 
 
 /**
- * Generated table of width percentages when using fractions.
+ * Generated table of width percentages for fractions.
  */
 const FIXED_SIZES = (() => {
   const table = { 1: 100 };
@@ -29,26 +29,14 @@ const FIXED_SIZES = (() => {
 
 
 /**
- * Checks whether provided value is considered fraction.
- * @param {String} value to check
- * @return {Boolean}
- */
-export const isFraction = value => (VALID_FRACTIONS.indexOf(value) !== -1);
-
-/**
- * Checks whether provided number is within valid percentage range.
- * @param {Number} value to check
- * @return {Boolean}
- */
-export const withinRange = value => (value >= 0 && value <= 100);
-
-
-/**
- * Determines whether object is hidden depending on current sizing class.
+ * Determines whether object is hidden depending on currently active size class.
  *
- * Since attributes cascade from smaller to larger dimensions and support
- * generic value, it will determine which one to use as reference and return
- * it's value.
+ * Since attributes cascade from smaller to larger dimensions it will determine
+ * which one to use as reference and return it's value. This enables easy way to
+ * hide elements from provided size up.
+ *
+ * For example `mdHidden={true}` will hide element on medium sized but as well
+ * on all larger sizes.
  *
  * @param {String} sizeClass sizing class that is determined by grid
  * @param {Object} props object use as reference for values
@@ -79,15 +67,6 @@ export const isHidden = (sizeClass, props, sizes = BREAKPOINTS) => {
 
 /**
  * Determines size of component depended on sizing class.
- *
- * Since attributes cascade from smaller to larger dimensions and support
- * generic value, it will determine which one to use as reference and return
- * it's value.
- *
- * @param {String} sizeClass sizing class that is determined by grid
- * @param {Object} props object use as reference for values
- * @param {Array<String>} sizes that grid supports sorted from smaller to larger
- * @return {String}
  */
 const getSize = (sizeClass, props, sizes) => {
   let relevantSize = props.size || '1';
@@ -112,11 +91,14 @@ const getSize = (sizeClass, props, sizes) => {
 
 
 /**
- * Determines width percentage of component depended on sizing class.
+ * Determines width percentage of component depended on currently active size.
  *
- * Since attributes cascade from smaller to larger dimensions and support
- * generic value, it will determine which one to use as reference and return
- * it's value.
+ * Since attributes cascade from smaller to larger dimensions it will determine
+ * which one to use as reference and return it's value. This enables easy way to
+ * determine element size on given size and larger.
+ *
+ * For example `mdSize="1/2"` will return 50% on medium sized but as well
+ * on all larger sizes.
  *
  * @param {String} sizeClass sizing class that is determined by grid
  * @param {Object} props object use as reference for values
@@ -130,10 +112,11 @@ export const determineSize = (sizeClass, props, sizes = BREAKPOINTS) => {
     return size;
   }
 
+  // Fallback to full width when invalid size argument is provided.
   if ((typeof size) === 'string') {
-    // Fallback to full width.
     return FIXED_SIZES[size];
   }
+
   return size;
 };
 

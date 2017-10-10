@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import { BREAKPOINTS } from '../shared';
 import { ContainerSizeProp } from '../shared/props';
 
-export const determineOrientation = (width, height) => {
-  return (
-    (width <= height) ? 'PORTRAIT' : 'LANDSCAPE'
-  );
-};
+/**
+ * Determines orientation from width and height, it doesn't necessarily match
+ * real device orientation if it is used in grid that is related to self.
+ */
+export const determineOrientation = (width, height) => (
+  (width <= height) ? 'PORTRAIT' : 'LANDSCAPE'
+);
 
+/**
+ * Selects value from props that closest matches sizeClass starting from
+ * smallest to largest.
+ */
 export const getSize = (sizeClass, props, sizes = BREAKPOINTS) => {
-  let relevantData = props[sizes[0]] || null;
+  let relevantData = props[sizes[0]] || undefined;
 
   for (let i = 0; i < sizes.length; i += 1) {
     const size = sizes[i];
@@ -29,10 +35,14 @@ export const getSize = (sizeClass, props, sizes = BREAKPOINTS) => {
   return relevantData;
 };
 
+
 /**
- * Wraps provided component and provides `size` which corresponds to relevant
- * sizing class and `orientation` props which will be inferred from closest
- * parent `Grid` element.
+ * Wraps provided component and provides:
+ * - `size` which corresponds to currently active size of grid
+ * - `orientation` which corresponds to orientation of grid
+ * - `sizeSelector` - function which takes object that contains sizes as keys
+ *  and returns closest size that is relevant, this enables style selection to
+ *  match grid size
  *
  * @param { React.Component|function } Component
  */
@@ -40,7 +50,7 @@ const withSize = (Component) => {
   const wrapper = (props, context) => (
     <Component
       size={context.containerSizeClass}
-      sizeSelector={(values) => getSize(context.containerSizeClass, values)}
+      sizeSelector={values => getSize(context.containerSizeClass, values)}
       orientation={determineOrientation(context.referenceWidth, context.referenceHeight)}
       {...props}
     />

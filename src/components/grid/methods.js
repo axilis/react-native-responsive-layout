@@ -1,19 +1,8 @@
-import { BREAKPOINTS, DEFAULT_SIZES } from '../../shared';
+import { BREAKPOINTS } from '../../shared';
 
-export const mergeBreakpoints = (breakpoints) => {
-  Object.keys(breakpoints).forEach((key) => {
-    if (!BREAKPOINTS.contains(key)) {
-      console.warn(`Unknown breakpoint size "${key}"`);
-    }
-  });
-
-  return {
-    ...DEFAULT_SIZES,
-    ...breakpoints,
-  };
-};
-
-// Order is important
+/**
+ * Determines size class from provided breakpoints and element size.
+ */
 export const determineSizeClass = (breakpoints, size = 0) => {
   const lastIndex = BREAKPOINTS.length - 1;
   let gridSizeClass = BREAKPOINTS[lastIndex];
@@ -22,7 +11,7 @@ export const determineSizeClass = (breakpoints, size = 0) => {
     const sizeClass = BREAKPOINTS[i];
     const breakpointSize = breakpoints[sizeClass];
 
-    if (breakpointSize < size) {
+    if (breakpointSize !== undefined && breakpointSize < size) {
       return sizeClass;
     }
 

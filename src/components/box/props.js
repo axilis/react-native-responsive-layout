@@ -1,10 +1,28 @@
 import PropTypes from 'prop-types';
 
 import { BREAKPOINTS } from '../../shared';
-import { isFraction, withinRange } from './methods';
+import { VALID_FRACTIONS } from './methods';
 
 /**
- * PropType that validates grid element size to be fraction or percentage.
+ * Checks whether provided value is considered fraction.
+ *
+ * @param {String} value to check
+ * @return {Boolean}
+ */
+const isFraction = value => (VALID_FRACTIONS.indexOf(value) !== -1);
+
+/**
+ * Checks whether provided number is within valid percentage range.
+ *
+ * @param {Number} value to check
+ * @return {Boolean}
+ */
+const withinRange = value => (value >= 0 && value <= 100);
+
+
+/**
+ * PropType that validates grid element size to be either string fraction or
+ * numerical percentage.
  */
 export const SizeProp = (props, propName) => {
   const size = props[propName];
@@ -32,11 +50,13 @@ export const SizeProp = (props, propName) => {
       `${propName} should be either string fraction or numerical percentage. \nGot: ${size}`,
     );
   }
+
+  return undefined;
 };
 
 
 /**
- * Defines size attribute prop validation for all sizes.
+ * Defines prop validation for all sizes to be valid string or number.
  */
 const BreakpointProps = (() => {
   const props = { size: SizeProp };
@@ -60,7 +80,7 @@ const HiddenProps = (() => {
 
 
 /**
- * All prop types that are required for Box element.
+ * Merge of all prop validations that are required for Box element.
  */
 const BoxProps = {
   ...BreakpointProps,

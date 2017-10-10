@@ -22,6 +22,10 @@ const style = StyleSheet.create({
   },
 });
 
+
+/**
+ * Component used to contain group of Boxes.
+ */
 const Section = ({ children }, { contentDirection }) => (
   <View style={(contentDirection === 'vertical' ? style.vertical : style.horizontal)}>
     { children }

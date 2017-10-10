@@ -57,5 +57,9 @@ describe('SizeProp', () => {
     it('expects supported type', () => {
       expect(SizeProp({ size: [] }, 'size')).toBeInstanceOf(Error);
     });
+
+    it('allows size not to be defined', () => {
+      expect(SizeProp({ size: undefined }, 'size')).toBeUndefined();
+    });
   });
 });

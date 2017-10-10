@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  *
  * @param { React.Component|function } Component
  */
-const withDimensions = (Component) => {
+const withContainerDimensions = (Component) => {
   const wrapper = (props, context) => (
     <Component
       width={context.referenceWidth}
@@ -23,8 +23,8 @@ const withDimensions = (Component) => {
     referenceHeight: PropTypes.number.isRequired,
   };
 
-  wrapper.displayName = `withDimensions(${Component.displayName || Component.name})`;
+  wrapper.displayName = `withContainerDimensions(${Component.displayName || Component.name})`;
   return wrapper;
 };
 
-export default withDimensions;
+export default withContainerDimensions;
