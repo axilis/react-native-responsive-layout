@@ -5,7 +5,7 @@ import { View, Dimensions, StyleSheet } from 'react-native';
 import GridBreakpointsProp from './props';
 import { DirectionProp, ContainerSizeProp } from '../../shared/props';
 import { DEFAULT_SIZES } from '../../shared';
-import { determineSizeClass } from './methods';
+import determineSizeClass from './methods';
 import SizeSubscriber from './Subscriber';
 
 const sharedStyle = {

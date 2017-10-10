@@ -1,4 +1,4 @@
-import { determineSizeClass } from './methods';
+import determineSizeClass from './methods';
 
 describe('determineSizeClass', () => {
   const BREAKPOINTS = {

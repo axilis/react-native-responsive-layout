@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
  * @param { React.Component|function } Component
  */
 const withContainerDimensions = (Component) => {
-
   class WithContainerDimensions extends React.Component {
     constructor() {
       super();

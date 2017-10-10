@@ -8,7 +8,9 @@ import { roundPercentage } from '../shared';
  * @param {number} totalLength total length of available space
  * @param {number} minimalElementLength minimal length of single element
  */
-export const calculateStretchLength = (totalLength, minimalElementLength) => {
+const calculateStretchLength = (totalLength, minimalElementLength) => {
   const w = (100 / Math.floor(totalLength / minimalElementLength));
   return roundPercentage(w);
 };
+
+export default calculateStretchLength;

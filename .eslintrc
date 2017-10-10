@@ -3,7 +3,8 @@
   "globals": {
     "expect": true,
     "it": true,
-    "describe": true
+    "describe": true,
+    "jest": true
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]

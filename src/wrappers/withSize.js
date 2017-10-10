@@ -47,7 +47,6 @@ export const getSize = (sizeClass, props, sizes = BREAKPOINTS) => {
  * @param { React.Component|function } Component
  */
 const withSize = (Component) => {
-
   class WithSize extends React.Component {
     constructor() {
       super();

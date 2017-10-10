@@ -1,3 +1,3 @@
 export * from './components/';
 export * from './wrappers/';
-export * from './utils/';
+export { default as calculateStretchLength } from './utils/';

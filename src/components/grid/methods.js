@@ -3,7 +3,7 @@ import { BREAKPOINTS } from '../../shared';
 /**
  * Determines size class from provided breakpoints and element size.
  */
-export const determineSizeClass = (breakpoints, size = 0) => {
+const determineSizeClass = (breakpoints, size = 0) => {
   const lastIndex = BREAKPOINTS.length - 1;
   let gridSizeClass = BREAKPOINTS[lastIndex];
 
@@ -20,3 +20,5 @@ export const determineSizeClass = (breakpoints, size = 0) => {
 
   return gridSizeClass;
 };
+
+export default determineSizeClass;
