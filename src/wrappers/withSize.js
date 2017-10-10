@@ -71,11 +71,11 @@ const withSize = (Component) => {
     }
 
     componentWillMount() {
-      this.context.referenceSizeSubscriber.subscribe(this.handler);
+      this.context.referenceSizeProvider.subscribe(this.handler);
     }
 
     componentWillUnmount() {
-      this.context.referenceSizeSubscriber.unsubscribe(this.handler);
+      this.context.referenceSizeProvider.unsubscribe(this.handler);
     }
 
 
@@ -94,7 +94,7 @@ const withSize = (Component) => {
 
   WithSize.contextTypes = {
     containerSizeClass: ContainerSizeProp,
-    referenceSizeSubscriber: PropTypes.shape({
+    referenceSizeProvider: PropTypes.shape({
       subscribe: PropTypes.func.isRequired,
       unsubscribe: PropTypes.func.isRequired,
     }),

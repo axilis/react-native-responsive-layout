@@ -55,14 +55,14 @@ class Grid extends Component {
     this.state = {
       breakpoints: props.breakpoints,
       containerSizeClass: this.determineSize(props.breakpoints, props.direction, width, height),
-      referenceSizeSubscriber: subscriber,
+      referenceSizeProvider: subscriber,
     };
   }
 
   getChildContext = () => ({
     contentDirection: this.props.direction,
     containerSizeClass: this.state.containerSizeClass,
-    referenceSizeSubscriber: this.state.referenceSizeSubscriber,
+    referenceSizeProvider: this.state.referenceSizeProvider,
   });
 
   componentWillMount() {
@@ -106,7 +106,7 @@ class Grid extends Component {
     const size = this.determineSize(this.state.breakpoints, this.props.direction, width, height);
 
     // Propagate size change to subscribed entities.
-    this.referenceSizeSubscriber.update(width, height);
+    this.state.referenceSizeProvider.update(width, height);
 
     if (size !== this.state.containerSizeClass) {
       this.setState({ containerSizeClass: size });
@@ -165,11 +165,6 @@ Grid.childContextTypes = {
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
   }),
-  /**
-   * Height of element that is observed to determine cascading of sizes.
-   * It can be either Grid itself or Window depending on `relativeTo` property.
-   */
-  referenceHeight: PropTypes.number.isRequired,
 };
 
 
