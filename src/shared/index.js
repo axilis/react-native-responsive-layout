@@ -1,4 +1,4 @@
-export { roundPercentage } from './rounding';
+export { default as roundPercentage } from './methods';
 
 export const GRID_UNITS = 12;
 export const BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];

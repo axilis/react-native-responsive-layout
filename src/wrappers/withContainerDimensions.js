@@ -10,21 +10,58 @@ import PropTypes from 'prop-types';
  * @param { React.Component|function } Component
  */
 const withContainerDimensions = (Component) => {
-  const wrapper = (props, context) => (
-    <Component
-      width={context.referenceWidth}
-      height={context.referenceHeight}
-      {...props}
-    />
-  );
 
-  wrapper.contextTypes = {
-    referenceWidth: PropTypes.number.isRequired,
-    referenceHeight: PropTypes.number.isRequired,
+  class WithContainerDimensions extends React.Component {
+    constructor() {
+      super();
+
+      this.state = {
+        referenceHeight: 0,
+        referenceWidth: 0,
+      };
+
+      this.handler = (width, height) => {
+        // Only update component on change.
+        if (this.referenceHeight === this.state.referenceHeight
+          || this.referenceWidth === this.state.referenceWidth) {
+          return;
+        }
+
+        this.setState({
+          referenceWidth: width,
+          referenceHeight: height,
+        });
+      };
+    }
+
+    componentWillMount() {
+      this.context.referenceSizeSubscriber.subscribe(this.handler);
+    }
+
+    componentWillUnmount() {
+      this.context.referenceSizeSubscriber.unsubscribe(this.handler);
+    }
+
+
+    render() {
+      return (
+        <Component
+          width={this.state.referenceWidth}
+          height={this.state.referenceHeight}
+          {...this.props}
+        />
+      );
+    }
+  }
+
+  WithContainerDimensions.contextTypes = {
+    referenceSizeSubscriber: PropTypes.shape({
+      subscribe: PropTypes.func.isRequired,
+      unsubscribe: PropTypes.func.isRequired,
+    }),
   };
 
-  wrapper.displayName = `withContainerDimensions(${Component.displayName || Component.name})`;
-  return wrapper;
+  return WithContainerDimensions;
 };
 
 export default withContainerDimensions;

@@ -1,6 +1,4 @@
-
 const ROUNDING_FACTOR = 10000;
-
 
 /**
  * Rounds down percent to ensure that total width won't exceed 100% fixing
@@ -8,6 +6,7 @@ const ROUNDING_FACTOR = 10000;
  *
  * @param {number} percent
  */
-export const roundPercentage = (percent) => {
-  return Math.floor(percent * ROUNDING_FACTOR) / ROUNDING_FACTOR;
-}
+const roundPercentage = percent =>
+  Math.floor(percent * ROUNDING_FACTOR) / ROUNDING_FACTOR;
+
+export default roundPercentage;

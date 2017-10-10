@@ -6,6 +6,7 @@ import GridBreakpointsProp from './props';
 import { DirectionProp, ContainerSizeProp } from '../../shared/props';
 import { DEFAULT_SIZES } from '../../shared';
 import { determineSizeClass } from './methods';
+import SizeSubscriber from './Subscriber';
 
 const sharedStyle = {
   alignItems: 'stretch',
@@ -39,6 +40,7 @@ class Grid extends Component {
   constructor(props) {
     super();
 
+    const subscriber = new SizeSubscriber();
     let width = 0;
     let height = 0;
 
@@ -47,19 +49,20 @@ class Grid extends Component {
     // `componentWillUnmount`.
     if (props.relativeTo === 'window') {
       ({ width, height } = Dimensions.get('window'));
+      subscriber.update(width, height);
     }
 
     this.state = {
       breakpoints: props.breakpoints,
-      ...this.determineValues(props.breakpoints, props.direction, width, height),
+      containerSizeClass: this.determineSize(props.breakpoints, props.direction, width, height),
+      referenceSizeSubscriber: subscriber,
     };
   }
 
   getChildContext = () => ({
     contentDirection: this.props.direction,
     containerSizeClass: this.state.containerSizeClass,
-    referenceWidth: this.state.referenceWidth,
-    referenceHeight: this.state.referenceHeight,
+    referenceSizeSubscriber: this.state.referenceSizeSubscriber,
   });
 
   componentWillMount() {
@@ -78,14 +81,10 @@ class Grid extends Component {
   /**
    * Helper function that calculates all state (context) values.
    */
-  determineValues = (breakpoints, direction, width, height) => ({
-    containerSizeClass: determineSizeClass(
-      breakpoints,
-      (direction === 'vertical' ? width : height),
-    ),
-    referenceWidth: width,
-    referenceHeight: height,
-  });
+  determineSize = (breakpoints, direction, width, height) => determineSizeClass(
+    breakpoints,
+    (direction === 'vertical' ? width : height),
+  );
 
   /**
    * Handler for window size changes when grid is relative to it.
@@ -104,19 +103,13 @@ class Grid extends Component {
    * useless re-rendering.
    */
   updateSize = (width, height) => {
-    const values = this.determineValues(
-      this.state.breakpoints,
-      this.props.direction,
-      width,
-      height,
-    );
+    const size = this.determineSize(this.state.breakpoints, this.props.direction, width, height);
 
-    if (
-      values.containerSizeClass !== this.state.containerSizeClass ||
-      values.referenceWidth !== this.state.referenceWidth ||
-      values.referenceHeight !== this.state.referenceHeight
-    ) {
-      this.setState(values);
+    // Propagate size change to subscribed entities.
+    this.referenceSizeSubscriber.update(width, height);
+
+    if (size !== this.state.containerSizeClass) {
+      this.setState({ containerSizeClass: size });
     }
   }
 
@@ -168,7 +161,10 @@ Grid.childContextTypes = {
    * Width of element that is observed to determine cascading of sizes.
    * It can be either Grid itself or Window depending on `relativeTo` property.
    */
-  referenceWidth: PropTypes.number.isRequired,
+  referenceSizeProvider: PropTypes.shape({
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
+  }),
   /**
    * Height of element that is observed to determine cascading of sizes.
    * It can be either Grid itself or Window depending on `relativeTo` property.

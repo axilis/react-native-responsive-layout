@@ -38,8 +38,8 @@ export const getSize = (sizeClass, props, sizes = BREAKPOINTS) => {
 
 /**
  * Wraps provided component and provides:
- * - `size` which corresponds to currently active size of grid
- * - `orientation` which corresponds to orientation of grid
+ * - `size` - which corresponds to currently active size of grid
+ * - `orientation` - which corresponds to orientation of grid
  * - `sizeSelector` - function which takes object that contains sizes as keys
  *  and returns closest size that is relevant, this enables style selection to
  *  match grid size
@@ -47,23 +47,61 @@ export const getSize = (sizeClass, props, sizes = BREAKPOINTS) => {
  * @param { React.Component|function } Component
  */
 const withSize = (Component) => {
-  const wrapper = (props, context) => (
-    <Component
-      size={context.containerSizeClass}
-      sizeSelector={values => getSize(context.containerSizeClass, values)}
-      orientation={determineOrientation(context.referenceWidth, context.referenceHeight)}
-      {...props}
-    />
-  );
 
-  wrapper.contextTypes = {
+  class WithSize extends React.Component {
+    constructor() {
+      super();
+
+      this.state = {
+        referenceHeight: 0,
+        referenceWidth: 0,
+      };
+
+      this.handler = (width, height) => {
+        // Only update component on change.
+        if (this.referenceHeight === this.state.referenceHeight
+          || this.referenceWidth === this.state.referenceWidth) {
+          return;
+        }
+
+        this.setState({
+          referenceWidth: width,
+          referenceHeight: height,
+        });
+      };
+    }
+
+    componentWillMount() {
+      this.context.referenceSizeSubscriber.subscribe(this.handler);
+    }
+
+    componentWillUnmount() {
+      this.context.referenceSizeSubscriber.unsubscribe(this.handler);
+    }
+
+
+    render() {
+      const { containerSizeClass, referenceHeight, referenceWidth } = this.context;
+      return (
+        <Component
+          size={containerSizeClass}
+          sizeSelector={values => getSize(containerSizeClass, values)}
+          orientation={determineOrientation(referenceWidth, referenceHeight)}
+          {...this.props}
+        />
+      );
+    }
+  }
+
+  WithSize.contextTypes = {
     containerSizeClass: ContainerSizeProp,
-    referenceWidth: PropTypes.number.isRequired,
-    referenceHeight: PropTypes.number.isRequired,
+    referenceSizeSubscriber: PropTypes.shape({
+      subscribe: PropTypes.func.isRequired,
+      unsubscribe: PropTypes.func.isRequired,
+    }),
   };
 
-  wrapper.displayName = `withSize(${Component.displayName || Component.name})`;
-  return wrapper;
+  return WithSize;
 };
 
 export default withSize;
