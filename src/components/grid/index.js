@@ -10,7 +10,6 @@ const sharedStyle = {
   alignItems: 'stretch',
   justifyContent: 'flex-start',
   flex: 1,
-  backgroundColor: 'yellowgreen',
 };
 
 const style = StyleSheet.create({

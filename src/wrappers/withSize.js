@@ -52,7 +52,7 @@ const withSize = (Component) => {
     referenceHeight: PropTypes.number.isRequired,
   };
 
-  wrapper.displayName = `withSize(${Component.displayName || Component.name}`;
+  wrapper.displayName = `withSize(${Component.displayName || Component.name})`;
   return wrapper;
 };
 
