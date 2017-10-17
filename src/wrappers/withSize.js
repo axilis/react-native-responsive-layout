@@ -80,7 +80,9 @@ const withSize = (Component) => {
 
 
     render() {
-      const { containerSizeClass, referenceHeight, referenceWidth } = this.context;
+      const { containerSizeClass } = this.context;
+      const { referenceHeight, referenceWidth } = this.state;
+
       return (
         <Component
           size={containerSizeClass}
