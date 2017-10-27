@@ -11,7 +11,7 @@ import SizeSubscriber from './Subscriber';
 const sharedStyle = {
   alignItems: 'stretch',
   justifyContent: 'flex-start',
-  flex: 1,
+  flex: 0,
 };
 
 const style = StyleSheet.create({
@@ -22,6 +22,9 @@ const style = StyleSheet.create({
   vertical: {
     ...sharedStyle,
     flexDirection: 'column',
+  },
+  stretch: {
+    flex: 1,
   },
 });
 
@@ -62,6 +65,7 @@ class Grid extends Component {
   getChildContext = () => ({
     contentDirection: this.props.direction,
     containerSizeClass: this.state.containerSizeClass,
+    containerStretch: this.props.stretch,
     referenceSizeProvider: this.state.referenceSizeProvider,
   });
 
@@ -119,7 +123,14 @@ class Grid extends Component {
     const onLayoutHandler = (this.props.relativeTo === 'self' ? this.onLayout : null);
 
     return (
-      <View style={(this.props.direction === 'horizontal' ? style.horizontal : style.vertical)} onLayout={onLayoutHandler}>
+      <View
+        style={[
+          (this.props.direction === 'horizontal' ? style.horizontal : style.vertical),
+          this.props.stretch ? style.stretch : null,
+          this.props.style,
+        ]}
+        onLayout={onLayoutHandler}
+      >
         { this.state.containerSizeClass ? this.props.children : null }
       </View>
     );
@@ -131,6 +142,8 @@ Grid.propTypes = {
   breakpoints: GridBreakpointsProp,
   direction: PropTypes.oneOf(['horizontal', 'vertical']),
   relativeTo: PropTypes.oneOf(['window', 'self']),
+  style: PropTypes.shape({}),
+  stretch: PropTypes.bool,
 
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -143,6 +156,8 @@ Grid.defaultProps = {
   breakpoints: DEFAULT_SIZES,
   direction: 'vertical',
   relativeTo: 'window',
+  style: {},
+  stretch: false,
 };
 
 
@@ -157,6 +172,10 @@ Grid.childContextTypes = {
    * on current grid size and merge of provided and default breakpoints.
    */
   containerSizeClass: ContainerSizeProp,
+  /**
+   * Whether grid should stretch available space.
+   */
+  containerStretch: PropTypes.bool,
   /**
    * Width of element that is observed to determine cascading of sizes.
    * It can be either Grid itself or Window depending on `relativeTo` property.

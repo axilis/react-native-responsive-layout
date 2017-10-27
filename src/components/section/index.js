@@ -5,13 +5,13 @@ import { DirectionProp } from '../../shared/props';
 
 const sharedStyle = {
   alignItems: 'flex-start',
-  flex: 1,
+  flex: 0,
   flexWrap: 'wrap',
   justifyContent: 'flex-start',
   position: 'relative',
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   horizontal: {
     ...sharedStyle,
     flexDirection: 'column',
@@ -20,14 +20,23 @@ const style = StyleSheet.create({
     ...sharedStyle,
     flexDirection: 'row',
   },
+  stretch: {
+    flex: 1,
+  },
 });
 
 
 /**
  * Component used to contain group of Boxes.
  */
-const Section = ({ children }, { contentDirection }) => (
-  <View style={(contentDirection === 'vertical' ? style.vertical : style.horizontal)}>
+const Section = ({ children, style }, { contentDirection, containerStretch }) => (
+  <View
+    style={[
+      (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
+      (containerStretch ? styles.stretch : null),
+      style,
+    ]}
+  >
     { children }
   </View>
 );
@@ -35,6 +44,7 @@ const Section = ({ children }, { contentDirection }) => (
 
 Section.contextTypes = {
   contentDirection: DirectionProp,
+  containerStretch: PropTypes.bool,
 };
 
 Section.propTypes = {
@@ -42,6 +52,11 @@ Section.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  style: PropTypes.shape({}),
+};
+
+Section.defaultProps = {
+  style: {},
 };
 
 export default Section;
