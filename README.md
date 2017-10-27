@@ -116,6 +116,8 @@ const ResponsiveButton = withSizeClass(({ sizeSelector, ...props}) => {
 
 ```
 
+![Tiles Demo](images/withSizeClass.gif)
+
 You can find full [example here](examples/withSizeClass.js).
 
 If you only want to hide or show certain components on specific size classes please check [Block](#block)'s `Hidden` props that will conditionally hide component.
@@ -146,6 +148,8 @@ const WrappedInfo = withContainerDimensions(Info);
 // ...
 ```
 
+![Tiles Demo](images/withContainerDimensions.gif)
+
 For complete code along with how grid nesting works along with it take a look at [full example](examples/withContainerDimensions.js).
 
 
@@ -169,5 +173,7 @@ const Card = withContainerDimensions(({ width }) => {
 When using images, keep in mind that calculated length will always be between minimal element length and double the minimal element length, so you can pick sensible value depending on resolution of thumbnails.
 
 If grid spans entire width, it makes more sense to use `realativeTo='window'` (default value) to avoid unneeded re-rendering.
+
+![Tiles Demo](images/tiles.gif)
 
 Entire gallery is available in [tiles example](examples/tiles.js).
