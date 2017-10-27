@@ -22,7 +22,7 @@ const withContainerDimensions = (Component) => {
       this.handler = (width, height) => {
         // Only update component on change.
         if (this.referenceHeight === this.state.referenceHeight
-          || this.referenceWidth === this.state.referenceWidth) {
+          && this.referenceWidth === this.state.referenceWidth) {
           return;
         }
 
