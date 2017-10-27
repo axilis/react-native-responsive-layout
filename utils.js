@@ -1,1 +1,1 @@
-export { default as calculateStretchLength } from './src/utils';
+export { calculateStretchLength } from './src/utils';

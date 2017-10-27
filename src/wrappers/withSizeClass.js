@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BREAKPOINTS } from '../shared';
 import { ContainerSizeProp } from '../shared/props';
+import { checkInsideGrid } from '../utils';
 
 /**
  * Determines orientation from width and height, it doesn't necessarily match
@@ -71,11 +72,15 @@ const withSizeClass = (Component) => {
     }
 
     componentWillMount() {
-      this.context.referenceSizeProvider.subscribe(this.handler);
+      if (this.context.referenceSizeProvider) {
+        this.context.referenceSizeProvider.subscribe(this.handler);
+      }
     }
 
     componentWillUnmount() {
-      this.context.referenceSizeProvider.unsubscribe(this.handler);
+      if (this.context.referenceSizeProvider) {
+        this.context.referenceSizeProvider.unsubscribe(this.handler);
+      }
     }
 
 
@@ -94,8 +99,11 @@ const withSizeClass = (Component) => {
     }
   }
 
+  const componentName = Component.displayName || Component.name || 'UnnamedComponent';
+  WithSize.displayName = `withSizeClass(${componentName})`;
+
   WithSize.contextTypes = {
-    containerSizeClass: ContainerSizeProp,
+    containerSizeClass: checkInsideGrid(ContainerSizeProp),
     referenceSizeProvider: PropTypes.shape({
       subscribe: PropTypes.func.isRequired,
       unsubscribe: PropTypes.func.isRequired,

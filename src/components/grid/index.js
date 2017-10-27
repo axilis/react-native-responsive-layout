@@ -30,7 +30,7 @@ const style = StyleSheet.create({
 
 
 /**
- * Grid that defines how nested `Section` and `Box` components should behave.
+ * Grid that defines how nested `Section` and `Block` components should behave.
  *
  * You can determine what object is being referenced to determine size using
  * `relativeTo`, as well on which sizes should size classes cascade using
@@ -163,7 +163,7 @@ Grid.defaultProps = {
 
 Grid.childContextTypes = {
   /**
-   * Determines how content should flow in both Section and Box element. It
+   * Determines how content should flow in both Section and Block element. It
    * is always based on provided direction prop.
    */
   contentDirection: DirectionProp,

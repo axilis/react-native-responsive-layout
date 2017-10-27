@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 
-import BoxProps from './props';
+import BlockProps from './props';
+import { checkInsideGrid } from '../../utils';
 import { determineSize, isHidden } from './methods';
 import { roundPercentage, GRID_UNITS } from '../../shared';
 import { DirectionProp, ContainerSizeProp } from '../../shared/props';
@@ -32,7 +33,7 @@ const style = StyleSheet.create({
  * - otherwise it will choose smallest class defined that is applicable based
  *   on sizing of closest outer `Grid` element
  */
-const Box = ({
+const Block = ({
   children,
   ...props
 }, {
@@ -56,21 +57,21 @@ const Box = ({
   );
 };
 
-Box.defaultProps = {
+Block.defaultProps = {
   children: null,
 };
 
-Box.contextTypes = {
-  containerSizeClass: ContainerSizeProp,
-  contentDirection: DirectionProp,
+Block.contextTypes = {
+  containerSizeClass: checkInsideGrid(ContainerSizeProp),
+  contentDirection: checkInsideGrid(DirectionProp),
 };
 
-Box.propTypes = {
+Block.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  ...BoxProps,
+  ...BlockProps,
 };
 
-export default Box;
+export default Block;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { checkInsideGrid } from '../utils';
 
 /**
  * Wraps provided component and provides `width` and `height` which are used
@@ -53,11 +54,15 @@ const withContainerDimensions = (Component) => {
     }
   }
 
+  const componentName = Component.displayName || Component.name || 'UnnamedComponent';
+  WithContainerDimensions.displayName = `withContainerDimensions(${componentName})`;
+
+
   WithContainerDimensions.contextTypes = {
-    referenceSizeProvider: PropTypes.shape({
+    referenceSizeProvider: checkInsideGrid(PropTypes.shape({
       subscribe: PropTypes.func.isRequired,
       unsubscribe: PropTypes.func.isRequired,
-    }),
+    })),
   };
 
   return WithContainerDimensions;

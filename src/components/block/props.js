@@ -80,11 +80,11 @@ const HiddenProps = (() => {
 
 
 /**
- * Merge of all prop validations that are required for Box element.
+ * Merge of all prop validations that are required for Block element.
  */
-const BoxProps = {
+const BlockProps = {
   ...BreakpointProps,
   ...HiddenProps,
 };
 
-export default BoxProps;
+export default BlockProps;

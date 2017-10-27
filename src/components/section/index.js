@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
+
+import { checkInsideGrid } from '../../utils';
 import { DirectionProp } from '../../shared/props';
 
 const sharedStyle = {
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
 
 
 /**
- * Component used to contain group of Boxes.
+ * Component used to contain group of Blocks.
  */
 const Section = ({ children, style }, { contentDirection, containerStretch }) => (
   <View
@@ -43,8 +45,8 @@ const Section = ({ children, style }, { contentDirection, containerStretch }) =>
 
 
 Section.contextTypes = {
-  contentDirection: DirectionProp,
-  containerStretch: PropTypes.bool,
+  contentDirection: checkInsideGrid(DirectionProp),
+  containerStretch: checkInsideGrid(PropTypes.bool),
 };
 
 Section.propTypes = {
