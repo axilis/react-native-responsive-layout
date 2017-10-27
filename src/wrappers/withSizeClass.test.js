@@ -1,4 +1,4 @@
-import { determineOrientation, getSize } from './withSize';
+import { determineOrientation, getSize } from './withSizeClass';
 
 describe('determineOrientation', () => {
   it('returns landscape when width is larger than height', () => {

@@ -10,7 +10,7 @@ import { roundPercentage } from '../shared';
  */
 const calculateStretchLength = (totalLength, minimalElementLength) => {
   const w = (100 / (Math.floor(totalLength / minimalElementLength) || 1));
-  return roundPercentage(w) / 100 * totalLength;
+  return (roundPercentage(w) / 100) * totalLength;
 };
 
 export default calculateStretchLength;
