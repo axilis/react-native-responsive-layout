@@ -22,10 +22,22 @@ Even though React-Native offers a great way to build complex native applications
 
 The most important concept these components bring is **ability to specify different component sizes and to select styles depending on viewport size** to enable responsive making building responsive elements as easy as using Bootstrap grid.
 
-It is built to be **mobile first**, so grid collapses to largest size class that it fits. This way you don't need to define sizes/styles for all breakpoint sizes, rather you can implement only those that matter and it will fallback to the latest one that it fits. For example, you can define only `xsSize` and `lgSize`, on all sizes lower than large it will fallback to extra small, but on all larger or equal to large, it will pick it. This gives you the flexibility to target most device sizes quite precisely.
+It is built to be **mobile first**, so grid collapses to largest size class that it fits. This way you don't need to define sizes/styles for all breakpoint sizes, rather you can implement only those that matter and it will fallback to the first smaller one that it fits. For example, you can define only `xsSize` and `lgSize`, on all sizes lower than large it will fallback to extra small, but on all larger it will pick large one. This gives you the flexibility to target most device sizes quite precisely.
 
 ## Usage Example
 
+
+### Flexible size (stretch to fit)
+
+By default grid size will be based on the content size, if you want it to use flex to stretch, simply set `stretch` property on grid, it will set appropriate flex styles on child `Box` and `Section` components and enable their children to be properly rendered if using flex.
+
+In this case by default both `Grid` and `Section` will be configured with `flex: 1` which you can override by providing custom style to any of those components. This way you can tweak size ratios of different elements.
+
+Following image demonstrates difference:
+
+![Tiles Demo](images/stretching.png)
+
+Keep in mind that when rendering components using flex inside ScrollView, you should set flex on `contentContainerStyle` in order for it to stretch entire space. For complete example take a look at source for above [normal](examples/stretch-disabled.js) and [stretching](examples/stretch-enabled.js) examples.
 
 
 ## Size Classes
