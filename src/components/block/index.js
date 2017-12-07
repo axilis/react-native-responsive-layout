@@ -51,7 +51,7 @@ const Block = ({
   const directionStyle = { flexDirection: (contentDirection === 'vertical' ? 'column' : 'row') };
 
   return (
-    <View style={[style.baseStyle, directionStyle, sizeStyle]}>
+    <View style={[style.baseStyle, directionStyle, sizeStyle, props.style]}>
       {children}
     </View>
   );

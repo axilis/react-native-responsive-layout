@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
-import { Block, Grid, Section } from 'react-native-responsive-layout/';
+import { Block, Grid, Section } from 'react-native-responsive-layout';
 import { withContainerDimensions } from 'react-native-responsive-layout/wrappers';
 import { calculateStretchLength } from 'react-native-responsive-layout/utils';
 

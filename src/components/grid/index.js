@@ -8,20 +8,15 @@ import { DEFAULT_SIZES } from '../../shared';
 import determineSizeClass from './methods';
 import SizeSubscriber from './Subscriber';
 
-const sharedStyle = {
-  alignItems: 'stretch',
-  justifyContent: 'flex-start',
-  flex: 0,
-};
 
 const style = StyleSheet.create({
   horizontal: {
-    ...sharedStyle,
     flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   vertical: {
-    ...sharedStyle,
     flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
   stretch: {
     flex: 1,
