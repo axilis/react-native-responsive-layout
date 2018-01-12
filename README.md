@@ -54,7 +54,7 @@ You can also see how columns are placed next to each other until they reflow to 
 
 ### Hidden elements
 
-Sometimes we only want to display specific elements on larger orsmaller devices, to do that we can use hidden classes (eg. `mdHidden`).
+Sometimes we only want to display specific elements on larger or smaller devices, to do that we can use hidden classes (eg. `mdHidden`).
 
 In this [example](examples/2-hidden-elements.js) we will hide two elements from first section on larger phones, and only show element from the second section on smaller phones.
 
@@ -63,7 +63,7 @@ Again since grid is mobile first it will be hidden on specified and larger devic
 ```jsx
 <Grid>
   <Section>
-    <Block />
+    <Block >
     <Block smHidden />
     <Block smHidden />
   </Section>
@@ -72,7 +72,61 @@ Again since grid is mobile first it will be hidden on specified and larger devic
   </Section>
 </Grid>
 ```
+
 ![Example showing how elements can be hidden depending on screen size.](docs/images/2-hidden-elements.png)
+
+### Shifting elements
+
+Sometimes we need to align element in center or push it to the right, you can do it by adding filler `Block` elements to ensure reflow on each design, but the simplest way to do it is using auto width elements, they will use flex to fill the space.
+
+To keep element on the **left** and keep remaining space free, simply put next element into new section. To **center** element add stretching element before and after given element. To shift it to the **right**, just add one before.
+
+
+```jsx
+<Grid>
+  <Section>
+    <Block xsSize="1/2" smSize="1/4"></Block>
+  </Section>
+  <Section>
+    <Block size="auto" />
+    <Block xsSize="1/2" smSize="1/4"></Block>
+    <Block size="auto" />
+  </Section>
+  <Section>
+    <Block size="auto" />
+    <Block xsSize="1/2" smSize="1/4"></Block>
+  </Section>
+  <Section>
+    <Block xsSize="1/3" smSize="1/4"></Block>
+    <Block size="auto" />
+    <Block xsSize="1/3" smSize="1/4"></Block>
+  </Section>
+</Grid>
+```
+
+Just like in this [example](examples/3-shifting-elements.js), normally when using stretching elements you will want to **put items from same line into separate section**, since they have no way of knowing when you want to break into next line.
+
+
+![Example showing how stretching elements can be used to shift other elements.](docs/images/3-shifting-elements.png)
+
+
+### Fixed size elements
+
+Usually sometimes we need elements with static size as well. In this example we are going to combine both fixed size elements, responsive elements and stretching elements at the same time.
+
+Following [example](examples/4-fixed-size-elements.js) shows just that.
+
+```jsx
+<Grid>
+  <Section>
+    <Block style={{ width: 100 }} />
+    <Block size="auto" />
+    <Block xsSize="1/2" smSize="2/3" />
+  </Section>
+</Grid>
+```
+
+![Example showing how one can use fixed size elements as well.](docs/images/4-fixed-size-elements.png)
 
 
 ### Flexible size (stretch to fit)
