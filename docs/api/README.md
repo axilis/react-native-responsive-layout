@@ -1,4 +1,5 @@
 # API Reference
+
 ## Components
 
 ### Grid
@@ -122,3 +123,28 @@ If grid spans entire width, it makes more sense to use `realativeTo='window'` (d
 ![Tiles Demo](../images/tiles.gif)
 
 Entire gallery is available in [tiles example](../../examples/tiles.js).
+
+
+## Size Classes
+
+Sizing is mobile first so it renders depending on current size and fallbacks to lower sizes for missing breakpoint values. Therefore there is no need to explicitly define all sizes, it is possible only to target breakpoints you care about.
+
+Based on currently popular device point sizes, grid breakpoints are chosen so it would be possible to precisely target devices of all sizes. 
+
+Most notable **differences compared to CSS frameworks** are that we differentiate two portrait sizes for mobile devices since in many cases 100 points difference which covers almost 1/4th of the screen could be used to render things differently.
+
+The second difference is that we are not interested in desktop sizes so we can also have more break points on large devices where there could also be a significant difference in sizes.
+
+Based on popular device sizes grid breakpoints are divided as following:
+
+ **Mobile** - iPhone 5/SE ( `320x568` ), iPhone 7/8 ( `375x667` ), Galaxy S6/S7 ( `360x640` )  
+ **Mobile Large** - iPhone 7+/8+ ( `414x736` ) , Nexus 5X/Pixel ( `411x731` )  
+ **Tablet** - iPad Mini/Air ( `768x1024` ), Nexus 9 ( `1024x768` )  
+ **Tablet Large** - iPad Pro 12,9 ( `1024x1366` )
+
+
+| xs     | sm           | md               | lg     | xl               | xxl                    |
+|--------|--------------|------------------|--------|------------------|------------------------|
+| 320    | >= 411       | >= 568           | >= 768 | >= 1024          | >= 1280                |
+| Mobile | Mobile Large | Mobile Landscape | Tablet | Tablet Landscape | Tablet Large Landscape |
+|        |              |                  |        | Tablet Large     |                        |

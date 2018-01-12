@@ -35,12 +35,12 @@ When rendering it will render largest size class that is smaller or equal to the
 ```jsx
 <Grid>
   <Section>
-    <Block xsSize="1/1" smSize="1/2" />
-    <Block xsSize="1/1" smSize="1/2" />
-    <Block xsSize="1/1" smSize="1/2" />
+    <Block xsSize="1/1" smSize="1/2" /> {/* 1.1 */}
+    <Block xsSize="1/1" smSize="1/2" /> {/* 1.2 */}
+    <Block xsSize="1/1" smSize="1/2" /> {/* 1.3 */}
   </Section>
   <Section>
-    <Block size="1/1" smSize="1/2" />
+    <Block size="1/1" smSize="1/2" /> {/* 2.1 */}
   </Section>
 </Grid>
 ```
@@ -63,12 +63,12 @@ Again since grid is mobile first it will be hidden on specified and larger devic
 ```jsx
 <Grid>
   <Section>
-    <Block >
-    <Block smHidden />
-    <Block smHidden />
+    <Block />          {/* 1.1 */}
+    <Block smHidden /> {/* 1.2 */}
+    <Block smHidden /> {/* 1.3 */}
   </Section>
   <Section>
-    <Block xsHidden smHidden={false} />
+    <Block xsHidden smHidden={false} /> {/* 2.1 */}
   </Section>
 </Grid>
 ```
@@ -85,21 +85,21 @@ To keep element on the **left** and keep remaining space free, simply put next e
 ```jsx
 <Grid>
   <Section>
-    <Block xsSize="1/2" smSize="1/4"></Block>
+    <Block xsSize="1/2" smSize="1/4"></Block> {/* Left */}
   </Section>
   <Section>
     <Block size="auto" />
-    <Block xsSize="1/2" smSize="1/4"></Block>
+    <Block xsSize="1/2" smSize="1/4"></Block> {/* Center */}
     <Block size="auto" />
   </Section>
   <Section>
     <Block size="auto" />
-    <Block xsSize="1/2" smSize="1/4"></Block>
+    <Block xsSize="1/2" smSize="1/4"></Block> {/* Right */}
   </Section>
   <Section>
-    <Block xsSize="1/3" smSize="1/4"></Block>
+    <Block xsSize="1/3" smSize="1/4"></Block> {/* Left */}
     <Block size="auto" />
-    <Block xsSize="1/3" smSize="1/4"></Block>
+    <Block xsSize="1/3" smSize="1/4"></Block> {/* Right */}
   </Section>
 </Grid>
 ```
@@ -119,27 +119,96 @@ Following [example](examples/4-fixed-size-elements.js) shows just that.
 ```jsx
 <Grid>
   <Section>
-    <Block style={{ width: 100 }} />
+    <Block style={{ width: 100 }} />    {/* Fixed */}
     <Block size="auto" />
-    <Block xsSize="1/2" smSize="2/3" />
+    <Block xsSize="1/2" smSize="2/3" /> {/* Responsive */}
   </Section>
 </Grid>
 ```
 
 ![Example showing how one can use fixed size elements as well.](docs/images/4-fixed-size-elements.png)
 
+### Conditionally rendering different styles or components
 
-### Flexible size (stretch to fit)
+When we render content depending on device size, often we want to also style some parts of components conditionally as well. In order to make it more easier there is HOC available that you can wrap your component with that will provide selector function which will select appropriate values.
 
-By default grid size will be based on the content size, if you want it to use flex to stretch, simply set `stretch` property on grid, it will set appropriate flex styles on child `Box` and `Section` components and enable their children to be properly rendered if using flex.
+For [example](examples/5-conditional-styling.js), if we want to render components using different styles we can wrap our component using `withSizeClass` and use `sizeSelector` prop to select appropriate style or even a component -- this way we can even render completely different component depending on size.
+
+
+```jsx
+const WrappedComponent = withSizeClass(({ sizeSelector }) => {
+  const style = sizeSelector({
+    xs: styles.lightContent,
+    sm: styles.darkContent,
+  });
+
+  return (
+    <View style={style} />
+  );
+});
+```
+
+```jsx
+<Grid>
+  <Section>
+    <Block>
+      <WrappedComponent />
+    </Block>
+  </Section>
+</Grid>
+```
+
+![Example showing how to use conditional styling HOC.](docs/images/5-conditional-styling.png)
+
+
+### Layout content either horizontally or vertically
+
+Just by changing `direction` prop we can select in which direction layout should flow. 
+Keep in mind when doing it that breakpoints are based on device height rather than width since most common use case for horizontal flow is in landscape orientation where again device height is greater concern.
+
+```jsx
+<Grid direction="horizontal">
+  <Section>
+    <Block xsSize="1/1" smSize="1/2" /> {/* 1.1 */}
+    <Block xsSize="1/1" smSize="1/2" /> {/* 1.2 */}
+    <Block xsSize="1/1" smSize="1/2" /> {/* 1.3 */}
+  </Section>
+  <Section>
+    <Block size="1/1" smSize="1/2" />   {/* 2.1 */}
+  </Section>
+</Grid>
+```
+![Example showing using horizontal direction.](docs/images/6-horizontal-direction.png)
+
+
+### Stretching grid
+
+By default grid size will be based on the content size, if you want it to stretch available space, simply set `stretch` property on grid, it will set appropriate styles on child `Box` and `Section` components and enable their children to be properly rendered using flex.
 
 In this case by default both `Grid` and `Section` will be configured with `flex: 1` which you can override by providing custom style to any of those components. This way you can tweak size ratios of different elements.
 
-Following image demonstrates difference:
+```jsx
+<Grid stretch>
+  {/* This ensures grid sections and blocks are configured to stretch. */}
 
-![Tiles Demo](docs/images/stretching.png)
+  <Section style={{ height: 80, flex: 0 }}>
+    {/* Since by default Sections would stretch we need to override their flex
+    style in order for them to stay fixed height. */}
+    <Block />
+  </Section>
+  <Section>
+    <Block size="1/4" />  {/* L */}
+    <Block size="auto" /> {/* Content */}
+  </Section>
+  <Section style={{ height: 80, flex: 0 }}>
+    <Block />
+  </Section>
+</Grid>
+```
 
-Keep in mind that when rendering components using flex inside ScrollView, you should set flex on `contentContainerStyle` in order for it to stretch entire space. For complete example take a look at source for above [normal](examples/stretch-disabled.js) and [stretching](examples/stretch-enabled.js) examples.
+![Stretching grid demonstration.](docs/images/7-stretching.png)
+
+Keep in mind that when rendering components using flex inside ScrollView, you should set `{ flex: 1 }` as `contentContainerStyle` prop in order for it to stretch entire space. For complete examples take a look at source for above [normal](examples/7-stretch-disabled.js) and [stretching](examples/7-stretch-enabled.js) examples.
 
 
 ## Size Classes
@@ -154,15 +223,15 @@ The second difference is that we are not interested in desktop sizes so we can a
 
 Based on popular device sizes grid breakpoints are divided as following:
 
- **Mobile** - iPhone 5/SE ( `320x568` ), iPhone 7/8 ( `375x667` ), Galaxy S6/S7 ( `360x640` )  
- **Mobile Large** - iPhone 7+/8+ ( `414x736` ) , Nexus 5X/Pixel ( `411x731` )  
- **Tablet** - iPad Mini/Air ( `768x1024` ), Nexus 9 ( `1024x768` )  
- **Tablet Large** - iPad Pro 12,9 ( `1024x1366` )
+| Size | Breakpoint | Devices                             |
+|------|------------|-------------------------------------|
+| xs   | 320 pt     | mobile                              |
+| sm   | >= 411 pt  | large mobile                        |
+| md   | >= 568 pt  | mobile - landscape                  |
+| lg   | >= 768 pt  | tablet                              |
+| xl   | >= 1024 pt | tablet - landscape, large tablet    |
+| xxl  | >= 1280 pt | large tablet - landscape            |
 
+## Further Reading
 
-| xs     | sm           | md               | lg     | xl               | xxl                    |
-|--------|--------------|------------------|--------|------------------|------------------------|
-| 320    | >= 411       | >= 568           | >= 768 | >= 1024          | >= 1280                |
-| Mobile | Mobile Large | Mobile Landscape | Tablet | Tablet Landscape | Tablet Large Landscape |
-|        |              |                  |        | Tablet Large     |                        |
-
+Best way to find out further is to look into [API docs](docs/api/).
