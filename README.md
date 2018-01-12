@@ -26,6 +26,54 @@ It is built to be **mobile first**, so grid collapses to largest size class that
 
 ## Examples
 
+### Responsive elements
+
+Any element that contains multiple different size classes will act responsive and adapt its size. Lets see how can we implement *single column design on typical phones and two columns on larger ones*. 
+
+When rendering it will render largest size class that is smaller or equal to the determined device size. Since design is mobile first, it doesn't matter if you use `size` or `xsSize`, since overriding it with larger size (eg. `xlSize` for tablets) would have the same effect, they coexist for semantical reasons -- when size is fixed across all size classes it makes more sense to use just `size`.
+
+```jsx
+<Grid>
+  <Section>
+    <Block xsSize="1/1" smSize="1/2" />
+    <Block xsSize="1/1" smSize="1/2" />
+    <Block xsSize="1/1" smSize="1/2" />
+  </Section>
+  <Section>
+    <Block size="1/1" smSize="1/2" />
+  </Section>
+</Grid>
+```
+
+In order to better show how it works, this [example](examples/1-responsive-elements.js) has sections marked with red border and each block is colored and has numbering.
+
+![Example showing how elements change size depending on screen size.](docs/images/1-responsive-elements.png)
+
+You can also see how columns are placed next to each other until they reflow to new line, when needed you can **break into new row manually using another section**.
+
+
+### Hidden elements
+
+Sometimes we only want to display specific elements on larger orsmaller devices, to do that we can use hidden classes (eg. `mdHidden`).
+
+In this [example](examples/2-hidden-elements.js) we will hide two elements from first section on larger phones, and only show element from the second section on smaller phones.
+
+Again since grid is mobile first it will be hidden on specified and larger device sizes. This means that in order to hide elements on larger devices it is enough to just define `smHidden` and they won't be displayed on larger devices. But in order to element to be hidden on only smaller devices we need to define it is hidden on small and then override it on larger.
+
+```jsx
+<Grid>
+  <Section>
+    <Block />
+    <Block smHidden />
+    <Block smHidden />
+  </Section>
+  <Section>
+    <Block xsHidden smHidden={false} />
+  </Section>
+</Grid>
+```
+![Example showing how elements can be hidden depending on screen size.](docs/images/2-hidden-elements.png)
+
 
 ### Flexible size (stretch to fit)
 
