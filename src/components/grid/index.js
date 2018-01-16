@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
-import GridBreakpointsProp from './props';
-import { DirectionProp, ContainerSizeProp } from '../../shared/props';
-import { DEFAULT_SIZES } from '../../shared';
-import determineSizeClass from './methods';
+import {
+  BREAKPOINT_VALUES,
+  SIZE_NAMES,
+  HORIZONTAL,
+  VERTICAL,
+} from '../../shared/constants';
+
+import { ContainerSizeProp, DirectionProp } from '../../shared/props';
+import { determineSizeClass } from './methods';
+import { BreakpointsProp } from './props';
 import SizeSubscriber from './Subscriber';
 
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -36,7 +42,7 @@ const style = StyleSheet.create({
  */
 class Grid extends Component {
   constructor(props) {
-    super();
+    super(props);
 
     const subscriber = new SizeSubscriber();
     let width = 0;
@@ -52,13 +58,13 @@ class Grid extends Component {
 
     this.state = {
       breakpoints: props.breakpoints,
-      containerSizeClass: this.determineSize(props.breakpoints, props.direction, width, height),
+      containerSizeClass: this.determineSize(props.breakpoints, props.horizontal, width, height),
       referenceSizeProvider: subscriber,
     };
   }
 
   getChildContext = () => ({
-    contentDirection: this.props.direction,
+    contentDirection: (this.props.horizontal ? HORIZONTAL : VERTICAL),
     containerSizeClass: this.state.containerSizeClass,
     containerStretch: this.props.stretch,
     referenceSizeProvider: this.state.referenceSizeProvider,
@@ -80,9 +86,10 @@ class Grid extends Component {
   /**
    * Helper function that calculates all state (context) values.
    */
-  determineSize = (breakpoints, direction, width, height) => determineSizeClass(
+  determineSize = (breakpoints, horizontal, width, height) => determineSizeClass(
+    SIZE_NAMES,
     breakpoints,
-    (direction === 'vertical' ? width : height),
+    (horizontal ? height : width),
   );
 
   /**
@@ -102,7 +109,7 @@ class Grid extends Component {
    * useless re-rendering.
    */
   updateSize = (width, height) => {
-    const size = this.determineSize(this.state.breakpoints, this.props.direction, width, height);
+    const size = this.determineSize(this.state.breakpoints, this.props.horizontal, width, height);
 
     // Propagate size change to subscribed entities.
     this.state.referenceSizeProvider.update(width, height);
@@ -120,8 +127,8 @@ class Grid extends Component {
     return (
       <View
         style={[
-          (this.props.direction === 'horizontal' ? style.horizontal : style.vertical),
-          this.props.stretch ? style.stretch : null,
+          (this.props.horizontal ? styles.horizontal : styles.vertical),
+          this.props.stretch ? styles.stretch : null,
           this.props.style,
         ]}
         onLayout={onLayoutHandler}
@@ -134,8 +141,8 @@ class Grid extends Component {
 
 
 Grid.propTypes = {
-  breakpoints: GridBreakpointsProp,
-  direction: PropTypes.oneOf(['horizontal', 'vertical']),
+  breakpoints: BreakpointsProp,
+  horizontal: PropTypes.bool,
   relativeTo: PropTypes.oneOf(['window', 'self']),
   style: PropTypes.shape({}),
   stretch: PropTypes.bool,
@@ -148,8 +155,8 @@ Grid.propTypes = {
 
 
 Grid.defaultProps = {
-  breakpoints: DEFAULT_SIZES,
-  direction: 'vertical',
+  breakpoints: BREAKPOINT_VALUES,
+  horizontal: false,
   relativeTo: 'window',
   style: {},
   stretch: false,

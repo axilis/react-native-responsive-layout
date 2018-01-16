@@ -1,24 +1,28 @@
-import { BREAKPOINTS } from '../../shared';
 
 /**
- * Determines size class from provided breakpoints and element size.
+ * Determines active size name from provided breakpoints and element size.
+ *
+ * @param {Array<String>} sizeNames that grid supports ordered from smallest
+ * @param {Object} breakpointValues object containing values for sizes
+ * @param {Number} value width/height from which to determine active size
+ * @return {String} largest size name that is still larger than value
  */
-const determineSizeClass = (breakpoints, size = 0) => {
-  const lastIndex = BREAKPOINTS.length - 1;
-  let gridSizeClass = BREAKPOINTS[lastIndex];
+export const determineSizeClass = (sizeNames, breakpointValues, value) => {
+  // Start from end to find largest one that is matching
+  const lastIndex = sizeNames.length - 1;
+  let preferredSizeClass = sizeNames[lastIndex];
 
   for (let i = lastIndex; i >= 0; i -= 1) {
-    const sizeClass = BREAKPOINTS[i];
-    const breakpointSize = breakpoints[sizeClass];
+    const sizeClass = sizeNames[i];
+    const breakpointSize = breakpointValues[sizeClass];
 
-    if (breakpointSize !== undefined && breakpointSize < size) {
+    // If there is matching, early return
+    if (breakpointSize !== undefined && breakpointSize <= value) {
       return sizeClass;
     }
 
-    gridSizeClass = sizeClass;
+    preferredSizeClass = sizeClass;
   }
 
-  return gridSizeClass;
+  return preferredSizeClass;
 };
-
-export default determineSizeClass;

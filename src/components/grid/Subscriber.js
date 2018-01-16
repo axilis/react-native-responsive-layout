@@ -1,4 +1,7 @@
 
+/**
+ * Subscriber pattern implementation.
+ */
 class SizeSubscriber {
   observers = [];
   width = 0;

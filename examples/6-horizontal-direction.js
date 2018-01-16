@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 export default () => (
-  <Grid direction="horizontal">
+  <Grid horizontal>
     <Section style={{ borderColor: 'red', borderWidth: 1, borderBottomWidth: 0 }}>
       <Block xsSize="1/1" smSize="1/2">
         <View style={[styles.element, { backgroundColor: '#b2d4fe' }]}>

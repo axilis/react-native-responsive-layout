@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
 
-import { BREAKPOINTS } from '../../shared';
-import { VALID_FRACTIONS } from './methods';
+import {
+  FRACTION_NAMES,
+  SIZE_NAMES,
+} from '../../shared/constants';
+
 
 /**
- * Checks whether provided value is considered fraction.
+ * Checks whether provided value is valid fraction.
  *
  * @param {String} value to check
- * @return {Boolean}
+ * @return {Boolean} true if it is fraction
  */
-const isFraction = value => (VALID_FRACTIONS.indexOf(value) !== -1);
+const isFraction = value => (FRACTION_NAMES.indexOf(value) !== -1);
 
 /**
  * Checks whether provided number is within valid percentage range.
@@ -32,7 +35,7 @@ export const SizeProp = (props, propName) => {
       return undefined;
     }
     return new Error(
-      `${propName} string argument should be valid fraction or auto. \nGot: "${size}."`,
+      `${propName} expected string argument to be valid fraction or auto. \nGot: "${size}."`,
     );
   }
 
@@ -60,7 +63,7 @@ export const SizeProp = (props, propName) => {
  */
 const BreakpointProps = (() => {
   const props = { size: SizeProp };
-  BREAKPOINTS.forEach((size) => {
+  SIZE_NAMES.forEach((size) => {
     props[`${size}Size`] = SizeProp;
   });
   return props;
@@ -72,7 +75,7 @@ const BreakpointProps = (() => {
  */
 const HiddenProps = (() => {
   const props = { hidden: PropTypes.bool };
-  BREAKPOINTS.forEach((size) => {
+  SIZE_NAMES.forEach((size) => {
     props[`${size}Hidden`] = PropTypes.bool;
   });
   return props;

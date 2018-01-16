@@ -1,3 +1,4 @@
+
 const ROUNDING_FACTOR = 10000;
 
 /**
@@ -6,7 +7,39 @@ const ROUNDING_FACTOR = 10000;
  *
  * @param {number} percent
  */
-const roundPercentage = percent =>
-  Math.floor(percent * ROUNDING_FACTOR) / ROUNDING_FACTOR;
+export const roundForPercentage = percent => (
+  Math.floor(percent * ROUNDING_FACTOR) / ROUNDING_FACTOR
+);
 
-export default roundPercentage;
+
+/**
+ * Utility method used to pick the largest value that is smaller than current
+ * gird width. It is used to pick best fitting object from keys that would fit
+ * as well.
+ *
+ * @param {Array<String>} sizes array of grid sizes
+ * @param {String} activeSize active grid size
+ * @param {Object} props object containing values for sizes
+ * @param {*} initialValue default value if none matches
+ * @param {function} keySelector function that generates key to access value
+ */
+export const valueForSize = (sizeNames, activeSize, props, initialValue, keySelector) => {
+  let value = initialValue;
+
+  for (let i = 0; i < sizeNames.length; i += 1) {
+    const size = sizeNames[i];
+    const key = keySelector(size);
+
+    // Ensure that key is updated on each size that is before.
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      value = props[key];
+    }
+
+    // If matched current size, early return to stop further iteration.
+    if (activeSize === size) {
+      return value;
+    }
+  }
+
+  return value;
+};

@@ -163,11 +163,11 @@ const WrappedComponent = withSizeClass(({ sizeSelector }) => {
 
 ### Layout content either horizontally or vertically
 
-Just by changing `direction` prop we can select in which direction layout should flow. 
+Just by providing `horizontal` prop we can change in which direction layout should flow. 
 Keep in mind when doing it that breakpoints are based on device height rather than width since most common use case for horizontal flow is in landscape orientation where again device height is greater concern.
 
 ```jsx
-<Grid direction="horizontal">
+<Grid horizontal>
   <Section>
     <Block xsSize="1/1" smSize="1/2" /> {/* 1.1 */}
     <Block xsSize="1/1" smSize="1/2" /> {/* 1.2 */}
