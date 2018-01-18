@@ -220,7 +220,7 @@ Based on currently popular device point sizes, grid breakpoints are chosen so it
 
 Most notable **differences compared to CSS frameworks** are that we differentiate two portrait sizes for mobile devices since in many cases a 100 points difference which covers almost 1/4th of the screen could be used to render things differently.
 
-The second difference is that we are not interested in desktop sizes, so we can also have more break points on large devices where there could also be a significant difference in sizes.
+The second difference is that break points for larger devices are set to target tablet sizes, while CSS frameworks (such as Bootstrap) target desktop sizes. 
 
 Based on popular device sizes grid, breakpoints are divided as following:
 
