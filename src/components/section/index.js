@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 
-import { checkInsideGrid } from '../../utils';
 import { DirectionProp } from '../../shared/props';
+import { checkInsideGrid } from '../../utils';
 
 const sharedStyle = {
   alignItems: 'flex-start',

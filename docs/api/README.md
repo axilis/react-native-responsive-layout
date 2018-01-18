@@ -15,9 +15,7 @@ A component which contains sections and Blockes. It is the source for of breakin
 - **relativeTo** (_default = window_) - whether to use breakpoints based on container size or viewport size
   - **window** - any changes to window size will trigger sizing recalculation and re-render, this will also handle when screen rotates
   - **self** - size classes will be calculated based on the grid container size, this can be useful in cases when you have only part of screen that you want to be responsive
-- **direction** (_default = vertical_) - direction in which sections will be laid out, it goes hand in hand with `horizontal` property of `ScrollView`
-  - **horizontal**
-  - **vertical**
+- **horizontal** - if provided it will flow horizontally, it goes hand in hand with `horizontal` property of `ScrollView`
 
 
 ### Section

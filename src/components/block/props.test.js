@@ -1,5 +1,6 @@
+import { GRID_UNITS } from '../../shared/constants';
 import { SizeProp } from './props';
-import { GRID_UNITS as GRID_SIZE } from '../../shared';
+
 
 describe('SizeProp', () => {
   describe('fractions', () => {
@@ -8,7 +9,7 @@ describe('SizeProp', () => {
     });
 
     it('allows fractions up to twelfths', () => {
-      for (let i = 1; i <= GRID_SIZE; i += 1) {
+      for (let i = 1; i <= GRID_UNITS; i += 1) {
         for (let j = 1; j <= i; j += 1) {
           expect(SizeProp({ size: `${j}/${i}` }, 'size')).toBeUndefined();
 
@@ -28,8 +29,8 @@ describe('SizeProp', () => {
     });
 
     it('expects fractions not to be over 100%', () => {
-      for (let i = 1; i < GRID_SIZE; i += 1) {
-        for (let j = i + 1; j <= GRID_SIZE; j += 1) {
+      for (let i = 1; i < GRID_UNITS; i += 1) {
+        for (let j = i + 1; j <= GRID_UNITS; j += 1) {
           expect(SizeProp({ size: `${j}/${i}` }, 'size')).toBeInstanceOf(Error);
 
           // Reducing fractions

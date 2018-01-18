@@ -164,11 +164,11 @@ As shown, the `sizeSelector` function expects to be provided with an object that
 
 ### Layout content either horizontally or vertically
 
-Just by changing the `direction` prop, we can select in which direction the layout should flow. 
+Just by providing `horizontal` prop we can change in which direction layout should flow. 
 Keep in mind that, when setting the direction to 'horizontal', breakpoints will be based on device **height** rather than width. This is because most use cases for horizontal flow are in landscape orientation, where device height is a greater concern.
 
 ```jsx
-<Grid direction="horizontal">
+<Grid horizontal>
   <Section>
     <Block xsSize="1/1" smSize="1/2" /> {/* 1.1 */}
     <Block xsSize="1/1" smSize="1/2" /> {/* 1.2 */}
