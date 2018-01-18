@@ -192,17 +192,20 @@ In this case, by default, both `Grid` and `Section` will be configured with `fle
 <Grid stretch>
   {/* This ensures grid sections and blocks are configured to stretch. */}
 
-  <Section style={{ height: 80, flex: 0 }}>
-    {/* Since by default Sections would stretch we need to override their flex
-    style in order for them to stay fixed height. */}
-    <Block />
+  <Section stretch={false}>
+    {/* By default Sections would be stretched so we need to override them to stay fixed height. */}
+    <Block>
+      <View style={{ height: 80 }} />
+    </Block>
   </Section>
   <Section>
     <Block size="1/4" />  {/* L */}
     <Block size="auto" /> {/* Content */}
   </Section>
-  <Section style={{ height: 80, flex: 0 }}>
-    <Block />
+  <Section stretch={false}>
+    <Block>
+      <View style={{ height: 80 }} />
+    </Block>
   </Section>
 </Grid>
 ```

@@ -33,17 +33,20 @@ const styles = StyleSheet.create({
 /**
  * Component used to contain group of Blocks.
  */
-const Section = ({ children, style }, { contentDirection, containerStretch }) => (
-  <View
-    style={[
-      (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
-      (containerStretch ? styles.stretch : null),
-      style,
-    ]}
-  >
-    { children }
-  </View>
-);
+const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
+  const stretched = (stretch === undefined ? containerStretch : stretch);
+  return (
+    <View
+      style={[
+        (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
+        (stretched ? styles.stretch : null),
+        style,
+      ]}
+    >
+      { children }
+    </View>
+  );
+};
 
 
 Section.contextTypes = {
@@ -57,10 +60,12 @@ Section.propTypes = {
     PropTypes.node,
   ]).isRequired,
   style: PropTypes.shape({}),
+  stretch: PropTypes.bool,
 };
 
 Section.defaultProps = {
   style: {},
+  stretch: undefined,
 };
 
 export default Section;
