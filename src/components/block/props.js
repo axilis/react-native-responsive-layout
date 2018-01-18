@@ -59,6 +59,31 @@ export const SizeProp = (props, propName) => {
 
 
 /**
+ * PropType that validates hidden/visible elements and their exclusivity.
+ */
+export const HiddenProp = sizeName => (props, propName) => {
+  const visibleKey = sizeName ? `${sizeName}Visible` : 'visible';
+  const hiddenKey = sizeName ? `${sizeName}Hidden` : 'hidden';
+
+  if (props[visibleKey] && props[hiddenKey]) {
+    return new Error(
+      `'${propName}' has also defined ${visibleKey} prop, this leads to unexpected behavior.`,
+    );
+  }
+
+  const size = props[propName];
+
+  if (size !== undefined && typeof size !== 'boolean') {
+    return new Error(
+      `'${propName}' should be boolean. \nGot: "${size}"`,
+    );
+  }
+
+  return undefined;
+};
+
+
+/**
  * Defines prop validation for all sizes to be valid string or number.
  */
 const BreakpointProps = (() => {
@@ -74,10 +99,18 @@ const BreakpointProps = (() => {
  * Defines hidden attribute prop validations for all sizes.
  */
 const HiddenProps = (() => {
-  const props = { hidden: PropTypes.bool };
+  // Defining only hidden will ensure that if both are defined proper message
+  // is displayed, if it was defined on both it would display same error twice.
+  const props = {
+    hidden: HiddenProp(),
+    visible: PropTypes.bool,
+  };
+
   SIZE_NAMES.forEach((size) => {
-    props[`${size}Hidden`] = PropTypes.bool;
+    props[`${size}Hidden`] = HiddenProp(size);
+    props[`${size}Visible`] = PropTypes.bool;
   });
+
   return props;
 })();
 

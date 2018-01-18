@@ -54,7 +54,7 @@ You can also see how columns are placed next to each other until they reflow to 
 
 ### Hidden elements
 
-Sometimes we only want to display specific elements on larger or smaller devices. To do so, we can use hidden classes (eg. `mdHidden`).
+Sometimes we only want to display specific elements on larger or smaller devices. To do so, we can use hidden classes (eg. `mdHidden`), there are as well their counterpart visible classes (eg. `mdVisible`) to override them.
 
 In this [example](examples/2-hidden-elements.js) we will hide two elements from the first section on larger phones, and only show the element from the second section on smaller phones.
 
@@ -68,7 +68,7 @@ Again, since the grid is mobile first, it will be hidden on specified and **larg
     <Block smHidden /> {/* 1.3 */}
   </Section>
   <Section>
-    <Block xsHidden smHidden={false} /> {/* 2.1 */}
+    <Block xsHidden smVisible /> {/* 2.1 */}
   </Section>
 </Grid>
 ```

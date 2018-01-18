@@ -4,32 +4,78 @@ import { determineSize, isHidden } from './methods';
 describe('isHidden', () => {
   const sizeNames = ['xs', 'sm', 'md', 'xl'];
 
-  it('defaults to false', () => {
-    expect(isHidden([], 'md', { })).toBeFalsy();
+  describe('hidden attributes', () => {
+    it('defaults to false', () => {
+      expect(isHidden([], 'md', { })).toBeFalsy();
+    });
+
+    it('returns true when hidden', () => {
+      expect(isHidden(sizeNames, 'md', { mdHidden: true })).toBeTruthy();
+    });
+
+    it('supports using common hidden attribute', () => {
+      expect(isHidden(sizeNames, 'md', { hidden: true })).toBeTruthy();
+    });
+
+    it('respects explicitly overriding common value', () => {
+      expect(isHidden(sizeNames, 'md', { hidden: true, mdHidden: false })).toBeFalsy();
+    });
+
+    it('cascades from smaller to larger size', () => {
+      expect(isHidden(sizeNames, 'md', { smHidden: true })).toBeTruthy();
+    });
+
+    it('respects overriding cascading sizes', () => {
+      expect(isHidden(sizeNames, 'md', { xsHidden: true, smHidden: false })).toBeFalsy();
+    });
+
+    it('ignores overrides that do not apply to it', () => {
+      expect(isHidden(sizeNames, 'md', { smHidden: false, xlHidden: true })).toBeFalsy();
+    });
   });
 
-  it('returns true when hidden', () => {
-    expect(isHidden(sizeNames, 'md', { mdHidden: true })).toBeTruthy();
+  describe('visible attributes', () => {
+    it('returns true when visible is set to false', () => {
+      expect(isHidden(sizeNames, 'md', { mdVisible: false })).toBeTruthy();
+    });
+
+    it('supports using common visible attribute', () => {
+      expect(isHidden(sizeNames, 'md', { visible: false })).toBeTruthy();
+    });
+
+    it('respects explicitly overriding common value', () => {
+      expect(isHidden(sizeNames, 'md', { visible: false, mdVisible: true })).toBeFalsy();
+    });
+
+    it('cascades from smaller to larger size', () => {
+      expect(isHidden(sizeNames, 'md', { smVisible: false })).toBeTruthy();
+    });
+
+    it('respects overriding cascading sizes', () => {
+      expect(isHidden(sizeNames, 'md', { xsVisible: false, smVisible: true })).toBeFalsy();
+    });
+
+    it('ignores overrides that do not apply to it', () => {
+      expect(isHidden(sizeNames, 'md', { smVisible: false, xlVisible: true })).toBeTruthy();
+    });
   });
 
-  it('supports using common hidden attribute', () => {
-    expect(isHidden(sizeNames, 'md', { hidden: true })).toBeTruthy();
-  });
+  describe('combined attributes', () => {
+    it('respects explicitly overriding common value', () => {
+      expect(isHidden(sizeNames, 'md', { visible: true, mdHidden: true })).toBeTruthy();
+    });
 
-  it('respects explicitly overriding common value', () => {
-    expect(isHidden(sizeNames, 'md', { hidden: true, mdHidden: false })).toBeFalsy();
-  });
+    it('cascades from smaller to larger size', () => {
+      expect(isHidden(sizeNames, 'md', { xsHidden: true, smVisible: true })).toBeFalsy();
+    });
 
-  it('cascades from smaller to larger size', () => {
-    expect(isHidden(sizeNames, 'md', { smHidden: true })).toBeTruthy();
-  });
-
-  it('respects overriding cascading sizes', () => {
-    expect(isHidden(sizeNames, 'md', { xsHidden: true, smHidden: false })).toBeFalsy();
-  });
-
-  it('ignores overrides that do not apply to it', () => {
-    expect(isHidden(sizeNames, 'md', { smHidden: false, xlHidden: true })).toBeFalsy();
+    it('respects overriding cascading sizes', () => {
+      const props = { hidden: true, smVisible: true, mdHidden: true };
+      expect(isHidden(sizeNames, 'xs', props)).toBeTruthy();
+      expect(isHidden(sizeNames, 'sm', props)).toBeFalsy();
+      expect(isHidden(sizeNames, 'md', props)).toBeTruthy();
+      expect(isHidden(sizeNames, 'xl', props)).toBeTruthy();
+    });
   });
 });
 
