@@ -23,7 +23,7 @@ export default () => (
           <Text style={styles.text}>Fixed</Text>
         </View>
       </Block>
-      <Block size="auto" />
+      <Block size="stretch" />
       <Block xsSize="1/2" smSize="2/3">
         <View style={[styles.element, { backgroundColor: '#80b9fd' }]}>
           <Text style={styles.text}>Responsive</Text>

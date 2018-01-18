@@ -57,13 +57,18 @@ const getSize = (sizeNames, activeSize, props) => {
 export const determineSize = (sizeNames, activeSize, props) => {
   const size = getSize(sizeNames, activeSize, props);
 
-  if (size === 'auto') {
+  if (size === 'stretch') {
     return size;
   }
 
-  // Fallback to full width when invalid size argument is provided.
   if ((typeof size) === 'string') {
-    return FRACTION_VALUES[size];
+    // If string represents percentages
+    if (size.endsWith('%')) {
+      return size;
+    }
+
+    // If string represents fractions
+    return `${FRACTION_VALUES[size]}%`;
   }
 
   return size;

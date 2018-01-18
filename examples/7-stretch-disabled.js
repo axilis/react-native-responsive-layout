@@ -26,7 +26,7 @@ export default () => (
           </View>
         </View>
       </Block>
-      <Block size="auto">
+      <Block size="stretch">
         <View>
           <View style={{ backgroundColor: '#91c2fd' }}>
             <Text style={styles.text}>Content</Text>
