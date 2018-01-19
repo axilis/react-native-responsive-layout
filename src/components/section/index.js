@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
  * Component used to contain group of Blocks.
  */
 const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
+  if (!containerStretch && !!stretch) {
+    console.warn( // eslint-disable-line no-console
+      'Using `stretch` on `Section` without using it on `Grid` has no effect because grid itself won\'t be stretched so section will just collapse and won\'t be visible.\nPlease enable stretch on `Grid` as well.',
+    );
+  }
+
   const stretched = (stretch === undefined ? containerStretch : stretch);
   return (
     <View
