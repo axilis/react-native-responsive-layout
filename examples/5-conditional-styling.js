@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
 import { withSizeClass } from 'react-native-responsive-layout/wrappers';
