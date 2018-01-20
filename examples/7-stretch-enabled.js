@@ -35,7 +35,7 @@ export default () => (
           <Text style={styles.text}>L</Text>
         </View>
       </Block>
-      <Block size="auto">
+      <Block size="stretch">
         <View style={[{ backgroundColor: '#91c2fd' }, styles.flexibleContainer]}>
           <Text style={styles.text}>Content</Text>
         </View>

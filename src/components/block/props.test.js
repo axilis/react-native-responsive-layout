@@ -44,13 +44,25 @@ describe('SizeProp', () => {
     });
   });
 
-  describe('specific widths', () => {
+  describe('fixed widths', () => {
     it('allows positive number', () => {
       expect(SizeProp({ size: 10 }, 'size')).toBeUndefined();
     });
 
     it('expects positive number', () => {
       expect(SizeProp({ size: -2 }, 'size')).toBeInstanceOf(Error);
+    });
+  });
+
+  describe('percentages', () => {
+    it('allows percentages', () => {
+      expect(SizeProp({ size: '10%' }, 'size')).toBeUndefined();
+    });
+  });
+
+  describe('stretch', () => {
+    it('allows stretch', () => {
+      expect(SizeProp({ size: 'stretch' }, 'size')).toBeUndefined();
     });
   });
 
