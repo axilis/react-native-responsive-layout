@@ -1,2 +1,4 @@
 examples/*
 images/*
+docs/*
+.vscode/*
