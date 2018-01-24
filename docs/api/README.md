@@ -25,9 +25,9 @@ Section of grid elements, in default grid direction (vertical) it is same as a r
 The smallest building block of grid elements. It renders itself depending on grid size.
 
 - **size** (_default="1/1"_) - used when there are no explicit sizes provided making block fixed width percentage across all the resolutions
-- **xsSize, smSize, mdSize, lgSize, xlSize, xxlSize** - size used when specific size class is active since this grid is mobile first and cascades from smaller to larger sizes, it will choose class that is lowest resolution larger than component/window size
-  - `"auto"` - when used it will stretch to be maximum width to fill remaining space surrounding other blocks, can be useful to fill spaces and to align components right
-  - **numeric percentage** from 0 to 100% (eg. `30`)
+- **xsSize, smSize, mdSize, lgSize, xlSize, xxlSize** - size used when specific size class is active since this grid is mobile first and cascades from smaller to larger sizes, it will choose class that is lowest resolution larger than component/window size, it works similarly to react's width and height but it takes some additional arguments 
+  - `"stretch"` - when used it will stretch to be maximum width to fill remaining space surrounding other blocks, can be useful to fill spaces and to align components right
+  - **string percentage**, from 0 to 100% (eg. `'30%'`)
   - **string fraction**, grid is based on 12's (eg. `'1/2'`, `'3/4'`... `'1/12'`)
   - **numeric points**, fixed size in points (eg. 100)
 - **xsHidden, smHidden, mdHidden, lgHidden, xlHidden, xxlHidden** - just like sizes, it will hide element attribute depending on current size
@@ -118,7 +118,7 @@ const Card = withContainerDimensions(({ width }) => {
 
 When using images, keep in mind that calculated length will always be between minimal element length and double the minimal element length, so you can pick sensible value depending on resolution of thumbnails.
 
-If grid spans entire width, it makes more sense to use `realativeTo='window'` (default value) to avoid unneeded re-rendering.
+If grid spans entire width, it makes more sense to use `relativeTo='window'` (default value) to avoid unneeded re-rendering.
 
 ![Tiles Demo](../images/tiles.gif)
 

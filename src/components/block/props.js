@@ -5,7 +5,6 @@ import {
   SIZE_NAMES,
 } from '../../shared/constants';
 
-
 /**
  * Checks whether provided value is valid fraction.
  *
@@ -15,12 +14,17 @@ import {
 const isFraction = value => (FRACTION_NAMES.indexOf(value) !== -1);
 
 /**
- * Checks whether provided number is within valid percentage range.
- *
- * @param {Number} value to check
- * @return {Boolean}
+ * Regex used to validate percentages, this way it is reused.
  */
-const withinRange = value => (value >= 0 && value <= 100);
+const percentageMatcher = /^\d+(\.\d+)?%$/;
+
+/**
+ * Checks whether provided string is valid percentage.
+ *
+ * @param {String} value  to check
+ * @return {Boolean} true if it is percentage
+ */
+const isPercentage = value => percentageMatcher.test(value);
 
 
 /**
@@ -31,20 +35,20 @@ export const SizeProp = (props, propName) => {
   const size = props[propName];
 
   if (typeof size === 'string') {
-    if (isFraction(size) || size === 'auto') {
+    if (isFraction(size) || isPercentage(size) || size === 'stretch') {
       return undefined;
     }
     return new Error(
-      `${propName} expected string argument to be valid fraction or auto. \nGot: "${size}."`,
+      `'${propName}' string argument should be valid fraction, percentage or stretch. \nGot: "${size}"`,
     );
   }
 
   if (typeof size === 'number') {
-    if (withinRange(size)) {
+    if (size >= 0) {
       return undefined;
     }
     return new Error(
-      `${propName} should be within 0 and 100 percent. \nGot: ${size}%.`,
+      `${propName} should be positive number. \nGot: ${size}%.`,
     );
   }
 

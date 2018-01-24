@@ -77,7 +77,7 @@ Again, since the grid is mobile first, it will be hidden on specified and **larg
 
 ### Shifting elements
 
-Sometimes we need center an element or push it to the right, you can do this by adding filler `Block` elements to ensure reflow on each design, but the simplest way to do it is by using *auto width* elements, which use flex to fill the space.
+Sometimes we need center an element or push it to the right, you can do this by adding filler `Block` elements to ensure reflow on each design, but the simplest way to do it is by using *stretching* elements, which use flex to fill the space. By setting size props to `stretch` it will apply additional styling to make them stretch.
 
 To keep an element on the **left** and keep the remaining space free, simply put the next element into a new section. To **center** an element, add a stretching element before and after the centered element. To shift it to the **right**, just add a single stretching element before.
 
@@ -88,17 +88,17 @@ To keep an element on the **left** and keep the remaining space free, simply put
     <Block xsSize="1/2" smSize="1/4"></Block> {/* Left */}
   </Section>
   <Section>
-    <Block size="auto" />
+    <Block size="stretch" />
     <Block xsSize="1/2" smSize="1/4"></Block> {/* Center */}
-    <Block size="auto" />
+    <Block size="stretch" />
   </Section>
   <Section>
-    <Block size="auto" />
+    <Block size="stretch" />
     <Block xsSize="1/2" smSize="1/4"></Block> {/* Right */}
   </Section>
   <Section>
     <Block xsSize="1/3" smSize="1/4"></Block> {/* Left */}
-    <Block size="auto" />
+    <Block size="stretch" />
     <Block xsSize="1/3" smSize="1/4"></Block> {/* Right */}
   </Section>
 </Grid>
@@ -114,14 +114,16 @@ When using stretching elements, **put items from the same line into the same sec
 
 Sometimes we need to use elements with a static size. In this example we are going to combine fixed size, responsive and stretching elements.
 
+This framework extends upon width/size style attributes that react provides. Because of that you can also provide number that represents fixes size in **points**. 
+
 The following [example](examples/4-fixed-size-elements.js) shows just that.
 
 ```jsx
 <Grid>
   <Section>
-    <Block style={{ width: 100 }} />    {/* Fixed */}
-    <Block size="auto" />
-    <Block xsSize="1/2" smSize="2/3" /> {/* Responsive */}
+    <Block size={100} />    {/* Fixed */}
+    <Block size="stretch" />
+    <Block xsSize="1/2" smSize="66%" /> {/* Responsive */}
   </Section>
 </Grid>
 ```
@@ -199,7 +201,7 @@ In this case, by default, both `Grid` and `Section` will be configured with `fle
   </Section>
   <Section>
     <Block size="1/4" />  {/* L */}
-    <Block size="auto" /> {/* Content */}
+    <Block size="stretch" /> {/* Content */}
   </Section>
   <Section style={{ height: 80, flex: 0 }}>
     <Block />
