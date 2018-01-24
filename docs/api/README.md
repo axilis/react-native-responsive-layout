@@ -30,7 +30,8 @@ The smallest building block of grid elements. It renders itself depending on gri
   - **string percentage**, from 0 to 100% (eg. `'30%'`)
   - **string fraction**, grid is based on 12's (eg. `'1/2'`, `'3/4'`... `'1/12'`)
   - **numeric points**, fixed size in points (eg. 100)
-- **xsHidden, smHidden, mdHidden, lgHidden, xlHidden, xslHidden** - just like sizes, it will hide element attribute depending on current size
+- **xsHidden, smHidden, mdHidden, lgHidden, xlHidden, xxlHidden** - just like sizes, it will hide element attribute depending on current size
+- **xsVisible, smVisible, mdVisible, lgVisible, xlVisible, xxlVisible** - counterparts to the hidden classes
 
 ## Wrappers
 ### withSizeClass(Component) → Component

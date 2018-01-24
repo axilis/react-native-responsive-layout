@@ -18,10 +18,32 @@ import { valueForSize } from '../../shared/methods';
  * @return {Boolean}
  */
 export const isHidden = (sizeNames, activeSize, props) => {
-  const initialValue = !!(props.hidden);
-  const keySelector = size => `${size}Hidden`;
+  // Strictly check hidden and visible as default values
+  let value = props.hidden === true || props.visible === false;
 
-  return valueForSize(sizeNames, activeSize, props, initialValue, keySelector);
+  for (let i = 0; i < sizeNames.length; i += 1) {
+    const size = sizeNames[i];
+    const keyVisible = `${size}Visible`;
+    const keyHidden = `${size}Hidden`;
+
+    // Mutual prop exclusivity is expected and validated using prop types.
+    // Therefore we can here assume that in each iteration only one of following
+    // will be executed.
+    if (Object.prototype.hasOwnProperty.call(props, keyVisible)) {
+      value = !props[keyVisible];
+    }
+
+    if (Object.prototype.hasOwnProperty.call(props, keyHidden)) {
+      value = props[keyHidden];
+    }
+
+    // If matched current size, early return to stop further iteration.
+    if (activeSize === size) {
+      return value;
+    }
+  }
+
+  return value;
 };
 
 
