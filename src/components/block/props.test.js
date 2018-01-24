@@ -1,5 +1,5 @@
 import { GRID_UNITS } from '../../shared/constants';
-import { SizeProp } from './props';
+import { SizeProp, HiddenProp } from './props';
 
 
 describe('SizeProp', () => {
@@ -44,13 +44,25 @@ describe('SizeProp', () => {
     });
   });
 
-  describe('specific widths', () => {
+  describe('fixed widths', () => {
     it('allows positive number', () => {
       expect(SizeProp({ size: 10 }, 'size')).toBeUndefined();
     });
 
     it('expects positive number', () => {
       expect(SizeProp({ size: -2 }, 'size')).toBeInstanceOf(Error);
+    });
+  });
+
+  describe('percentages', () => {
+    it('allows percentages', () => {
+      expect(SizeProp({ size: '10%' }, 'size')).toBeUndefined();
+    });
+  });
+
+  describe('stretch', () => {
+    it('allows stretch', () => {
+      expect(SizeProp({ size: 'stretch' }, 'size')).toBeUndefined();
     });
   });
 
@@ -61,6 +73,50 @@ describe('SizeProp', () => {
 
     it('allows size not to be defined', () => {
       expect(SizeProp({ size: undefined }, 'size')).toBeUndefined();
+    });
+  });
+});
+
+describe('HiddenProp', () => {
+  describe('hidden', () => {
+    it('accepts boolean', () => {
+      expect(HiddenProp('md')({ mdHidden: true }, 'mdHidden')).toBeUndefined();
+    });
+
+    it('accepts undefined', () => {
+      expect(HiddenProp('md')({ mdHidden: undefined }, 'mdHidden')).toBeUndefined();
+    });
+
+    it('throws on other types', () => {
+      expect(HiddenProp('md')({ mdHidden: 2 }, 'mdHidden')).toBeInstanceOf(Error);
+    });
+
+    it('works with un-prefixed value', () => {
+      expect(HiddenProp('')({ hidden: 2 }, 'hidden')).toBeInstanceOf(Error);
+    });
+  });
+
+  describe('visible', () => {
+    it('accepts boolean', () => {
+      expect(HiddenProp('md')({ mdVisible: true }, 'mdVisible')).toBeUndefined();
+    });
+
+    it('accepts undefined', () => {
+      expect(HiddenProp('md')({ mdVisible: undefined }, 'mdVisible')).toBeUndefined();
+    });
+
+    it('throws on other types', () => {
+      expect(HiddenProp('md')({ mdVisible: 2 }, 'mdVisible')).toBeInstanceOf(Error);
+    });
+
+    it('works with un-prefixed value', () => {
+      expect(HiddenProp('')({ visible: 2 }, 'visible')).toBeInstanceOf(Error);
+    });
+  });
+
+  describe('hidden and visible', () => {
+    it('warns of collision', () => {
+      expect(HiddenProp('md')({ mdVisible: true, mdHidden: true }, 'mdHidden')).toBeInstanceOf(Error);
     });
   });
 });

@@ -25,16 +25,16 @@ export default () => (
       </Block>
     </Section>
     <Section>
-      <Block size="auto" />
+      <Block size="stretch" />
       <Block xsSize="1/2" smSize="1/4">
         <View style={[styles.element, { backgroundColor: '#91c2fd' }]}>
           <Text style={styles.text}>Center</Text>
         </View>
       </Block>
-      <Block size="auto" />
+      <Block size="stretch" />
     </Section>
     <Section>
-      <Block size="auto" />
+      <Block size="stretch" />
       <Block xsSize="1/2" smSize="1/4">
         <View style={[styles.element, { backgroundColor: '#6faffd' }]}>
           <Text style={styles.text}>Right</Text>
@@ -47,7 +47,7 @@ export default () => (
           <Text style={styles.text}>Left</Text>
         </View>
       </Block>
-      <Block size="auto" />
+      <Block size="stretch" />
       <Block xsSize="1/3" smSize="1/4">
         <View style={[styles.element, { backgroundColor: '#4e9dfc' }]}>
           <Text style={styles.text}>Right</Text>

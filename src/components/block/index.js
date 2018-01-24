@@ -15,15 +15,15 @@ import { determineSize, isHidden } from './methods';
 import BlockProps from './props';
 
 
-// We need to ensure that auto sizing wouldn't collapse to zero width when there
-// is enough elements to already fill the line.
+// We need to ensure that stretch sizing wouldn't collapse to zero width when
+// there is enough elements to already fill the line.
 const ONE_UNIT_WIDTH = `${roundForPercentage(100 / GRID_UNITS)}%`;
 
 const style = StyleSheet.create({
   baseStyle: {
     justifyContent: 'flex-start',
   },
-  autoSize: {
+  stretchSize: {
     flex: 1,
     flexBasis: ONE_UNIT_WIDTH,
   },
@@ -51,13 +51,15 @@ const Block = ({
     return null;
   }
 
-  // Generate with/height size style
-  const size = determineSize(SIZE_NAMES, containerSizeClass, props);
+  // Which attribute we set depends on direction
   const styleProperty = contentDirection === VERTICAL ? 'width' : 'height';
-  const constantSize = { [styleProperty]: `${size}%` };
-  const sizeStyle = (size === 'auto') ? style.autoSize : constantSize;
 
-  // Generate direction style
+  // Determine size
+  const size = determineSize(SIZE_NAMES, containerSizeClass, props);
+  const constantSize = { [styleProperty]: size };
+  const sizeStyle = (size === 'stretch') ? style.stretchSize : constantSize;
+
+  // flexDirection depends on direction
   const directionStyle = {
     flexDirection: (contentDirection === VERTICAL ? 'column' : 'row'),
   };

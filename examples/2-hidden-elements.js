@@ -35,7 +35,7 @@ export default () => (
       </Block>
     </Section>
     <Section>
-      <Block xsHidden smHidden={false}>
+      <Block xsHidden smVisible>
         <View style={[styles.element, { backgroundColor: '#4e9dfc' }]}>
           <Text style={styles.text}>2.1</Text>
         </View>

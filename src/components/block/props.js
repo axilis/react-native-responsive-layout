@@ -5,7 +5,6 @@ import {
   SIZE_NAMES,
 } from '../../shared/constants';
 
-
 /**
  * Checks whether provided value is valid fraction.
  *
@@ -15,12 +14,17 @@ import {
 const isFraction = value => (FRACTION_NAMES.indexOf(value) !== -1);
 
 /**
- * Checks whether provided number is within valid percentage range.
- *
- * @param {Number} value to check
- * @return {Boolean}
+ * Regex used to validate percentages, this way it is reused.
  */
-const withinRange = value => (value >= 0 && value <= 100);
+const percentageMatcher = /^\d+(\.\d+)?%$/;
+
+/**
+ * Checks whether provided string is valid percentage.
+ *
+ * @param {String} value  to check
+ * @return {Boolean} true if it is percentage
+ */
+const isPercentage = value => percentageMatcher.test(value);
 
 
 /**
@@ -31,26 +35,51 @@ export const SizeProp = (props, propName) => {
   const size = props[propName];
 
   if (typeof size === 'string') {
-    if (isFraction(size) || size === 'auto') {
+    if (isFraction(size) || isPercentage(size) || size === 'stretch') {
       return undefined;
     }
     return new Error(
-      `${propName} expected string argument to be valid fraction or auto. \nGot: "${size}."`,
+      `'${propName}' string argument should be valid fraction, percentage or stretch. \nGot: "${size}"`,
     );
   }
 
   if (typeof size === 'number') {
-    if (withinRange(size)) {
+    if (size >= 0) {
       return undefined;
     }
     return new Error(
-      `${propName} should be within 0 and 100 percent. \nGot: ${size}%.`,
+      `${propName} should be positive number. \nGot: ${size}%.`,
     );
   }
 
   if (size !== undefined) {
     return new Error(
       `${propName} should be either string fraction or numerical percentage. \nGot: ${size}`,
+    );
+  }
+
+  return undefined;
+};
+
+
+/**
+ * PropType that validates hidden/visible elements and their exclusivity.
+ */
+export const HiddenProp = sizeName => (props, propName) => {
+  const visibleKey = sizeName ? `${sizeName}Visible` : 'visible';
+  const hiddenKey = sizeName ? `${sizeName}Hidden` : 'hidden';
+
+  if (props[visibleKey] && props[hiddenKey]) {
+    return new Error(
+      `'${propName}' has also defined ${visibleKey} prop, this leads to unexpected behavior.`,
+    );
+  }
+
+  const size = props[propName];
+
+  if (size !== undefined && typeof size !== 'boolean') {
+    return new Error(
+      `'${propName}' should be boolean. \nGot: "${size}"`,
     );
   }
 
@@ -74,10 +103,18 @@ const BreakpointProps = (() => {
  * Defines hidden attribute prop validations for all sizes.
  */
 const HiddenProps = (() => {
-  const props = { hidden: PropTypes.bool };
+  // Defining only hidden will ensure that if both are defined proper message
+  // is displayed, if it was defined on both it would display same error twice.
+  const props = {
+    hidden: HiddenProp(),
+    visible: PropTypes.bool,
+  };
+
   SIZE_NAMES.forEach((size) => {
-    props[`${size}Hidden`] = PropTypes.bool;
+    props[`${size}Hidden`] = HiddenProp(size);
+    props[`${size}Visible`] = PropTypes.bool;
   });
+
   return props;
 })();
 
