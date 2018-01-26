@@ -16,6 +16,15 @@ export const calculateStretchLength = (totalLength, minimalElementLength) => {
   return (roundForPercentage(w) / 100) * totalLength;
 };
 
+
+/**
+ * Logs warning to the console and displays yellow-box message.
+ */
+export const warn = (message) => {
+  console.warn(message); // eslint-disable-line no-console
+};
+
+
 /**
  * Validates that specified prop exits. This is used to ensure that components
  * are rendered inside grid, by validating that they have expected context

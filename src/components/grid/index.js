@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-  stretch: {
+  stretchable: {
     flex: 1,
   },
 });
@@ -66,7 +66,7 @@ class Grid extends Component {
   getChildContext = () => ({
     contentDirection: (this.props.horizontal ? HORIZONTAL : VERTICAL),
     containerSizeClass: this.state.containerSizeClass,
-    containerStretch: this.props.stretch,
+    containerStretch: this.props.stretchable,
     referenceSizeProvider: this.state.referenceSizeProvider,
   });
 
@@ -128,7 +128,7 @@ class Grid extends Component {
       <View
         style={[
           (this.props.horizontal ? styles.horizontal : styles.vertical),
-          this.props.stretch ? styles.stretch : null,
+          this.props.stretchable ? styles.stretchable : null,
           this.props.style,
         ]}
         onLayout={onLayoutHandler}
@@ -145,7 +145,7 @@ Grid.propTypes = {
   horizontal: PropTypes.bool,
   relativeTo: PropTypes.oneOf(['window', 'self']),
   style: PropTypes.shape({}),
-  stretch: PropTypes.bool,
+  stretchable: PropTypes.bool,
 
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -159,7 +159,7 @@ Grid.defaultProps = {
   horizontal: false,
   relativeTo: 'window',
   style: {},
-  stretch: false,
+  stretchable: false,
 };
 
 

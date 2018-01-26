@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 
 import { DirectionProp } from '../../shared/props';
-import { checkInsideGrid } from '../../utils';
+import { checkInsideGrid, warn } from '../../utils';
 
 const sharedStyle = {
   alignItems: 'flex-start',
@@ -35,17 +35,16 @@ const styles = StyleSheet.create({
  */
 const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
   if (!containerStretch && !!stretch) {
-    console.warn( // eslint-disable-line no-console
-      'Using `stretch` on `Section` without using it on `Grid` has no effect because grid itself won\'t be stretched so section will just collapse and won\'t be visible.\nPlease enable stretch on `Grid` as well.',
+    warn(
+      'Using `stretch` on `Section` without using it on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease enable stretch on `Grid` as well.',
     );
   }
 
-  const stretched = (stretch === undefined ? containerStretch : stretch);
   return (
     <View
       style={[
         (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
-        (stretched ? styles.stretch : null),
+        (stretch ? styles.stretch : null),
         style,
       ]}
     >
