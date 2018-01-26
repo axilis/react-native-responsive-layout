@@ -18,13 +18,13 @@ const styles = StyleSheet.create({
 export default () => (
   <Grid>
     <Section>
-      <Block style={{ width: 100 }}>
+      <Block size={100}>
         <View style={[styles.element, { backgroundColor: '#b2d4fe' }]}>
           <Text style={styles.text}>Fixed</Text>
         </View>
       </Block>
-      <Block size="auto" />
-      <Block xsSize="1/2" smSize="2/3">
+      <Block size="stretch" />
+      <Block xsSize="1/2" smSize="66%">
         <View style={[styles.element, { backgroundColor: '#80b9fd' }]}>
           <Text style={styles.text}>Responsive</Text>
         </View>
