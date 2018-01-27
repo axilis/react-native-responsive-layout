@@ -13,25 +13,12 @@ import { checkInsideGrid } from '../../utils';
  */
 const withContainerDimensions = (Component) => {
   class WithContainerDimensions extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
 
       this.state = {
         referenceHeight: 0,
         referenceWidth: 0,
-      };
-
-      this.handler = (width, height) => {
-        // Only update component on change.
-        if (this.referenceHeight === this.state.referenceHeight
-          && this.referenceWidth === this.state.referenceWidth) {
-          return;
-        }
-
-        this.setState({
-          referenceWidth: width,
-          referenceHeight: height,
-        });
       };
     }
 
@@ -43,6 +30,18 @@ const withContainerDimensions = (Component) => {
       this.context.referenceSizeProvider.unsubscribe(this.handler);
     }
 
+    handler = (width, height) => {
+      // Only update component on change.
+      if (height === this.state.referenceHeight
+        && width === this.state.referenceWidth) {
+        return;
+      }
+
+      this.setState({
+        referenceWidth: width,
+        referenceHeight: height,
+      });
+    }
 
     render() {
       return (
