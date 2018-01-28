@@ -13,20 +13,46 @@ const styles = StyleSheet.create({
     color: '#02326b',
     fontSize: 30,
   },
+  whiteText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 30,
+  },
 });
 
 export default () => (
   <Grid>
     <Section>
       <Block size={100}>
-        <View style={[styles.element, { backgroundColor: '#b2d4fe' }]}>
-          <Text style={styles.text}>Fixed</Text>
+        <View style={[styles.element, { backgroundColor: '#a1cbfd' }]}>
+          <Text style={styles.text}>100pt</Text>
         </View>
       </Block>
-      <Block size="stretch" />
-      <Block xsSize="1/2" smSize="66%">
+      <Block size="stretch">
         <View style={[styles.element, { backgroundColor: '#80b9fd' }]}>
-          <Text style={styles.text}>Responsive</Text>
+          <Text style={styles.text}>stretch</Text>
+        </View>
+      </Block>
+      <Block size="1/4">
+        <View style={[styles.element, { backgroundColor: '#5fa6fc' }]}>
+          <Text style={styles.text}>1/4</Text>
+        </View>
+      </Block>
+      <Block size="25%">
+        <View style={[styles.element, { backgroundColor: '#3d94fc' }]}>
+          <Text style={styles.text}>25%</Text>
+        </View>
+      </Block>
+    </Section>
+    <Section>
+      <Block size={150}>
+        <View style={[styles.element, { backgroundColor: '#02418d' }]}>
+          <Text style={styles.whiteText}>150pt{'\n'}fixed</Text>
+        </View>
+      </Block>
+      <Block size="stretch">
+        <View style={[styles.element, { backgroundColor: '#02326b' }]}>
+          <Text style={styles.whiteText}>stretch{'\n'}remaining width</Text>
         </View>
       </Block>
     </Section>

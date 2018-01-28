@@ -13,31 +13,27 @@ const styles = StyleSheet.create({
     color: '#02326b',
     fontSize: 40,
   },
+  textLight: {
+    color: 'white',
+  },
 });
 
 export default () => (
   <Grid>
     <Section>
       <Block>
-        <View style={[styles.element, { backgroundColor: '#b2d4fe' }]}>
-          <Text style={styles.text}>1.1</Text>
+        <View style={[styles.element, { backgroundColor: '#c3defe' }]}>
+          <Text style={styles.text}>always visible</Text>
         </View>
       </Block>
       <Block smHidden>
-        <View style={[styles.element, { backgroundColor: '#a1cbfd' }]}>
-          <Text style={styles.text}>1.2</Text>
-        </View>
-      </Block>
-      <Block smHidden>
-        <View style={[styles.element, { backgroundColor: '#91c2fd' }]}>
-          <Text style={styles.text}>1.3</Text>
-        </View>
-      </Block>
-    </Section>
-    <Section>
-      <Block xsHidden smVisible>
         <View style={[styles.element, { backgroundColor: '#4e9dfc' }]}>
-          <Text style={styles.text}>2.1</Text>
+          <Text style={styles.text}>small phone</Text>
+        </View>
+      </Block>
+      <Block xsHidden smVisible>
+        <View style={[styles.element, { backgroundColor: '#02326b' }]}>
+          <Text style={[styles.text, styles.textLight]}>large phone</Text>
         </View>
       </Block>
     </Section>

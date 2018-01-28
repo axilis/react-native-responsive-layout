@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
   },
-  lightContent: {
+  lightBackground: {
     backgroundColor: '#b2d4fe',
   },
-  darkContent: {
+  darkBackground: {
     backgroundColor: '#1c81fb',
   },
 });
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
 
 const WrappedComponent = withSizeClass(({ sizeSelector }) => {
   const style = sizeSelector({
-    xs: styles.lightContent,
-    sm: styles.darkContent,
+    xs: styles.lightBackground,
+    sm: styles.darkBackground,
   });
 
   return (

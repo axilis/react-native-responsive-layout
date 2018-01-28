@@ -23,4 +23,8 @@ describe('getSize', () => {
   it('ignores overrides that do not apply', () => {
     expect(getSize(sizeNames, 'md', { md: 'EXP', xl: 'NON' })).toEqual('EXP');
   });
+
+  it('fallbacks to the smallest value', () => {
+    expect(getSize(sizeNames, 'sm', { default: 'EXP' })).toEqual('EXP');
+  });
 });
