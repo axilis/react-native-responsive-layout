@@ -174,7 +174,7 @@ Above, the `sizeSelector` function expects an object that contains sizes (breakp
 
 ### Laying out content either horizontally or vertically
 
-Just like `ScrollView`, by providing `horizontal` property, you can change the direction in which the layout should flow. When using horizontal direction, the breakpoints are based on device **height** rather than width. This is because in horizontal flow the height is the limiting factor for conditional rendering.
+Just like `ScrollView`, by providing `horizontal` property, you can change the direction in which the layout should flow. This [example](examples/6-horizontal-direction.js) shows how when using horizontal direction, the breakpoints are based on device **height** rather than width. This is because in horizontal flow the height is the limiting factor for conditional rendering.
 
 ```jsx
 <Grid horizontal>
