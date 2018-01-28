@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
  * Component used to contain group of Blocks.
  */
 const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
-  if (!containerStretch && !!stretch) {
+  if (process.env && process.env.NODE_ENV === 'development' && !containerStretch && !!stretch) {
     warn(
       'Using `stretch` on `Section` without using it on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease enable stretch on `Grid` as well.',
     );
