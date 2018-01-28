@@ -186,7 +186,7 @@ Keep in mind that, when setting the direction to 'horizontal', breakpoints will 
 
 ### Stretching grid
 
-By default, grid size will be based on the content size. If you want it to stretch over the available space, simply set the `stretchable` property on the grid and add `stretch` to sections you want to be stretched. It will set the appropriate styles on child `Box` and `Section` components and enable their children to be properly rendered using flex.
+By default, grid size will be based on the content size. If you want it to stretch over the available space, simply set the `stretchable` property on the grid and add `stretch` to sections you want to be stretched. It will automatically set the appropriate styles on child `Box` and `Section` components and enable their children to be properly rendered.
 
 ```jsx
 <Grid stretchable>
