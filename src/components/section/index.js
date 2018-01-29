@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 
 import { DirectionProp } from '../../shared/props';
-import { checkInsideGrid } from '../../utils';
+import { checkInsideGrid, warn } from '../../utils';
 
 const sharedStyle = {
   alignItems: 'flex-start',
@@ -33,17 +33,25 @@ const styles = StyleSheet.create({
 /**
  * Component used to contain group of Blocks.
  */
-const Section = ({ children, style }, { contentDirection, containerStretch }) => (
-  <View
-    style={[
-      (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
-      (containerStretch ? styles.stretch : null),
-      style,
-    ]}
-  >
-    { children }
-  </View>
-);
+const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
+  if (process.env && process.env.NODE_ENV === 'development' && !containerStretch && !!stretch) {
+    warn(
+      'Using `stretch` on `Section` without using it on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease enable stretch on `Grid` as well.',
+    );
+  }
+
+  return (
+    <View
+      style={[
+        (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
+        (stretch ? styles.stretch : null),
+        style,
+      ]}
+    >
+      { children }
+    </View>
+  );
+};
 
 
 Section.contextTypes = {
@@ -57,10 +65,12 @@ Section.propTypes = {
     PropTypes.node,
   ]).isRequired,
   style: PropTypes.shape({}),
+  stretch: PropTypes.bool,
 };
 
 Section.defaultProps = {
   style: {},
+  stretch: undefined,
 };
 
 export default Section;

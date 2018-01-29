@@ -186,25 +186,26 @@ Keep in mind that, when setting the direction to 'horizontal', breakpoints will 
 
 ### Stretching grid
 
-By default, grid size will be based on the content size. If you want it to stretch over the available space, simply set the `stretch` property on the grid. It will set the appropriate styles on child `Box` and `Section` components and enable their children to be properly rendered using flex.
-
-In this case, by default, both `Grid` and `Section` will be configured with `flex: 1` which you can override by providing a custom style to any of those components. This way you can tweak size ratios of different elements.
+By default, grid size will be based on the content size. If you want it to stretch over the available space, simply set the `stretchable` property on the grid and add `stretch` to sections you want to be stretched. It will automatically set the appropriate styles on child `Box` and `Section` components and enable their children to be properly rendered.
 
 ```jsx
-<Grid stretch>
-  {/* This ensures grid sections and blocks are configured to stretch. */}
+<Grid stretchable>
+  {/* This ensures grid itself spans available space. */}
 
-  <Section style={{ height: 80, flex: 0 }}>
-    {/* Since by default Sections would stretch we need to override their flex
-    style in order for them to stay fixed height. */}
-    <Block />
-  </Section>
   <Section>
+    <Block>
+      <View style={{ height: 80 }} />
+    </Block>
+  </Section>
+  <Section stretch>
+    {/* By default Sections are not stretched. */}
     <Block size="1/4" />  {/* L */}
     <Block size="stretch" /> {/* Content */}
   </Section>
-  <Section style={{ height: 80, flex: 0 }}>
-    <Block />
+  <Section>
+    <Block>
+      <View style={{ height: 80 }} />
+    </Block>
   </Section>
 </Grid>
 ```
