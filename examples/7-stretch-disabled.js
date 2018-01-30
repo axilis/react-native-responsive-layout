@@ -14,9 +14,11 @@ const styles = StyleSheet.create({
 
 export default () => (
   <Grid>
-    <Section style={{ height: 80, backgroundColor: '#d4e7fe' }}>
+    <Section>
       <Block>
-        <Text style={styles.text}>Header</Text>
+        <View style={{ height: 80, backgroundColor: '#d4e7fe' }}>
+          <Text style={styles.text}>Header</Text>
+        </View>
       </Block>
     </Section>
     <Section>
@@ -35,9 +37,11 @@ export default () => (
         </View>
       </Block>
     </Section>
-    <Section style={{ height: 80, backgroundColor: '#6faffd' }}>
+    <Section>
       <Block>
-        <Text style={styles.text}>Footer</Text>
+        <View style={{ height: 80, backgroundColor: '#6faffd' }}>
+          <Text style={styles.text}>Footer</Text>
+        </View>
       </Block>
     </Section>
   </Grid>

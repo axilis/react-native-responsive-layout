@@ -1,6 +1,6 @@
 {
   "name": "react-native-responsive-layout",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "An easy way to implement responsive layouts.",
   "main": "index.js",
   "scripts": {

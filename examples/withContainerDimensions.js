@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
@@ -22,9 +23,14 @@ const styles = StyleSheet.create({
 // Our original component is provided with original props and it will
 // additionally receive width and height once rendered inside grid.
 // Default values are fallback if rendered outside grid.
-const Info = ({ width = 0, height = 0, ...props }) => (
+const Info = ({ width, height }) => (
   <Text style={styles.text}>{width}pt x {height}pt</Text>
 );
+
+Info.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+};
 
 // This wrapper will inject width and height to our component.
 const DimensionInfo = withContainerDimensions(Info);

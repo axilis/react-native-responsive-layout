@@ -16,22 +16,22 @@ const styles = StyleSheet.create({
 });
 
 export default () => (
-  <Grid stretch>
-    {/* This ensures grid sections and blocks are configured to stretch. */}
+  <Grid stretchable>
+    {/* This ensures grid itself spans available space. */}
 
-    <Section style={{ height: 80, backgroundColor: '#d4e7fe', flex: 0 }}>
-      {/* Since by default Sections would stretch we need to override their flex
-      style in order for them to stay fixed height. */}
-
+    <Section>
       <Block>
-        <Text style={styles.text}>Header</Text>
+        <View style={{ height: 80, backgroundColor: '#d4e7fe' }}>
+          <Text style={styles.text}>Header</Text>
+        </View>
       </Block>
     </Section>
-    <Section>
+    <Section stretch>
+      {/* By default Sections are not stretched. */}
       <Block size="1/4">
         <View style={[{ backgroundColor: '#b2d4fe' }, styles.flexibleContainer]}>
-          {/* When nesting elements inside blocks, if you want them to be
-          stretched do not forget to add flex: 1 */}
+          {/* When nesting elements inside stretched section blocks, if you want
+           them to fill space do not forget to add flex: 1 */}
 
           <Text style={styles.text}>L</Text>
         </View>
@@ -42,9 +42,11 @@ export default () => (
         </View>
       </Block>
     </Section>
-    <Section style={{ height: 80, backgroundColor: '#6faffd', flex: 0 }}>
+    <Section>
       <Block>
-        <Text style={styles.text}>Footer</Text>
+        <View style={{ height: 80, backgroundColor: '#6faffd' }}>
+          <Text style={styles.text}>Footer</Text>
+        </View>
       </Block>
     </Section>
   </Grid>
