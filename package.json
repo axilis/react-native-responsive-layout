@@ -4,7 +4,7 @@
   "description": "An easy way to implement responsive layouts.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest"
   },
   "peerDependencies": {
     "react-native": ">=0.42.0",
