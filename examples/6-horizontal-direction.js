@@ -5,42 +5,40 @@ import { Grid, Section, Block } from 'react-native-responsive-layout';
 
 const styles = StyleSheet.create({
   element: {
-    width: 80,
+    width: 160,
     justifyContent: 'center',
   },
   text: {
     textAlign: 'center',
     color: '#02326b',
     fontSize: 40,
+    marginTop: 10,
+    fontWeight: '600',
+  },
+  icon: {
+    textAlign: 'center',
+    fontSize: 60,
   },
 });
 
 export default () => (
   <Grid horizontal>
-    <Section style={{ borderColor: 'red', borderWidth: 1, borderBottomWidth: 0 }}>
+    <Section>
       <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#b2d4fe' }]}>
-          <Text style={styles.text}>1.1</Text>
+        <View style={[styles.element, { backgroundColor: '#c3defe' }]}>
+          <Text style={styles.text}>2018.</Text>
         </View>
       </Block>
       <Block xsSize="1/1" smSize="1/2">
         <View style={[styles.element, { backgroundColor: '#a1cbfd' }]}>
-          <Text style={styles.text}>1.2</Text>
+          <Text style={styles.text}>2017.</Text>
         </View>
       </Block>
       <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#91c2fd' }]}>
-          <Text style={styles.text}>1.3</Text>
-        </View>
-      </Block>
-    </Section>
-    <Section style={{ borderColor: 'red', borderWidth: 1 }}>
-      <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#4e9dfc' }]}>
-          <Text style={styles.text}>2.1</Text>
+        <View style={[styles.element, { backgroundColor: '#80b9fd' }]}>
+          <Text style={styles.text}>2016.</Text>
         </View>
       </Block>
     </Section>
   </Grid>
 );
-

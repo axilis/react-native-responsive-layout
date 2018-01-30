@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
 
@@ -8,37 +8,36 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center',
   },
-  text: {
-    textAlign: 'center',
-    color: '#02326b',
-    fontSize: 40,
-  },
 });
 
 export default () => (
   <Grid>
-    <Section style={{ borderColor: 'red', borderWidth: 1, borderBottomWidth: 0 }}>
+    <Section>
       <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#b2d4fe' }]}>
-          <Text style={styles.text}>1.1</Text>
-        </View>
+        <View style={[styles.element, { backgroundColor: '#c3defe' }]} />
       </Block>
       <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#a1cbfd' }]}>
-          <Text style={styles.text}>1.2</Text>
-        </View>
+        <View style={[styles.element, { backgroundColor: '#b2d4fe' }]} />
       </Block>
       <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#91c2fd' }]}>
-          <Text style={styles.text}>1.3</Text>
-        </View>
+        <View style={[styles.element, { backgroundColor: '#a1cbfd' }]} />
       </Block>
     </Section>
-    <Section style={{ borderColor: 'red', borderWidth: 1 }}>
+    <Section>
       <Block xsSize="1/1" smSize="1/2">
-        <View style={[styles.element, { backgroundColor: '#4e9dfc' }]}>
-          <Text style={styles.text}>2.1</Text>
-        </View>
+        <View style={[styles.element, { backgroundColor: '#2d8bfb' }]} />
+      </Block>
+      <Block xsSize="1/1" smSize="1/2">
+        <View style={[styles.element, { backgroundColor: '#1c81fb' }]} />
+      </Block>
+      <Block xsSize="1/1" smSize="1/2">
+        <View style={[styles.element, { backgroundColor: '#0b78fb' }]} />
+      </Block>
+      <Block xsSize="1/1" smSize="1/2">
+        <View style={[styles.element, { backgroundColor: '#0470f1' }]} />
+      </Block>
+      <Block xsSize="1/1" smSize="1/2">
+        <View style={[styles.element, { backgroundColor: '#0468e0' }]} />
       </Block>
     </Section>
   </Grid>

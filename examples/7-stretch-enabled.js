@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#02326b',
     fontSize: 40,
+    lineHeight: 80,
   },
 });
 
