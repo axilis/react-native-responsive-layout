@@ -5,7 +5,9 @@ describe('determineSizeClass', () => {
   const sizeNames = ['xs', 'sm', 'md', 'xl', 'xxl'];
 
   it('returns smallest size when nothing is provided', () => {
-    const breakpointValues = { xs: 100, sm: 200, md: 300, xl: 400 };
+    const breakpointValues = {
+      xs: 100, sm: 200, md: 300, xl: 400,
+    };
     expect(determineSizeClass(sizeNames, breakpointValues)).toEqual('xs');
   });
 

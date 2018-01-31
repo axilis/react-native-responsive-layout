@@ -13,9 +13,10 @@ import { getSize } from './methods';
  *  and returns closest size that is relevant, this enables style selection to
  *  match grid size
  *
- * @param { React.Component|function } Component
+ * @param { React.ComponentType<{size: string, sizeSelector: function(Object): *}> } Component
  */
 const withSizeClass = (Component) => {
+  /** @type {React.StatelessComponent} */
   const WithSize = (props, { containerSizeClass }) => (
     <Component
       size={containerSizeClass}
