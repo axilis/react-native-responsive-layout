@@ -2,10 +2,10 @@
 /**
  * Determines active size name from provided breakpoints and element size.
  *
- * @param {Array<String>} sizeNames that grid supports ordered from smallest
+ * @param {Array<string>} sizeNames that grid supports ordered from smallest
  * @param {Object} breakpointValues object containing values for sizes
- * @param {Number} value width/height from which to determine active size
- * @return {String} largest size name that is still larger than value
+ * @param {number} value width/height from which to determine active size
+ * @return {string} largest size name that is still larger than value
  */
 export const determineSizeClass = (sizeNames, breakpointValues, value) => {
   // Start from end to find largest one that is matching

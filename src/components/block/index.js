@@ -29,7 +29,7 @@ const style = StyleSheet.create({
   },
 });
 
-
+/* eslint-disable */
 /**
  * Element representing single cell in grid structure. It only works when nested
  * inside Grid component.
@@ -39,7 +39,10 @@ const style = StyleSheet.create({
  * - if there is only `size` provided it will be same on all layouts
  * - otherwise it will choose smallest class defined that is applicable based
  *   on sizing of closest outer `Grid` element
+ *
+ * @type {React.StatelessComponent<{size: string | number, hidden: boolean, visible: boolean, style: any, children: any}>}
  */
+/* eslint-enable */
 const Block = ({
   children,
   ...props

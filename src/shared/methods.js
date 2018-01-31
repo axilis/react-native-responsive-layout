@@ -6,6 +6,7 @@ const ROUNDING_FACTOR = 10000;
  * issues with floating point representation of specific widths.
  *
  * @param {number} percent
+ * @returns {number}
  */
 export const roundForPercentage = percent => (
   Math.floor(percent * ROUNDING_FACTOR) / ROUNDING_FACTOR
@@ -17,11 +18,12 @@ export const roundForPercentage = percent => (
  * gird width. It is used to pick best fitting object from keys that would fit
  * as well.
  *
- * @param {Array<String>} sizes array of grid sizes
- * @param {String} activeSize active grid size
+ * @param {Array<string>} sizeNames array of grid sizes
+ * @param {string} activeSize active grid size
  * @param {Object} props object containing values for sizes
  * @param {*} initialValue default value if none matches
- * @param {function} keySelector function that generates key to access value
+ * @param {function(string): string} keySelector function that generates key to access value
+ * @returns {*}
  */
 export const valueForSize = (sizeNames, activeSize, props, initialValue, keySelector) => {
   let value = initialValue;
