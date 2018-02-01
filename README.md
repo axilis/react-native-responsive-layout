@@ -1,4 +1,6 @@
-# react-native-responsive-layout
+<img alt="Responsive Layout logo." src="docs/images/logo.svg" height="80">
+
+# React Native Responsive Layout
 [![CircleCI](https://circleci.com/gh/axilis/react-native-responsive-layout.svg?style=shield)](https://circleci.com/gh/axilis/react-native-responsive-layout)
 
 Set of components that make building responsive React user interfaces easier by bringing concepts used in web development.
@@ -16,7 +18,7 @@ alternatively, if you prefer using `npm`:
 npm install --save react-native-responsive-layout
 ```
 
-## Responsive layout
+## Motivation
 
 Even though React-Native offers a fast way to build complex native applications, creating a responsive UI still isn't as easy as on the web. Development got easier when percentage-based widths landed. However, responsive applications still requires many conditional renderings and size-specific overrides. This framework aims to bring good parts from web development to simplify native development.
 
