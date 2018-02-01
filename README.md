@@ -18,7 +18,7 @@ alternatively, if you prefer using `npm`:
 npm install --save react-native-responsive-layout
 ```
 
-## Responsive layout
+## Motivation
 
 Even though React-Native offers a fast way to build complex native applications, creating a responsive UI still isn't as easy as on the web. Development got easier when percentage-based widths landed. However, responsive applications still requires many conditional renderings and size-specific overrides. This framework aims to bring good parts from web development to simplify native development.
 
