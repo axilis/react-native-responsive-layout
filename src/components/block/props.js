@@ -8,8 +8,8 @@ import {
 /**
  * Checks whether provided value is valid fraction.
  *
- * @param {String} value to check
- * @return {Boolean} true if it is fraction
+ * @param {string} value to check
+ * @return {boolean} true if it is fraction
  */
 const isFraction = value => (FRACTION_NAMES.indexOf(value) !== -1);
 
@@ -21,8 +21,8 @@ const percentageMatcher = /^\d+(\.\d+)?%$/;
 /**
  * Checks whether provided string is valid percentage.
  *
- * @param {String} value  to check
- * @return {Boolean} true if it is percentage
+ * @param {string} value  to check
+ * @return {boolean} true if it is percentage
  */
 const isPercentage = value => percentageMatcher.test(value);
 
@@ -30,6 +30,10 @@ const isPercentage = value => percentageMatcher.test(value);
 /**
  * PropType that validates grid element size to be either string fraction or
  * numerical percentage.
+ *
+ * @param {Object} props
+ * @param {string} propName
+ * @return {Error | undefined}
  */
 export const SizeProp = (props, propName) => {
   const size = props[propName];
@@ -38,24 +42,18 @@ export const SizeProp = (props, propName) => {
     if (isFraction(size) || isPercentage(size) || size === 'stretch') {
       return undefined;
     }
-    return new Error(
-      `'${propName}' string argument should be valid fraction, percentage or stretch. \nGot: "${size}"`,
-    );
+    return new Error(`'${propName}' string argument should be valid fraction, percentage or stretch. \nGot: "${size}"`);
   }
 
   if (typeof size === 'number') {
     if (size >= 0) {
       return undefined;
     }
-    return new Error(
-      `${propName} should be positive number. \nGot: ${size}%.`,
-    );
+    return new Error(`${propName} should be positive number. \nGot: ${size}%.`);
   }
 
   if (size !== undefined) {
-    return new Error(
-      `${propName} should be either string fraction or numerical percentage. \nGot: ${size}`,
-    );
+    return new Error(`${propName} should be either string fraction or numerical percentage. \nGot: ${size}`);
   }
 
   return undefined;
@@ -64,23 +62,22 @@ export const SizeProp = (props, propName) => {
 
 /**
  * PropType that validates hidden/visible elements and their exclusivity.
+ *
+ * @param {string=} sizeName
+ * @return {function(Object, string): Error | undefined}
  */
 export const HiddenProp = sizeName => (props, propName) => {
   const visibleKey = sizeName ? `${sizeName}Visible` : 'visible';
   const hiddenKey = sizeName ? `${sizeName}Hidden` : 'hidden';
 
   if (props[visibleKey] && props[hiddenKey]) {
-    return new Error(
-      `'${propName}' has also defined ${visibleKey} prop, this leads to unexpected behavior.`,
-    );
+    return new Error(`'${propName}' has also defined ${visibleKey} prop, this leads to unexpected behavior.`);
   }
 
   const size = props[propName];
 
   if (size !== undefined && typeof size !== 'boolean') {
-    return new Error(
-      `'${propName}' should be boolean. \nGot: "${size}"`,
-    );
+    return new Error(`'${propName}' should be boolean. \nGot: "${size}"`);
   }
 
   return undefined;

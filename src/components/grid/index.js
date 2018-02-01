@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-
+/* eslint-disable */
 /**
  * Grid that defines how nested `Section` and `Block` components should behave.
  *
@@ -39,7 +39,10 @@ const styles = StyleSheet.create({
  *
  * Using `relativeTo` set to 'self' can have performance impact since it must
  * determine whether children components are impacted by resize.
+ *
+ * @augments {Component<{breakpoints: Object, horizontal: boolean, relativeTo: 'window' | 'self', stretchable: boolean, style: any, children: any}>}
  */
+/* eslint-enable */
 class Grid extends Component {
   constructor(props) {
     super(props);
@@ -133,7 +136,7 @@ class Grid extends Component {
         ]}
         onLayout={onLayoutHandler}
       >
-        { this.state.containerSizeClass ? this.props.children : null }
+        {this.state.containerSizeClass ? this.props.children : null}
       </View>
     );
   }

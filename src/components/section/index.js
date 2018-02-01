@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
 
 /**
  * Component used to contain group of Blocks.
+ *
+ * @type {React.StatelessComponent<{stretch: boolean, style: any, children: any}>}
  */
 const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
   if (process.env && process.env.NODE_ENV === 'development' && !containerStretch && !!stretch) {
-    warn(
-      'Using `stretch` on `Section` without using it on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease enable stretch on `Grid` as well.',
-    );
+    warn('Using `stretch` on `Section` without using it on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease enable stretch on `Grid` as well.');
   }
 
   return (
@@ -48,7 +48,7 @@ const Section = ({ children, style, stretch }, { contentDirection, containerStre
         style,
       ]}
     >
-      { children }
+      {children}
     </View>
   );
 };

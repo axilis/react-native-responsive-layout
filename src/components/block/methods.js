@@ -12,10 +12,10 @@ import { valueForSize } from '../../shared/methods';
  * For example `mdHidden={true}` will hide element on medium sized but as well
  * on all larger sizes unless overridden.
  *
- * @param {Array<String>} sizeNames that grid supports ordered from smallest
- * @param {String} activeSize that is determined by grid
+ * @param {Array<string>} sizeNames that grid supports ordered from smallest
+ * @param {string} activeSize that is determined by grid
  * @param {Object} props object use as reference for values
- * @return {Boolean}
+ * @return {boolean}
  */
 export const isHidden = (sizeNames, activeSize, props) => {
   // Strictly check hidden and visible as default values
@@ -49,6 +49,11 @@ export const isHidden = (sizeNames, activeSize, props) => {
 
 /**
  * Determines size of component depended on sizing class.
+ *
+ * @param {Array<string>} sizeNames that grid supports ordered from smallest
+ * @param {string} activeSize that is determined by grid
+ * @param {Object} props object use as reference for values
+ * @return {*}
  */
 const getSize = (sizeNames, activeSize, props) => {
   const initialValue = (props.size || '1');
@@ -71,10 +76,10 @@ const getSize = (sizeNames, activeSize, props) => {
  * It returns full with if there is none matching current size (either none is
  * smaller or there were no provided).
  *
- * @param {Array<String>} sizeNames that grid supports ordered from smallest
- * @param {String} activeSize that is determined by grid
+ * @param {Array<string>} sizeNames that grid supports ordered from smallest
+ * @param {string} activeSize that is determined by grid
  * @param {Object} props object use as reference for values
- * @return {Number} representing width/height as percentage
+ * @return {number | string} representing width/height as percentage
  */
 export const determineSize = (sizeNames, activeSize, props) => {
   const size = getSize(sizeNames, activeSize, props);
@@ -95,4 +100,3 @@ export const determineSize = (sizeNames, activeSize, props) => {
 
   return size;
 };
-
