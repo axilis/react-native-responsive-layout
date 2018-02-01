@@ -1,4 +1,4 @@
-<img alt="Responsive Layout logo." src="docs/images/logo.svg" height="120">
+<img alt="Responsive Layout logo." src="docs/images/logo.svg" height="80">
 
 # React Native Responsive Layout
 [![CircleCI](https://circleci.com/gh/axilis/react-native-responsive-layout.svg?style=shield)](https://circleci.com/gh/axilis/react-native-responsive-layout)
