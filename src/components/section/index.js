@@ -36,8 +36,11 @@ const styles = StyleSheet.create({
  * @type {React.StatelessComponent<{stretch: boolean, style: any, children: any}>}
  */
 const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
-  if (process.env && process.env.NODE_ENV === 'development' && !containerStretch && !!stretch) {
-    warn('Using `stretch` on `Section` without using it on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease enable stretch on `Grid` as well.');
+  if (process.env.NODE_ENV === 'development') {
+    warn(
+      !containerStretch && !!stretch,
+      'Using `stretch` on `Section` without using `stretchable` on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease make `Grid` stretchable as well.',
+    );
   }
 
   return (
@@ -70,7 +73,7 @@ Section.propTypes = {
 
 Section.defaultProps = {
   style: {},
-  stretch: undefined,
+  stretch: false,
 };
 
 export default Section;

@@ -21,10 +21,13 @@ export const calculateStretchLength = (totalLength, minimalElementLength) => {
 /**
  * Logs warning to the console and displays yellow-box message.
  *
+ * @param {boolean} shouldWarn
  * @param {string} message
  */
-export const warn = (message) => {
-  console.warn(message); // eslint-disable-line no-console
+export const warn = (shouldWarn, message) => {
+  if (shouldWarn) {
+    console.warn(message); // eslint-disable-line no-console
+  }
 };
 
 

@@ -2,6 +2,7 @@
 
 # React Native Responsive Layout
 [![CircleCI](https://circleci.com/gh/axilis/react-native-responsive-layout.svg?style=shield)](https://circleci.com/gh/axilis/react-native-responsive-layout)
+[![Dependencies Status](https://david-dm.org/axilis/react-native-responsive-layout/status.svg)](https://david-dm.org/axilis/react-native-responsive-layout)
 
 Set of components that make building responsive React user interfaces easier by bringing concepts used in web development.
 

@@ -1,15 +1,7 @@
 {
   "name": "react-native-responsive-layout",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "An easy way to implement responsive layouts.",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "peerDependencies": {
-    "react-native": ">=0.42.0",
-    "react": ">=15.0.0"
-  },
   "keywords": [
     "react-native",
     "grid",
@@ -17,19 +9,44 @@
     "responsive",
     "bootstrap"
   ],
-  "author": "Axilis",
+  "author": "axilis",
+  "contributors": [
+    "srolija",
+    "ivanvarga",
+    "MislavMandaric",
+    "pero5ar"
+  ],
+  "homepage": "https://github.com/axilis/react-native-responsive-layout",
+  "bugs": {
+    "url": "https://github.com/axilis/react-native-responsive-layout/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axilis/react-native-responsive-layout.git"
+  },
   "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "eslint src",
+    "test": "jest"
+  },
   "dependencies": {
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "babel-preset-react-native": "^4.0.0",
-    "eslint": "^4.15.0",
-    "eslint-config-airbnb": "^15.1.0",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.5.1",
-    "jest": "^22.1.2"
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.6.1",
+    "jest": "^22.1.4",
+    "react": "^16.2.0",
+    "react-native": "^0.52.2"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.42.0",
+    "react": ">=15.0.0"
   }
 }
