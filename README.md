@@ -1,14 +1,15 @@
-<img alt="Responsive Layout logo." src="docs/images/logo.svg" height="80">
+![Responsive Layout logo](docs/images/logo.png)
 
 # React Native Responsive Layout
+[![npm](https://img.shields.io/npm/v/react-native-responsive-layout.svg?style=flat)](https://www.npmjs.com/package/react-native-responsive-layout)
 [![CircleCI](https://circleci.com/gh/axilis/react-native-responsive-layout.svg?style=shield)](https://circleci.com/gh/axilis/react-native-responsive-layout)
-[![Dependencies Status](https://david-dm.org/axilis/react-native-responsive-layout/status.svg)](https://david-dm.org/axilis/react-native-responsive-layout)
+[![dependencies](https://david-dm.org/axilis/react-native-responsive-layout/status.svg)](https://david-dm.org/axilis/react-native-responsive-layout)
 
-Set of components that make building responsive React user interfaces easier by bringing concepts used in web development.
+Set of components that make building responsive React Native user interfaces easier by bringing concepts used in web development.
 
 ## Installation
 
-This package is only **compatible with RN >= 0.42** since older versions do not support percentage-based widths.  
+This package is only **compatible with RN >= 0.42** since older versions do not support percentage-based widths. 
 To install the latest version simply run:
 
 ```bash
