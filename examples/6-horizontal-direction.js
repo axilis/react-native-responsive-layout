@@ -39,6 +39,16 @@ export default () => (
           <Text style={styles.text}>2016.</Text>
         </View>
       </Block>
+      <Block xsSize="1/1" smSize="1/2">
+        <View style={[styles.element, { backgroundColor: '#5fa6fc' }]}>
+          <Text style={styles.text}>2015.</Text>
+        </View>
+      </Block>
+      <Block xsSize="1/1" smSize="1/2">
+        <View style={[styles.element, { backgroundColor: '#3d94fc' }]}>
+          <Text style={styles.text}>2014.</Text>
+        </View>
+      </Block>
     </Section>
   </Grid>
 );
