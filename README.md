@@ -220,7 +220,28 @@ By default, grid size will be based on the content size. If you want it to stret
 
 ![Stretching grid demonstration.](docs/images/7-stretching.png)
 
-Keep in mind that when rendering components using flex inside ScrollView, you should set `{ flex: 1 }` as `contentContainerStyle` prop in order for it to stretch over the entire space. For complete examples take a look at source for the above [normal](examples/7-stretch-disabled.js) and [stretching](examples/7-stretch-enabled.js) examples.
+For complete examples take a look at source for the above [normal](examples/7-stretch-disabled.js) and [stretching](examples/7-stretch-enabled.js) examples.
+
+
+### Scrollable grid
+
+When using grid on a screen that contains lots of elements that might not fit the screen, it is recommended to wrap the grid into a `ScrollView`. By doing that, there are cases where implementation details are leaked and have to be set up manually. To make that easier, it is possible to provide a `scrollable` prop to `Grid` component, which will automatically wrap the whole grid in `ScrollView`.
+
+```jsx
+<Grid scrollable>
+  <Section>
+    <Block xsSize="1/1" mdSize="1/2" /> {/* View 1 */}
+    {/* ... */}
+    <Block xsSize="1/1" mdSize="1/2" /> {/* View 12 */}
+  </Section>
+</Grid>
+```
+
+When other `Grid` props are also set, `scrollable` prop will configure `ScrollView` according to those props. For example, setting both `horizontal` and `scrollable` will enable horizontal scrolling of grid and setting both `stretchable` and `scrollable` will stretch the grid if content doesn't take up the whole screen while enabling scrolling if the content takes more space than the screen.
+
+![Scrollable grid demonstration.](docs/images/8-scrollable-grid.png)
+
+If you require more control over `ScrollView`, you can always wrap the grid manually, without using `scrollable` prop.
 
 
 ## Note on sizes
