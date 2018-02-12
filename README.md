@@ -241,7 +241,7 @@ When other `Grid` props are also set, `scrollable` prop will configure `ScrollVi
 
 ![Scrollable grid demonstration.](docs/images/8-scrollable-grid.png)
 
-If you require more control over `ScrollView`, you can always wrap the grid manually, without using `scrollable` prop.
+If you require more control over `ScrollView`, you can always wrap the grid manually, without using `scrollable` prop. Keep in mind that when rendering stretched grid inside `ScrollView`, you should set `{ flexGrow: 1 }` as `contentContainerStyle` prop in order for it to stretch over the entire space.
 
 
 ## Note on sizes
