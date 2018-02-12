@@ -230,9 +230,9 @@ When using grid on a screen that contains lots of elements that might not fit th
 ```jsx
 <Grid scrollable>
   <Section>
-    <Block xsSize="1/1" mdSize="1/2" /> {/* View 1 */}
+    <Block xsSize="1/1" mdSize="1/2" /> {/* 1 */}
     {/* ... */}
-    <Block xsSize="1/1" mdSize="1/2" /> {/* View 12 */}
+    <Block xsSize="1/1" mdSize="1/2" /> {/* 12 */}
   </Section>
 </Grid>
 ```
