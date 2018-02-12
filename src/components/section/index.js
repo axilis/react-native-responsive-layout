@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   stretch: {
     flex: 1,
     alignContent: 'stretch',
-    alignItems: 'stretch',
   },
 });
 
