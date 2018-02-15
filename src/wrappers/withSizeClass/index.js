@@ -7,6 +7,26 @@ import { getSize } from './methods';
 
 
 /**
+ * Function as a child component that provides:
+ * - `size` - which corresponds to currently active size of grid
+ * - `sizeSelector` - function which takes object that contains sizes as keys
+ *  and returns closest size that is relevant, this enables style selection to
+ *  match grid size
+ */
+const WithSizeClass = ({children}, { containerSizeClass }) => ({
+  children(containerSizeClass, values => getSize(SIZE_NAMES, containerSizeClass, values))
+});
+
+
+
+  return WithSize;
+};
+
+WithSizeClass.contextTypes = {
+  containerSizeClass: checkInsideGrid(ContainerSizeProp),
+};
+
+/**
  * Wraps provided component and provides:
  * - `size` - which corresponds to currently active size of grid
  * - `sizeSelector` - function which takes object that contains sizes as keys
@@ -15,24 +35,22 @@ import { getSize } from './methods';
  *
  * @param { React.ComponentType<{size: string, sizeSelector: function(Object): *}> } Component
  */
-const withSizeClass = (Component) => {
-  /** @type {React.StatelessComponent} */
-  const WithSize = (props, { containerSizeClass }) => (
-    <Component
-      size={containerSizeClass}
-      sizeSelector={values => getSize(SIZE_NAMES, containerSizeClass, values)}
-      {...props}
-    />
-  );
+export const withSizeClass = Component => {
+  const wrappedComponent = (props) => (
+    <WithSizeClass>
+      {(size, sizeSelector) => (
+        <Component
+          size={size}
+          sizeSelector={sizeSelector}
+          {...props} />)}
+    </WithSizeClass>);
 
   const componentName = Component.displayName || Component.name || 'UnnamedComponent';
-  WithSize.displayName = `withSizeClass(${componentName})`;
+  wrappedComponent.displayName = `withSizeClass(${componentName})`;
 
-  WithSize.contextTypes = {
-    containerSizeClass: checkInsideGrid(ContainerSizeProp),
-  };
-
-  return WithSize;
+  return wrappedComponent;
 };
+
+
 
 export default withSizeClass;

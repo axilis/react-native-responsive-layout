@@ -1,2 +1,2 @@
-export { default as withSizeClass } from './withSizeClass';
-export { default as withContainerDimensions } from './withContainerDimensions';
+export { default as WithSizeClass, withSizeClass } from './withSizeClass';
+export { default as WithContainerDimensions, withContainerDimensions } from './withContainerDimensions';

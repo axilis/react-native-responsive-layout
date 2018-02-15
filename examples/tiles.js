@@ -2,10 +2,20 @@ import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { Block, Grid, Section } from 'react-native-responsive-layout';
-import { withContainerDimensions } from 'react-native-responsive-layout/wrappers';
+import { WithContainerDimensions, withContainerDimensions } from 'react-native-responsive-layout/wrappers';
 import { calculateStretchLength } from 'react-native-responsive-layout/utils';
 
-const Card = withContainerDimensions(({ width, style }) => {
+const Card = ({style}) => (
+  <WithContainerDimensions>{(width)=>{
+    const l = calculateStretchLength(width, 120);
+    return (
+      <View style={[style,{ width: l, height: l }]} />
+    )
+  }}
+  </WithContainerDimensions>
+);
+
+const WrappedCard = withContainerDimensions(({ width, style }) => {
   const l = calculateStretchLength(width, 120);
   return (
     <View style={[style, { width: l, height: l }]} />
@@ -28,16 +38,16 @@ export default () => (
         <Block>
           <Text style={{ margin: 5, fontSize: 16 }}>Second Heading</Text>
         </Block>
-        <Card style={{ backgroundColor: '#bbb' }} />
-        <Card style={{ backgroundColor: '#aaa' }} />
-        <Card style={{ backgroundColor: '#999' }} />
-        <Card style={{ backgroundColor: '#888' }} />
-        <Card style={{ backgroundColor: '#777' }} />
-        <Card style={{ backgroundColor: '#666' }} />
-        <Card style={{ backgroundColor: '#555' }} />
-        <Card style={{ backgroundColor: '#444' }} />
-        <Card style={{ backgroundColor: '#333' }} />
-        <Card style={{ backgroundColor: '#222' }} />
+        <WrappedCard style={{ backgroundColor: '#bbb' }} />
+        <WrappedCard style={{ backgroundColor: '#aaa' }} />
+        <WrappedCard style={{ backgroundColor: '#999' }} />
+        <WrappedCard style={{ backgroundColor: '#888' }} />
+        <WrappedCard style={{ backgroundColor: '#777' }} />
+        <WrappedCard style={{ backgroundColor: '#666' }} />
+        <WrappedCard style={{ backgroundColor: '#555' }} />
+        <WrappedCard style={{ backgroundColor: '#444' }} />
+        <WrappedCard style={{ backgroundColor: '#333' }} />
+        <WrappedCard style={{ backgroundColor: '#222' }} />
       </Section>
     </Grid>
   </ScrollView>

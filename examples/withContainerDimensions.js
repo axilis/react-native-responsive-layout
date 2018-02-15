@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { withContainerDimensions } from 'react-native-responsive-layout/wrappers';
+import { WithContainerDimensions } from 'react-native-responsive-layout/wrappers';
 
 const styles = StyleSheet.create({
   text: {
@@ -23,17 +23,14 @@ const styles = StyleSheet.create({
 // Our original component is provided with original props and it will
 // additionally receive width and height once rendered inside grid.
 // Default values are fallback if rendered outside grid.
-const Info = ({ width, height }) => (
-  <Text style={styles.text}>{width}pt x {height}pt</Text>
+const Info = () => (
+  <WithContainerDimensions>{(width, height) => (<Text>{width}pt x {height}pt</Text>)}</WithContainerDimensions>
 );
 
 Info.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };
-
-// This wrapper will inject width and height to our component.
-const DimensionInfo = withContainerDimensions(Info);
 
 export default () => (
   <View>
@@ -50,14 +47,12 @@ export default () => (
             <Section>
               <Block size="1/2">
                 <View style={[{ backgroundColor: '#BBB' }]}>
-
-                  {/* Note that we render wrapped component. */}
-                  <DimensionInfo />
+                  <Info />
                 </View>
               </Block>
               <Block size="1/2">
                 <View style={[{ backgroundColor: '#999' }]}>
-                  <DimensionInfo />
+                  <Info />
                 </View>
               </Block>
             </Section>

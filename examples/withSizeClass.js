@@ -54,6 +54,22 @@ export default () => (
           <ResponsiveButton title="First button" />
           <ResponsiveButton title="Second button" />
           <ResponsiveButton title="Third button" />
+          <WithSizeClass>{
+          (size, sizeSelector) => {
+            const style = props.sizeSelector({
+              xs: styles.smallButton,
+              sm: styles.mediumButton,
+              md: styles.largeButton,
+            });
+            return (
+              <TouchableOpacity onPress={props.onPress}>
+                <View style={[style, props.containerStyle]}>
+                  <Text style={[styles.text, props.textStyle]}>{"Fourth button"}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          }
+        }</WithSizeClass>
         </Block>
       </Section>
     </Grid>
