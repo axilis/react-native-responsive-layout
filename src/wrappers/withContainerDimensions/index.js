@@ -47,6 +47,10 @@ class WithContainerDimensions extends React.Component {
   }
 }
 
+WithContainerDimensions.propTypes = {
+  children: PropTypes.func.isRequired,
+};
+
 WithContainerDimensions.contextTypes = {
   referenceSizeProvider: checkInsideGrid(PropTypes.shape({
     subscribe: PropTypes.func.isRequired,
@@ -55,8 +59,8 @@ WithContainerDimensions.contextTypes = {
 };
 
 
-export const withContainerDimensions = Component => {
-  const withContainerDimensionsWrapped = (props) => (
+export const withContainerDimensions = (Component) => {
+  const withContainerDimensionsWrapped = props => (
     <WithContainerDimensions>
       {(width, height) => (<Component width={width} height={height} {...props} />)}
     </WithContainerDimensions>);
@@ -65,7 +69,7 @@ export const withContainerDimensions = Component => {
   withContainerDimensionsWrapped.displayName = `withContainerDimensions(${componentName})`;
 
   return withContainerDimensionsWrapped;
-}
+};
 
 
 export default WithContainerDimensions;
