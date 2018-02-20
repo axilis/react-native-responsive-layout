@@ -19,11 +19,11 @@ import Scrollable from './Scrollable';
 const styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   vertical: {
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   stretchable: {
     flex: 1,
