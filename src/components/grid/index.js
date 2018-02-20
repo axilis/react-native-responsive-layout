@@ -74,12 +74,12 @@ class Grid extends Component {
     referenceSizeProvider: this.state.referenceSizeProvider,
   });
 
-  componentWillMount() {
-    Dimensions.addEventListener('change', this.windowResizeHandler.bind(this));
+  componentDidMount() {
+    Dimensions.addEventListener('change', this.windowResizeHandler);
   }
 
   componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.windowResizeHandler.bind(this));
+    Dimensions.removeEventListener('change', this.windowResizeHandler);
   }
 
   onLayout = ({ nativeEvent: { layout: { width, height } } }) => {
