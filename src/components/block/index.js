@@ -20,9 +20,6 @@ import BlockProps from './props';
 const ONE_UNIT_WIDTH = `${roundForPercentage(100 / GRID_UNITS)}%`;
 
 const style = StyleSheet.create({
-  baseStyle: {
-    justifyContent: 'flex-start',
-  },
   stretchSize: {
     flex: 1,
     flexBasis: ONE_UNIT_WIDTH,
@@ -68,7 +65,7 @@ const Block = ({
   };
 
   return (
-    <View style={[style.baseStyle, directionStyle, sizeStyle, props.style]}>
+    <View style={[directionStyle, sizeStyle, props.style]}>
       {children}
     </View>
   );
