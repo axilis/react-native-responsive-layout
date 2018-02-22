@@ -109,17 +109,17 @@ Stretched elements automatically span at least one grid unit (`1/12`) to avoid h
   </Section>
   <Section>
     <Block size="stretch" />
-    <Block xsSize="1/2" smSize="1/4"></Block> {/* Center */}
+    <Block xsSize="1/2" smSize="1/4" /> {/* Center */}
     <Block size="stretch" />
   </Section>
   <Section>
     <Block size="stretch" />
-    <Block xsSize="1/2" smSize="1/4"></Block> {/* Right */}
+    <Block xsSize="1/2" smSize="1/4" /> {/* Right */}
   </Section>
   <Section>
-    <Block xsSize="1/3" smSize="1/4"></Block> {/* Left */}
+    <Block xsSize="1/3" smSize="1/4" /> {/* Left */}
     <Block size="stretch" />
-    <Block xsSize="1/3" smSize="1/4"></Block> {/* Right */}
+    <Block xsSize="1/3" smSize="1/4" /> {/* Right */}
   </Section>
 </Grid>
 ```
