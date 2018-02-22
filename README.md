@@ -1,11 +1,11 @@
 ![Responsive Layout logo](docs/images/logo.png)
 
-# React Native Responsive Layout
+# React Native Responsive Layout (RNRL)
 [![npm](https://img.shields.io/npm/v/react-native-responsive-layout.svg?style=flat)](https://www.npmjs.com/package/react-native-responsive-layout)
 [![CircleCI](https://circleci.com/gh/axilis/react-native-responsive-layout.svg?style=shield)](https://circleci.com/gh/axilis/react-native-responsive-layout)
 [![dependencies](https://david-dm.org/axilis/react-native-responsive-layout/status.svg)](https://david-dm.org/axilis/react-native-responsive-layout)
 
-Set of components that make building responsive React Native user interfaces easier by bringing concepts used in web development.
+A framework that makes building responsive React Native user interfaces easier by bringing over concepts from web development.
 
 ## Installation
 
@@ -22,34 +22,36 @@ npm install --save react-native-responsive-layout
 
 ## Motivation
 
-Even though React-Native offers a fast way to build complex native applications, creating a responsive UI still isn't as easy as on the web. Development got easier when percentage-based widths landed. However, responsive applications still requires many conditional renderings and size-specific overrides. This framework aims to bring good parts from web development to simplify native development.
+Even though React Native offers a faster way to build complex native applications, creating responsive RN UIs is significantly more difficult than compared to web development. This difficulty was somewhat mitigated when percentage-based widths landed. However, responsive RN UIs still require the use of many conditional renderings and size-specific overrides. RNRL brings over the good parts from web development in order to simplify native development.
 
-The main feature of this framework is the ability to specify **different sizes, styles or even swap entire components depending on viewport size**. Making development of responsive UI as easy as using Bootstrap's grid system.
+RNRL offers the ability to specify **different element sizes and styles or even swap entire components depending on target size**. This makes responsive UI development for RN as simple as using Bootstrap's grid system.
 
 ### Size Classes
 
-The framework is built to be **mobile first**, so you build the design for the smallest screen size upward, and elements use size/style for the largest size class they can fit. If you do not define specific size, it will fallback to the first smaller defined. That means if you define only `xsSize` and `lgSize`, all sizes smaller than large use the value provided for extra small (`xsSize`), and on the rest, it uses the value of large one (`lgSize`). This way you can precisely style most device sizes. For readability, all size based props also have un-prefixed versions (eg. `size`) which are just alias for the smallest one (`xsSize`) since when using the same size across all sizes it makes things more semantically clear. 
+Based on popular screen sizes, target sizes are as follows:
 
-Based on popular device sizes, classes are as following:
+| Prefix | Breakpoint | Example Devices                     |
+|--------|------------|-------------------------------------|
+| xs     | <= 410 pt  | phones                              |
+| sm     | >= 411 pt  | large phones                        |
+| md     | >= 568 pt  | phones - landscape                  |
+| lg     | >= 768 pt  | tablets                             |
+| xl     | >= 1024 pt | tablets - landscape, large tablets  |
+| xxl    | >= 1280 pt | large tablets - landscape           |
 
-| Size | Breakpoint | Devices                             |
-|------|------------|-------------------------------------|
-| xs   | <= 410 pt  | phones                              |
-| sm   | >= 411 pt  | large phones                        |
-| md   | >= 568 pt  | phones - landscape                  |
-| lg   | >= 768 pt  | tablets                             |
-| xl   | >= 1024 pt | tablets - landscape, large tablets  |
-| xxl  | >= 1280 pt | large tablets - landscape           |
+RNRL is **mobile first**. Therefore you start with the design for the smallest target size, and move up from there. Elements use size/style for the largest target size they fit. If a specific target size is not defined, the size will default to the next smaller defined size. This means if you define only `xsSize` and `lgSize`, all sizes smaller than `lgSize` use the value provided for `xsSize`, and the value of `lgSize` on the rest. 
 
+When an element has the same behavior on all target sizes, you can use an un-prefixed version (e.g. `size`). Un-prefixed is just an alias for the smallest size, that makes reading code semantically clearer.
 
+You can override breakpoint values on a specific grid instance by setting the `breakpoints` property.
 
 ## Examples
 
-### Responsive elements
+### Responsive Elements
 
-Any element that defines multiple different size classes is responsive and adapts its size. 
+Any `Block` element that defines multiple different size classes is responsive and adapts its size.
 
-Following [example](examples/1-responsive-elements.js) shows how to build single column design on small phones and two column design on larger devices. You can either use `xsSize` or `size` to set base size and override it as needed. Blocks automatically fill line and break into new line when needed. However, you can also break manually by wrapping elements into another section.
+This [example](examples/1-responsive-elements.js) shows how to build a one-column design for smaller phones and a two-column design for larger devices. You can either use `xsSize` or `size` to set the base size, and then override it as needed. Blocks automatically fill the line and wrap onto a new line. However, you can also create a manual break by wrapping elements into another section.
 
 ```jsx
 <Grid>
@@ -72,9 +74,11 @@ Following [example](examples/1-responsive-elements.js) shows how to build single
 ![Example showing how elements can change size depending on screen size.](docs/images/1-responsive-elements.png)
 
 
-### Selectively displaying elements
+### Selectively Displaying Elements
 
-This [example](examples/2-hidden-elements.js) shows how to display elements only on specific device sizes using `*hidden` properties. There are also complementary `*visible` properties which make overriding easier.
+Using `*hidden` and `*visible` properties is the easiest way to display element only on specific target sizes.
+
+This [example](examples/2-hidden-elements.js) shows how to use `smHidden` property to display the second block only on smaller phones. The third block is exactly the opposite, it is hidden by default using `hidden`, and only visible on larger devices because it was overridden with `smVisible`.
 
 ```jsx
 <Grid>
@@ -88,14 +92,15 @@ This [example](examples/2-hidden-elements.js) shows how to display elements only
 
 ![Example showing how elements can be hidden depending on screen size.](docs/images/2-hidden-elements.png)
 
-### Centering and shifting elements
+### Aligning and Shifting Elements
 
-Since elements flow from left to right, to center element or push it to the end, you can put filler elements and manually calculate their sizes to push elements depending on device size. The more straightforward way is to use *stretching* elements, which use flex to fill the space.
+Rather than manually calculating filler element sizes for different target sizes, stretching elements can be used to align elements more easily.
 
-To keep an element on the **left** and keep the remaining space free, just put the next element into a new section. To **center** an element, add a stretching element both before and after that element. To shift it to the **right**, just add a single stretching element before.
+This [example](examples/3-shifting-elements.js) shows how to align elements. To **left** align an element and keep the remaining space free, add the next element to a new section. To **center** align an element, add a stretching element both before and after the element. To **right** align it, add a single stretching element before.
 
-Since stretching elements have no way of knowing when to break into the next line and therefore the total amount of free space that is available, you should **put items you want in the same line into the same section**, just like in this [example](examples/3-shifting-elements.js). To prevent having zero width stretched elements, they have minimum width of one grid unit (`1/12`).
+Main benefit of this approach, compared to setting flex attributes on parent element is that it is simple to override how elements are rendered on different target sizes.
 
+Stretched elements automatically span at least one grid unit (`1/12`) to avoid having a width of zero. Since elements wrap once entire space is filled, when aligning elements to the right you will want to put them into same section.
 
 ```jsx
 <Grid>
@@ -122,9 +127,9 @@ Since stretching elements have no way of knowing when to break into the next lin
 ![Example showing how stretching elements can be used to shift other elements.](docs/images/3-shifting-elements.png)
 
 
-### Combining fixed and responsive widths
+### Combining Fixed and Responsive Widths
 
-This [example](examples/4-fixed-size-elements.js) shows how it is possible to combine different size value types. The second section shows a solution for a real-life problem, how to combine fixed size along with stretching element to fill the remaining space.
+This [example](examples/4-fixed-size-elements.js) shows how to fill the remaining space after fixed sized elements and how it is possible to combine different units for blocks inside same section.
 
 ```jsx
 <Grid>
@@ -143,11 +148,11 @@ This [example](examples/4-fixed-size-elements.js) shows how it is possible to co
 
 ![Example showing how one can use fixed size elements as well.](docs/images/4-fixed-size-elements.png)
 
-### Different styles or components
+### Conditionally Rendering Styles/Components
 
-Since size is not the only thing that needs to change depending on device size, there is also HOC available that provides selector function.
+To enable changing other properties, such as styles you can wrap your component with [`withSizeClass`](docs/api/README.md#withsizeclasscomponent). It provides a `sizeSelector` function that makes it easy to select a value depending on current target size.
 
-This [example](examples/5-conditional-styling.js) shows how to render components with different styles. However, using `withSizeClass` and provided `sizeSelector` property is not limited to the styles -- it works with any object so you can even render a different component depending on device size.
+This [example](examples/5-conditional-styling.js) shows how to render a component with a different style depending on target size. However, `sizeSelector` is not limited to just styles, its values can be any object. Therefore you can even render a completely different component.
 
 ```jsx
 const WrappedComponent = withSizeClass(({ sizeSelector }) => {
@@ -162,7 +167,7 @@ const WrappedComponent = withSizeClass(({ sizeSelector }) => {
 });
 ```
 
-Above, the `sizeSelector` function expects an object that contains sizes (breakpoints) or `default` as keys, then just like with size and hidden properties in previous examples, it selects the appropriate. The only thing remaining is to render component inside the grid.
+Wrapped component must be rendered inside the grid in order for selector functions to work.
 
 ```jsx
 <Grid>
@@ -177,9 +182,12 @@ Above, the `sizeSelector` function expects an object that contains sizes (breakp
 ![Example showing how to use conditional styling HOC.](docs/images/5-conditional-styling.png)
 
 
-### Laying out content either horizontally or vertically
+### Changing the Orientation
 
-Just like `ScrollView`, by providing `horizontal` property, you can change the direction in which the layout should flow. This [example](examples/6-horizontal-direction.js) shows how when using horizontal direction, the breakpoints are based on device **height** rather than width. This is because in horizontal flow the height is the limiting factor for conditional rendering.
+Just like with `ScrollView` it is possible to set the horizontal property to change content orientation. 
+
+This [example](examples/6-horizontal-direction.js) shows how to lay out grid horizontally. Height is the limiting dimension with a horizontal flow, so target size is determined by comparing breakpoints to it.
+
 
 ```jsx
 <Grid horizontal>
@@ -195,9 +203,11 @@ Just like `ScrollView`, by providing `horizontal` property, you can change the d
 ![Example showing using horizontal direction.](docs/images/6-horizontal-direction.png)
 
 
-### Stretching grid
+### Stretching the Grid
 
-By default, grid size will be based on the content size. If you want it to stretch over the available space, simply set the `stretchable` property on the grid and add `stretch` to sections you want to be stretched. It will automatically set the appropriate styles on child `Box` and `Section` components and enable their children to be properly rendered.
+By default, the grid will take up as much space as its content requires. In order to stretch a grid across all the available space, simply set the grid’s `stretchable` property and add `stretch` to the desired sections. 
+
+For a demonstration, take a look at the source of these [normal](examples/7-stretch-disabled.js) and [stretching](examples/7-stretch-enabled.js) examples. 
 
 ```jsx
 <Grid stretchable>
@@ -223,12 +233,14 @@ By default, grid size will be based on the content size. If you want it to stret
 
 ![Stretching grid demonstration.](docs/images/7-stretching.png)
 
-For complete examples take a look at source for the above [normal](examples/7-stretch-disabled.js) and [stretching](examples/7-stretch-enabled.js) examples.
 
+### Scrollable Grid
 
-### Scrollable grid
+When grid contains too many elements and would not fit on a screen, rather than wrapping it inside `ScrollView`, simply set the `scrollable` property. Main advantage of this approach is that it takes in count other grid settings such as orientation and stretching and configures the `ScrollView` for you. 
 
-When using grid on a screen that contains lots of elements that might not fit the screen, it is recommended to wrap the grid into a `ScrollView`. By doing that, there are cases where implementation details are leaked and have to be set up manually. To make that easier, it is possible to provide a `scrollable` prop to `Grid` component, which will automatically wrap the whole grid in `ScrollView`.
+This [example](examples/8-scrollable-grid.js) shows just how easy is to add scroll functionality by just providing scrollable property.
+
+If you require more control over `ScrollView`, you can always wrap the grid manually, without using `scrollable` prop. When wrapping stretching grid inside `ScrollView`, you should set `contentContainerStyle` prop to `{ flexGrow: 1 }` to ensure it stretches properly.
 
 ```jsx
 <Grid scrollable>
@@ -240,22 +252,7 @@ When using grid on a screen that contains lots of elements that might not fit th
 </Grid>
 ```
 
-When other `Grid` props are also set, `scrollable` prop will configure `ScrollView` according to those props. For example, setting both `horizontal` and `scrollable` will enable horizontal scrolling of grid and setting both `stretchable` and `scrollable` will stretch the grid if content doesn't take up the whole screen while enabling scrolling if the content takes more space than the screen.
-
 ![Scrollable grid demonstration.](docs/images/8-scrollable-grid.png)
-
-If you require more control over `ScrollView`, you can always wrap the grid manually, without using `scrollable` prop. Keep in mind that when rendering stretched grid inside `ScrollView`, you should set `{ flexGrow: 1 }` as `contentContainerStyle` prop in order for it to stretch over the entire space.
-
-
-## Note on sizes
-
-Based on currently popular device sizes, grid breakpoints were chosen so it would be possible to precisely target devices of all sizes which means there are some notable differences compared to web frameworks.
-
-Two sizes target portrait sizes of mobile phones, since in many cases a 100 points difference, between smaller ones and larger ones, can be used to render things differently.
-
-Similarly larger breakpoints were chosen so they target common tablet sizes rather than desktop monitor sizes. 
-
-These are just the defaults; you can always override breakpoints for specific grid instance by providing `breakpoints` property to `Grid`.
 
 ## Further Reading
 
