@@ -18,8 +18,7 @@ export class WithContainerDimensions extends React.Component {
       referenceWidth: 0,
     };
   }
-
-  componentWillMount() {
+  componentDidMount() {
     this.context.referenceSizeProvider.subscribe(this.handler);
   }
 

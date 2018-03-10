@@ -48,22 +48,15 @@ class Grid extends Component {
   constructor(props) {
     super(props);
 
-    const subscriber = new SizeSubscriber();
     let width = 0;
     let height = 0;
-
-    // If relative to window we need to manually determine values when mounted.
-    // To track changes we add on change handlers on `componentWillMount` and
-    // `componentWillUnmount`.
     if (props.relativeTo === 'window') {
       ({ width, height } = Dimensions.get('window'));
-      subscriber.update(width, height);
     }
 
     this.state = {
-      breakpoints: props.breakpoints,
       containerSizeClass: this.determineSize(props.breakpoints, props.horizontal, width, height),
-      referenceSizeProvider: subscriber,
+      referenceSizeProvider: new SizeSubscriber(),
     };
   }
 
@@ -82,10 +75,12 @@ class Grid extends Component {
     Dimensions.removeEventListener('change', this.windowResizeHandler);
   }
 
-  onLayout = ({ nativeEvent: { layout: { width, height } } }) => {
-    this.updateSize(width, height);
+  onLayoutHandler = ({ nativeEvent: { layout: { width, height } } }) => {
+    if (this.props.relativeTo === 'self') {
+      this.updateSizeClass(width, height);
+    }
+    this.updateSizeProvider(width, height);
   };
-
 
   /**
    * Helper function that calculates all state (context) values.
@@ -100,34 +95,29 @@ class Grid extends Component {
    * Handler for window size changes when grid is relative to it.
    */
   windowResizeHandler = ({ window: { width, height } }) => {
-    // Only trigger handler if Grid is relative to window size.
-    if (this.props.relativeTo !== 'window') {
-      return;
+    if (this.props.relativeTo === 'window') {
+      this.updateSizeClass(width, height);
     }
-
-    this.updateSize(width, height);
   };
 
   /**
    * Handler that will only update state if size really happened to avoid
    * useless re-rendering.
    */
-  updateSize = (width, height) => {
-    const size = this.determineSize(this.state.breakpoints, this.props.horizontal, width, height);
-
-    // Propagate size change to subscribed entities.
-    this.state.referenceSizeProvider.update(width, height);
+  updateSizeClass = (width, height) => {
+    const size = this.determineSize(this.props.breakpoints, this.props.horizontal, width, height);
 
     if (size !== this.state.containerSizeClass) {
       this.setState({ containerSizeClass: size });
     }
   }
 
+  updateSizeProvider = (width, height) => {
+    // Propagate size change to subscribed entities.
+    this.state.referenceSizeProvider.update(width, height);
+  }
 
   render() {
-    // Only enable onLayout handler when Grid is relative to its own size.
-    const onLayoutHandler = (this.props.relativeTo === 'self' ? this.onLayout : null);
-
     const view = (
       <View
         style={[
@@ -135,7 +125,7 @@ class Grid extends Component {
           this.props.stretchable ? styles.stretchable : null,
           this.props.style,
         ]}
-        onLayout={onLayoutHandler}
+        onLayout={this.onLayoutHandler}
       >
         {this.state.containerSizeClass ? this.props.children : null}
       </View>
