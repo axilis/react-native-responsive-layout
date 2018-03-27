@@ -9,7 +9,7 @@ import { checkInsideGrid } from '../../utils';
  * sizing class - depending on `Grid` configuration that will be
  * either be window sizes or `Grid` component's size.
  */
-class WithContainerDimensions extends React.Component {
+export class WithContainerDimensions extends React.Component {
   constructor(props) {
     super(props);
 
@@ -71,5 +71,3 @@ export const withContainerDimensions = (Component) => {
   return withContainerDimensionsWrapped;
 };
 
-
-export default WithContainerDimensions;

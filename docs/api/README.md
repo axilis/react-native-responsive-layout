@@ -50,19 +50,21 @@ This way we can simply create button that would look great on all device sizes w
 
 ```javascript
 const ResponsiveButton = (props) => (
-    <WithSizeClass>{(size, sizeSelector) => {
-      // Use provided method to select appropriate object
-      const style = sizeSelector({
-        xs: styles.smallButton,
-        sm: styles.mediumButton,
-        md: styles.largeButton,
-      });
-      return (<TouchableOpacity onPress={props.onPress}>
-        <View style={[style, props.containerStyle]}>
-          <Text style={props.textStyle}>{props.title}</Text>
-        </View>
-      </TouchableOpacity>);
-    }}</WithSizeClass>
+    <WithSizeClass>
+      {(size, sizeSelector) => {
+        // Use provided method to select appropriate object
+        const style = sizeSelector({
+          xs: styles.smallButton,
+          sm: styles.mediumButton,
+          md: styles.largeButton,
+        });
+        return (<TouchableOpacity onPress={props.onPress}>
+          <View style={[style, props.containerStyle]}>
+            <Text style={props.textStyle}>{props.title}</Text>
+          </View>
+        </TouchableOpacity>);
+      }}
+    </WithSizeClass>
 );
 
 ```
@@ -107,13 +109,18 @@ Provides current `width` and `height` that first outer grid uses to determine si
 - **width** - reference component width
 - **height** - reference component height
 
-If you do not care about exact dimensions, rather size class, it is better to use [withSizeClass](#withsizeclasscomponent--component) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
+If you do not care about exact dimensions, rather size class, it is better to use [WithSizeClass](#withsizeclass) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
-// height by using WithContainerDimensions helper:
+// height by by rendering as FaCC (Function as Child Component) inside 
+// WithContainerDimensions component:
 const Info = () => (
-  <WithContainerDimensions>{(width, height) => (<Text>{width}pt x {height}pt</Text>)}</WithContainerDimensions>
+  <WithContainerDimensions>
+    {(width, height) => (
+      <Text>{width}pt x {height}pt</Text>
+    )}
+  </WithContainerDimensions>
 );
 
 // when it is rendered inside Grid your component is provided with values.
@@ -135,7 +142,9 @@ If you do not care about exact dimensions, rather size class, it is better to us
 ```javascript
 // To make use of width and height in our component, we just access width and 
 // height by using WithContainerDimensions helper:
-const WrappedInfo = withContainerDimensions((width, height)  => (<Text>{width}pt x {height}pt</Text>));
+const WrappedInfo = withContainerDimensions((width, height)  => (
+  <Text>{width}pt x {height}pt</Text>
+));
 
 // when it is rendered inside Grid your component is provided with values.
 <Grid>
@@ -159,12 +168,13 @@ Most obvious usage of this function would be to build HOC that represents tiles 
 
 ```javascript
 const Card = () => (
-    <WithContainerDimensions>{(width)=>{
-      const l = calculateStretchLength(width, 120);
-      return (
-        <View style={{ width: l, height: l }} />
-      )
-    }}
+    <WithContainerDimensions>
+      {(width) => {
+        const l = calculateStretchLength(width, 120);
+        return (
+          <View style={{ width: l, height: l }} />
+        )
+      }}
     </WithContainerDimensions>
   );
 ```

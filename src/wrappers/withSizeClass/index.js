@@ -13,7 +13,7 @@ import { getSize } from './methods';
  *  and returns closest size that is relevant, this enables style selection to
  *  match grid size
  */
-const WithSizeClass = ({ children }, { containerSizeClass }) => {
+export const WithSizeClass = ({ children }, { containerSizeClass }) => {
   const sizeSelector = values => getSize(SIZE_NAMES, containerSizeClass, values);
   return children(containerSizeClass, sizeSelector);
 };
@@ -39,7 +39,8 @@ export const withSizeClass = (Component) => {
           size={size}
           sizeSelector={sizeSelector}
           {...props}
-        />)}
+        />
+      )}
     </WithSizeClass>);
 
   const componentName = Component.displayName || Component.name || 'UnnamedComponent';
@@ -48,5 +49,3 @@ export const withSizeClass = (Component) => {
   return wrappedComponent;
 };
 
-
-export default withSizeClass;

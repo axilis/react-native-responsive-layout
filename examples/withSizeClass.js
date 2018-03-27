@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { withSizeClass } from 'react-native-responsive-layout/wrappers';
+import { withSizeClass, WithSizeClass } from 'react-native-responsive-layout/wrappers';
 
 const styles = StyleSheet.create({
   text: {
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ResponsiveButton = withSizeClass((props) => {
+const ResponsiveButtonHOC = withSizeClass((props) => {
   const style = props.sizeSelector({
     xs: styles.smallButton,
     sm: styles.mediumButton,
@@ -39,37 +40,46 @@ const ResponsiveButton = withSizeClass((props) => {
   });
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <View style={[style, props.containerStyle]}>
-        <Text style={[styles.text, props.textStyle]}>{props.title}</Text>
+      <View style={style}>
+        <Text style={styles.text}>{props.title}</Text>
       </View>
     </TouchableOpacity>
   );
 });
+
+const ResponsiveButtonFaCC = props => (
+  <WithSizeClass>
+    {(size, sizeSelector) => {
+      const style = sizeSelector({
+        xs: styles.smallButton,
+        sm: styles.mediumButton,
+        md: styles.largeButton,
+      });
+      return (
+        <TouchableOpacity onPress={props.onPress}>
+          <View style={style}>
+            <Text style={styles.text}>{props.title}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }}
+  </WithSizeClass>
+);
+
+ResponsiveButtonFaCC.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default () => (
   <View>
     <Grid>
       <Section>
         <Block>
-          <ResponsiveButton title="First button" />
-          <ResponsiveButton title="Second button" />
-          <ResponsiveButton title="Third button" />
-          <WithSizeClass>{
-          (size, sizeSelector) => {
-            const style = props.sizeSelector({
-              xs: styles.smallButton,
-              sm: styles.mediumButton,
-              md: styles.largeButton,
-            });
-            return (
-              <TouchableOpacity onPress={props.onPress}>
-                <View style={[style, props.containerStyle]}>
-                  <Text style={[styles.text, props.textStyle]}>{"Fourth button"}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }
-        }</WithSizeClass>
+          <ResponsiveButtonHOC title="First button" onPress={() => {}} />
+          <ResponsiveButtonFaCC title="Second button" onPress={() => {}} />
+          <ResponsiveButtonHOC title="Third button" onPress={() => {}} />
+          <ResponsiveButtonFaCC title="Fourth button" onPress={() => {}} />
         </Block>
       </Section>
     </Grid>

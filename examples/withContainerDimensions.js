@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { WithContainerDimensions } from 'react-native-responsive-layout/wrappers';
+import { withContainerDimensions, WithContainerDimensions } from 'react-native-responsive-layout/wrappers';
 
 const styles = StyleSheet.create({
   text: {
@@ -23,14 +22,23 @@ const styles = StyleSheet.create({
 // Our original component is provided with original props and it will
 // additionally receive width and height once rendered inside grid.
 // Default values are fallback if rendered outside grid.
-const Info = () => (
-  <WithContainerDimensions>{(width, height) => (<Text>{width}pt x {height}pt</Text>)}</WithContainerDimensions>
+const InfoHOC = withContainerDimensions(({ width, height }) => (
+  <Text style={styles.text}>
+    {width}pt x {height}pt
+  </Text>
+));
+
+// Same component implemented using function as a child component pattern.
+const InfoFaCC = () => (
+  <WithContainerDimensions>
+    {(width, height) => (
+      <Text style={styles.text}>
+        {width}pt x {height}pt
+      </Text>
+    )}
+  </WithContainerDimensions>
 );
 
-Info.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-};
 
 export default () => (
   <View>
@@ -47,12 +55,12 @@ export default () => (
             <Section>
               <Block size="1/2">
                 <View style={[{ backgroundColor: '#BBB' }]}>
-                  <Info />
+                  <InfoHOC />
                 </View>
               </Block>
               <Block size="1/2">
                 <View style={[{ backgroundColor: '#999' }]}>
-                  <Info />
+                  <InfoFaCC />
                 </View>
               </Block>
             </Section>
@@ -63,7 +71,7 @@ export default () => (
       <Section>
         <Block>
           <View style={[{ backgroundColor: '#777' }, styles.container]}>
-            <DimensionInfo />
+            <InfoHOC />
           </View>
         </Block>
       </Section>

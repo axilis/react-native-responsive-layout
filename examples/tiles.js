@@ -1,21 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView, Text, View } from 'react-native';
 
 import { Block, Grid, Section } from 'react-native-responsive-layout';
 import { WithContainerDimensions, withContainerDimensions } from 'react-native-responsive-layout/wrappers';
 import { calculateStretchLength } from 'react-native-responsive-layout/utils';
 
-const Card = ({style}) => (
-  <WithContainerDimensions>{(width)=>{
+const CardFaCC = ({ style }) => (
+  <WithContainerDimensions>{(width) => {
     const l = calculateStretchLength(width, 120);
     return (
-      <View style={[style,{ width: l, height: l }]} />
-    )
+      <View style={[style, { width: l, height: l }]} />
+    );
   }}
   </WithContainerDimensions>
 );
 
-const WrappedCard = withContainerDimensions(({ width, style }) => {
+CardFaCC.propTypes = {
+  style: PropTypes.style,
+};
+
+CardFaCC.defaultProps = {
+  style: {},
+};
+
+const CardHOC = withContainerDimensions(({ width, style }) => {
   const l = calculateStretchLength(width, 120);
   return (
     <View style={[style, { width: l, height: l }]} />
@@ -30,24 +39,24 @@ export default () => (
         <Block>
           <Text style={{ margin: 5, fontSize: 16 }}>First Heading</Text>
         </Block>
-        <Card style={{ backgroundColor: '#eee' }} />
-        <Card style={{ backgroundColor: '#ddd' }} />
-        <Card style={{ backgroundColor: '#ccc' }} />
+        <CardFaCC style={{ backgroundColor: '#eee' }} />
+        <CardFaCC style={{ backgroundColor: '#ddd' }} />
+        <CardFaCC style={{ backgroundColor: '#ccc' }} />
       </Section>
       <Section>
         <Block>
           <Text style={{ margin: 5, fontSize: 16 }}>Second Heading</Text>
         </Block>
-        <WrappedCard style={{ backgroundColor: '#bbb' }} />
-        <WrappedCard style={{ backgroundColor: '#aaa' }} />
-        <WrappedCard style={{ backgroundColor: '#999' }} />
-        <WrappedCard style={{ backgroundColor: '#888' }} />
-        <WrappedCard style={{ backgroundColor: '#777' }} />
-        <WrappedCard style={{ backgroundColor: '#666' }} />
-        <WrappedCard style={{ backgroundColor: '#555' }} />
-        <WrappedCard style={{ backgroundColor: '#444' }} />
-        <WrappedCard style={{ backgroundColor: '#333' }} />
-        <WrappedCard style={{ backgroundColor: '#222' }} />
+        <CardHOC style={{ backgroundColor: '#bbb' }} />
+        <CardHOC style={{ backgroundColor: '#aaa' }} />
+        <CardHOC style={{ backgroundColor: '#999' }} />
+        <CardHOC style={{ backgroundColor: '#888' }} />
+        <CardHOC style={{ backgroundColor: '#777' }} />
+        <CardHOC style={{ backgroundColor: '#666' }} />
+        <CardHOC style={{ backgroundColor: '#555' }} />
+        <CardHOC style={{ backgroundColor: '#444' }} />
+        <CardHOC style={{ backgroundColor: '#333' }} />
+        <CardHOC style={{ backgroundColor: '#222' }} />
       </Section>
     </Grid>
   </ScrollView>
