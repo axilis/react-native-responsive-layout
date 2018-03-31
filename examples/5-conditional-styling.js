@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { withSizeClass } from 'react-native-responsive-layout/wrappers';
+import { withSizeClass, WithSizeClass  } from 'react-native-responsive-layout/wrappers';
 
 
 const styles = StyleSheet.create({
@@ -36,6 +36,17 @@ export default () => (
     <Section>
       <Block>
         <WrappedComponent />
+        <WithSizeClass>{
+          (size, sizeSelector) => {
+            const style = sizeSelector({
+              xs: styles.lightBackground,
+              sm: styles.darkBackground,
+            });
+            return (
+              <View style={[styles.element, style]} />
+            );
+          }
+        }</WithSizeClass>
       </Block>
     </Section>
   </Grid>
