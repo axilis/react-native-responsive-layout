@@ -188,8 +188,7 @@ Grid.childContextTypes = {
    */
   containerStretch: PropTypes.bool,
   /**
-   * Width of element that is observed to determine cascading of sizes.
-   * It can be either Grid itself or Window depending on `relativeTo` property.
+   * Provider of changes in grids width and height.
    */
   containerSizeProvider: PropTypes.shape({
     subscribe: PropTypes.func.isRequired,

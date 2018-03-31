@@ -105,16 +105,16 @@ If you only want to hide or show specific components on specific size classes, p
 
 ### WithContainerDimensions
 
-Provides current `width` and `height` that first outer grid uses to determine size, depending on grid's `relativeTo` prop it is either viewport or grid itself.
+Provides current `width` and `height` of first outer grid.
 
-- **width** - reference component width
-- **height** - reference component height
+- **width** - grid component width
+- **height** - grid component height
 
 If you do not care about exact dimensions, rather size class, it is better to use [WithSizeClass](#withsizeclass) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
-// height by by rendering as FaCC (Function as Child Component) inside 
+// height by rendering as FaCC (Function as Child Component) inside 
 // WithContainerDimensions component:
 const Info = () => (
   <WithContainerDimensions>
@@ -133,17 +133,17 @@ const Info = () => (
 
 ### withContainerDimensions (Component) → Component
 
-HOC that offers same functionality as WithContainerDimensions. Provides current `width` and `height` that first outer grid uses to determine size, depending on grid's `relativeTo` prop it is either viewport or grid itself.
+HOC that offers same functionality as WithContainerDimensions. Provides current `width` and `height` of the first outer grid.
 
-- **width** - reference component width
-- **height** - reference component height
+- **width** - grid component width
+- **height** - grid component height
 
 If you do not care about exact dimensions, rather size class, it is better to use [withSizeClass](#withsizeclasscomponent--component) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
 // height by using WithContainerDimensions helper:
-const WrappedInfo = withContainerDimensions((width, height)  => (
+const WrappedInfo = withContainerDimensions(({width, height})  => (
   <Text>{width}pt x {height}pt</Text>
 ));
 
@@ -165,7 +165,7 @@ For complete code along with how grid nesting works along with it take a look at
 
 Calculates minimum length larger or equal to provided that enables elements to be proportionally stretched in a provided total length. This is useful for building grids that have objects of equal width/height and have the specific minimum size. This way element will never be stretched never more than twice the size (since then two of them would fit using smaller length). 
 
-Most obvious usage of this function would be to build HOC that represents tiles in a gallery; this is especially useful in combination with `WithContainerDimensions` of Grid that is `relativeTo='self'` since it enables us to get its width:
+Most obvious usage of this function would be to build HOC that represents tiles in a gallery; this is especially useful in combination with `WithContainerDimensions` since it enables us to get grids width:
 
 ```javascript
 const Card = () => (
