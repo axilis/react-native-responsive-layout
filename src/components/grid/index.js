@@ -13,16 +13,17 @@ import { ContainerSizeProp, DirectionProp } from '../../shared/props';
 import { determineSizeClass } from './methods';
 import { BreakpointsProp } from './props';
 import SizeSubscriber from './Subscriber';
+import Scrollable from './Scrollable';
 
 
 const styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   vertical: {
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   stretchable: {
     flex: 1,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
  * Using `relativeTo` set to 'self' can have performance impact since it must
  * determine whether children components are impacted by resize.
  *
- * @augments {Component<{breakpoints: Object, horizontal: boolean, relativeTo: 'window' | 'self', stretchable: boolean, style: any, children: any}>}
+ * @augments {Component<{breakpoints: Object, horizontal: boolean, scrollable: boolean, relativeTo: 'window' | 'self', stretchable: boolean, style: any, children: any}>}
  */
 /* eslint-enable */
 class Grid extends Component {
@@ -73,12 +74,12 @@ class Grid extends Component {
     referenceSizeProvider: this.state.referenceSizeProvider,
   });
 
-  componentWillMount() {
-    Dimensions.addEventListener('change', this.windowResizeHandler.bind(this));
+  componentDidMount() {
+    Dimensions.addEventListener('change', this.windowResizeHandler);
   }
 
   componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.windowResizeHandler.bind(this));
+    Dimensions.removeEventListener('change', this.windowResizeHandler);
   }
 
   onLayout = ({ nativeEvent: { layout: { width, height } } }) => {
@@ -127,7 +128,7 @@ class Grid extends Component {
     // Only enable onLayout handler when Grid is relative to its own size.
     const onLayoutHandler = (this.props.relativeTo === 'self' ? this.onLayout : null);
 
-    return (
+    const view = (
       <View
         style={[
           (this.props.horizontal ? styles.horizontal : styles.vertical),
@@ -139,6 +140,19 @@ class Grid extends Component {
         {this.state.containerSizeClass ? this.props.children : null}
       </View>
     );
+
+    if (!this.props.scrollable) {
+      return view;
+    }
+
+    return (
+      <Scrollable
+        horizontal={this.props.horizontal}
+        stretch={this.props.stretchable}
+      >
+        {view}
+      </Scrollable>
+    );
   }
 }
 
@@ -146,6 +160,7 @@ class Grid extends Component {
 Grid.propTypes = {
   breakpoints: BreakpointsProp,
   horizontal: PropTypes.bool,
+  scrollable: PropTypes.bool,
   relativeTo: PropTypes.oneOf(['window', 'self']),
   style: PropTypes.shape({}),
   stretchable: PropTypes.bool,
@@ -160,6 +175,7 @@ Grid.propTypes = {
 Grid.defaultProps = {
   breakpoints: BREAKPOINT_VALUES,
   horizontal: false,
+  scrollable: false,
   relativeTo: 'window',
   style: {},
   stretchable: false,

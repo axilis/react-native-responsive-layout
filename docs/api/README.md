@@ -17,6 +17,7 @@ A component which contains sections and blocks.
   - **self** - size classes will be calculated based on the grid container size, this can be useful in cases when you have only part of screen that you want to be responsive
 - **horizontal** - if provided it will flow horizontally, it goes hand in hand with `horizontal` property of `ScrollView`
 - **stretchable** - whether the grid should stretch the available space, this has no effect on sections that do not have the `stretch` property
+- **scrollable** - option which enables scrolling on a grid, if grid content doesn't fit the screen
 - **style** - enables overriding generated style
 
 ### Section

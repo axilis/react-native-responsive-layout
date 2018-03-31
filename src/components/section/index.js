@@ -5,27 +5,20 @@ import { StyleSheet, View } from 'react-native';
 import { DirectionProp } from '../../shared/props';
 import { checkInsideGrid, warn } from '../../utils';
 
-const sharedStyle = {
-  alignItems: 'flex-start',
-  flex: 0,
-  flexWrap: 'wrap',
-  justifyContent: 'flex-start',
-  position: 'relative',
-};
 
 const styles = StyleSheet.create({
   horizontal: {
-    ...sharedStyle,
+    alignItems: 'flex-start', // Required to support RN42+ due a bug with wrap
+    flexWrap: 'wrap',
     flexDirection: 'column',
   },
   vertical: {
-    ...sharedStyle,
+    alignItems: 'flex-start', // Required to support RN42+ due a bug with wrap
+    flexWrap: 'wrap',
     flexDirection: 'row',
   },
   stretch: {
     flex: 1,
-    alignContent: 'stretch',
-    alignItems: 'stretch',
   },
 });
 
