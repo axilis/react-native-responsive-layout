@@ -5,44 +5,41 @@ import { checkInsideGrid } from '../../utils';
 
 
 /**
- * Provides `width` and `height` which are used to determine
- * sizing class - depending on `Grid` configuration that will be
- * either be window sizes or `Grid` component's size.
+ * Provides `width` and `height` of parent `Grid` container
  */
 export class WithContainerDimensions extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      referenceHeight: 0,
-      referenceWidth: 0,
+      containerWidth: 0,
+      containerHeight: 0,
     };
   }
-
-  componentWillMount() {
-    this.context.referenceSizeProvider.subscribe(this.handler);
+  componentDidMount() {
+    this.context.containerSizeProvider.subscribe(this.handler);
   }
 
   componentWillUnmount() {
-    this.context.referenceSizeProvider.unsubscribe(this.handler);
+    this.context.containerSizeProvider.unsubscribe(this.handler);
   }
 
   handler = (width, height) => {
     // Only update component on change.
-    if (height === this.state.referenceHeight
-      && width === this.state.referenceWidth) {
+    if (height === this.state.containerHeight
+      && width === this.state.containerWidth) {
       return;
     }
 
     this.setState({
-      referenceWidth: width,
-      referenceHeight: height,
+      containerWidth: width,
+      containerHeight: height,
     });
   }
 
   render() {
     return (
-      this.props.children(this.state.referenceWidth, this.state.referenceHeight)
+      this.props.children(this.state.containerWidth, this.state.containerHeight)
     );
   }
 }
@@ -52,7 +49,7 @@ WithContainerDimensions.propTypes = {
 };
 
 WithContainerDimensions.contextTypes = {
-  referenceSizeProvider: checkInsideGrid(PropTypes.shape({
+  containerSizeProvider: checkInsideGrid(PropTypes.shape({
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
   })),
