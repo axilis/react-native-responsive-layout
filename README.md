@@ -15,7 +15,7 @@ To install the latest version simply run:
 ```bash
 yarn add react-native-responsive-layout
 ```
-alternatively, if you prefer using `npm`:
+Alternatively, if you prefer using `npm`:
 ```bash
 npm install --save react-native-responsive-layout
 ```
@@ -150,7 +150,7 @@ This [example](examples/4-fixed-size-elements.js) shows how to fill the remainin
 
 ### Conditionally Rendering Styles/Components
 
-To enable changing other properties, such as styles you can wrap your component with [`withSizeClass`](docs/api/README.md#withsizeclasscomponent). It provides a `sizeSelector` function that makes it easy to select a value depending on current target size.
+To enable changing other properties, such as styles, you can wrap your component with [`withSizeClass`](docs/api/README.md#withsizeclasscomponent) HOC or FaCC. They provide a `sizeSelector` function that makes it easy to select a value depending on current target size.
 
 This [example](examples/5-conditional-styling.js) shows how to render a component with a different style depending on target size. However, `sizeSelector` is not limited to just styles, its values can be any object. Therefore you can even render a completely different component.
 

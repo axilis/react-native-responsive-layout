@@ -5,7 +5,7 @@
 ### Grid
 A component which contains sections and blocks.
 
-- **breakpoints** - an object containing sizes upon child's blocks will collapse, if you do not provide some of them it automatically fallbacks to the first previous smaller, by default values are from the table at the bottom of this page:
+- **breakpoints** - an object containing sizes upon child's blocks will collapse; if you do not provide some of them it automatically fallbacks to the first previous smaller; default values are from the table at the bottom of this page:
   - **xs**: 320
   - **sm**: 411
   - **md**: 568
@@ -22,14 +22,14 @@ A component which contains sections and blocks.
 
 ### Section
 Container for blocks, in default grid direction (vertical) it behaves the same as a row in web-based grid systems. Its purpose is to group elements (blocks) and enable breaking into the new row.
-- **style** - enables overriding generated style
 - **stretch** - whether section should stretch the available space, only works when grid is `stretchable`
+- **style** - enables overriding generated style
 
 ### Block
 The smallest building block of grid elements. It renders itself depending on grid size.
 
 - **size** (_default="1/1"_) - used when there are no explicit sizes provided making block fixed width percentage across all the resolutions
-- **xsSize, smSize, mdSize, lgSize, xlSize, xxlSize** - size used when specific size class is active since this grid is mobile first and cascades from smaller to larger sizes, it will choose class that is lowest resolution larger than component/window size, it works similarly to React's width and height but it takes some additional arguments 
+- **xsSize, smSize, mdSize, lgSize, xlSize, xxlSize** - size used when specific size class is active; since this grid is mobile first and cascades from smaller to larger sizes, it will choose class that is lowest resolution larger than component/window size; it works similarly to React's width and height but it takes some additional arguments 
   - `"stretch"` - when used it stretches to be maximum width to fill remaining space surrounding other blocks, it can be useful to align components center or right
   - **string percentage**, from 0 to 100% (eg. `'30%'`)
   - **string fraction**, grid is based on 12's (eg. `'1/2'`, `'3/4'`... `'1/12'`)
@@ -45,7 +45,7 @@ The smallest building block of grid elements. It renders itself depending on gri
 Function as a child component that provides size class that is determined by parent grid.
 
 - **size** - provides outer grid's size class (eg. `sm`, `lg`...)
-- **sizeSelector** - depending on current grid size, selects relevant value from object, that contains sizes as keys, it is possible to provide only some of them, just like rest of grid, it will fallback to first smaller that satisfies criteria, especially useful when using with styles since it enables selection of appropriate style to match the block size (eg. you can create matching `lgSize` and `lg` style).
+- **sizeSelector** - depending on current grid size, selects relevant value from object that contains sizes as keys; it is possible to provide only some of them and it will fallback to first smaller that satisfies criteria; especially useful when using with styles since it enables selection of appropriate style to match the block size (eg. you can create matching `lgSize` and `lg` style).
 
 This way we can simply create button that would look great on all device sizes when rendered inside the grid:
 
@@ -59,11 +59,13 @@ const ResponsiveButton = (props) => (
           sm: styles.mediumButton,
           md: styles.largeButton,
         });
-        return (<TouchableOpacity onPress={props.onPress}>
-          <View style={[style, props.containerStyle]}>
-            <Text style={props.textStyle}>{props.title}</Text>
-          </View>
-        </TouchableOpacity>);
+        return (
+          <TouchableOpacity onPress={props.onPress}>
+            <View style={[style, props.containerStyle]}>
+              <Text style={props.textStyle}>{props.title}</Text>
+            </View>
+          </TouchableOpacity>
+        );
       }}
     </WithSizeClass>
 );
@@ -71,10 +73,10 @@ const ResponsiveButton = (props) => (
 ```
 ### withSizeClass(Component) → Component
 
-Provides component with size class that is determined by parent grid.
+Higher order component that provides size class that is determined by parent grid.
 
 - **size** - provides outer grid's size class (eg. `sm`, `lg`...)
-- **sizeSelector** - depending on current grid size, selects relevant value from object, that contains sizes as keys, it is possible to provide only some of them, just like rest of grid, it will fallback to first smaller that satisfies criteria, especially useful when using with styles since it enables selection of appropriate style to match the block size (eg. you can create matching `lgSize` and `lg` style).
+- **sizeSelector** - depending on current grid size, selects relevant value from object, that contains sizes as keys; it is possible to provide only some of them and it will fallback to first smaller that satisfies criteria; especially useful when using with styles since it enables selection of appropriate style to match the block size (eg. you can create matching `lgSize` and `lg` style).
 
 This way we can simply create button that would look great on all device sizes when rendered inside the grid:
 
@@ -114,8 +116,7 @@ If you do not care about exact dimensions, rather size class, it is better to us
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
-// height by rendering as FaCC (Function as Child Component) inside 
-// WithContainerDimensions component:
+// height provided by WithContainerDimensions FaCC:
 const Info = () => (
   <WithContainerDimensions>
     {(width, height) => (
@@ -142,15 +143,15 @@ If you do not care about exact dimensions, rather size class, it is better to us
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
-// height by using WithContainerDimensions helper:
-const WrappedInfo = withContainerDimensions(({width, height})  => (
+// height provided by withContainerDimensions HOC:
+const Info = withContainerDimensions(({width, height})  => (
   <Text>{width}pt x {height}pt</Text>
 ));
 
 // when it is rendered inside Grid your component is provided with values.
 <Grid>
 // ...
-    <WrappedInfo />
+    <Info />
 // ...
 ```
 
@@ -163,7 +164,7 @@ For complete code along with how grid nesting works along with it take a look at
 
 ### calculateStretchLength(totalLength, minimalElementLength) → length
 
-Calculates minimum length larger or equal to provided that enables elements to be proportionally stretched in a provided total length. This is useful for building grids that have objects of equal width/height and have the specific minimum size. This way element will never be stretched never more than twice the size (since then two of them would fit using smaller length). 
+Calculates minimum length larger or equal to provided that enables elements to be proportionally stretched in a provided total length. This is useful for building grids that have objects of equal width/height and have the specific minimum size. This way element will never be stretched more than twice the size (since then two of them would fit using smaller length). 
 
 Most obvious usage of this function would be to build HOC that represents tiles in a gallery; this is especially useful in combination with `WithContainerDimensions` since it enables us to get grids width:
 
