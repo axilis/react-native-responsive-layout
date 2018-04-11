@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const ResponsiveButtonHOC = withSizeClass((props) => {
-  const style = props.sizeSelector({
+const ResponsiveButtonHOC = withSizeClass(({ sizeSelector, ...props }) => {
+  const style = sizeSelector({
     xs: styles.smallButton,
     sm: styles.mediumButton,
     md: styles.largeButton,
@@ -66,20 +66,16 @@ const ResponsiveButtonFaCC = props => (
   </WithSizeClass>
 );
 
-ResponsiveButtonFaCC.propTypes = {
-  onPress: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default () => (
   <View>
     <Grid>
       <Section>
         <Block>
-          <ResponsiveButtonHOC title="First button" onPress={() => {}} />
-          <ResponsiveButtonFaCC title="Second button" onPress={() => {}} />
-          <ResponsiveButtonHOC title="Third button" onPress={() => {}} />
-          <ResponsiveButtonFaCC title="Fourth button" onPress={() => {}} />
+          <ResponsiveButtonHOC title="First button" onPress={() => { }} />
+          <ResponsiveButtonFaCC title="Second button" onPress={() => { }} />
+          <ResponsiveButtonHOC title="Third button" onPress={() => { }} />
+          <ResponsiveButtonFaCC title="Fourth button" onPress={() => { }} />
         </Block>
       </Section>
     </Grid>

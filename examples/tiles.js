@@ -7,22 +7,15 @@ import { WithContainerDimensions, withContainerDimensions } from 'react-native-r
 import { calculateStretchLength } from 'react-native-responsive-layout/utils';
 
 const CardFaCC = ({ style }) => (
-  <WithContainerDimensions>{(width) => {
-    const l = calculateStretchLength(width, 120);
-    return (
-      <View style={[style, { width: l, height: l }]} />
-    );
-  }}
+  <WithContainerDimensions>
+    {(width) => {
+      const l = calculateStretchLength(width, 120);
+      return (
+        <View style={[style, { width: l, height: l }]} />
+      );
+    }}
   </WithContainerDimensions>
 );
-
-CardFaCC.propTypes = {
-  style: PropTypes.style,
-};
-
-CardFaCC.defaultProps = {
-  style: {},
-};
 
 const CardHOC = withContainerDimensions(({ width, style }) => {
   const l = calculateStretchLength(width, 120);
