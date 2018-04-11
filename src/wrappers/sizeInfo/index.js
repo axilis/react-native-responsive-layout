@@ -1,24 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { SIZE_NAMES } from '../../shared/constants';
 import { ContainerSizeProp } from '../../shared/props';
-import { checkInsideGrid } from '../../utils';
+import { checkInsideGrid, warn } from '../../utils';
 import { getSize } from './methods';
 
 
 /**
- * Function as a child component that provides:
+ * Function as child component that provides:
  * - `size` - which corresponds to currently active size of grid
  * - `sizeSelector` - function which takes object that contains sizes as keys
  *  and returns closest size that is relevant, this enables style selection to
  *  match grid size
  */
-export const WithSizeClass = ({ children }, { containerSizeClass }) => {
-  const sizeSelector = values => getSize(SIZE_NAMES, containerSizeClass, values);
-  return children(containerSizeClass, sizeSelector);
+export const SizeInfo = ({ children }, { containerSizeClass: size }) => {
+  const sizeSelector = values => getSize(SIZE_NAMES, size, values);
+  return children({
+    size,
+    sizeSelector
+  });
 };
 
-WithSizeClass.contextTypes = {
+SizeInfo.propTypes = {
+  children: PropTypes.func.isRequired,
+};
+
+SizeInfo.contextTypes = {
   containerSizeClass: checkInsideGrid(ContainerSizeProp),
 };
 
@@ -31,21 +39,31 @@ WithSizeClass.contextTypes = {
  *
  * @param { React.ComponentType<{size: string, sizeSelector: function(Object): *}> } Component
  */
-export const withSizeClass = (Component) => {
+export const withSizeInfo = (Component) => {
   const wrappedComponent = props => (
-    <WithSizeClass>
-      {(size, sizeSelector) => (
+    <SizeInfo>
+      {({ size, sizeSelector }) => (
         <Component
           size={size}
           sizeSelector={sizeSelector}
           {...props}
         />
       )}
-    </WithSizeClass>);
+    </SizeInfo>
+  );
 
   const componentName = Component.displayName || Component.name || 'UnnamedComponent';
-  wrappedComponent.displayName = `withSizeClass(${componentName})`;
+  wrappedComponent.displayName = `withSizeInfo(${componentName})`;
 
   return wrappedComponent;
 };
 
+export const withSizeClass = (Component) => {
+  if (process.env.NODE_ENV === 'development') {
+    warn(
+      true,
+      'We deprecated `withSizeClass` HOC and replaced it with `withSizeInfo`. You should either use the new HOC or equivalent `SizeInfo` FaCC.',
+    );
+  }
+  return withSizeInfo(Component);
+}

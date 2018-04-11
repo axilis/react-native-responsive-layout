@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { withSizeClass, WithSizeClass } from 'react-native-responsive-layout/wrappers';
+import { SizeInfo, withSizeInfo } from 'react-native-responsive-layout/wrappers';
 
 const styles = StyleSheet.create({
   text: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ResponsiveButtonHOC = withSizeClass(({ sizeSelector, ...props }) => {
+const ResponsiveButtonHOC = withSizeInfo(({ sizeSelector, ...props }) => {
   const style = sizeSelector({
     xs: styles.smallButton,
     sm: styles.mediumButton,
@@ -48,8 +48,8 @@ const ResponsiveButtonHOC = withSizeClass(({ sizeSelector, ...props }) => {
 });
 
 const ResponsiveButtonFaCC = props => (
-  <WithSizeClass>
-    {(size, sizeSelector) => {
+  <SizeInfo>
+    {({ sizeSelector }) => {
       const style = sizeSelector({
         xs: styles.smallButton,
         sm: styles.mediumButton,
@@ -63,7 +63,7 @@ const ResponsiveButtonFaCC = props => (
         </TouchableOpacity>
       );
     }}
-  </WithSizeClass>
+  </SizeInfo>
 );
 
 

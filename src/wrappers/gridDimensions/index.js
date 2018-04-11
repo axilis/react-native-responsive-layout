@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { checkInsideGrid } from '../../utils';
+import { checkInsideGrid, warn } from '../../utils';
 
 
 /**
  * Provides `width` and `height` of parent `Grid` container
  */
-export class WithContainerDimensions extends React.Component {
+export class GridDimensions extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,17 +38,18 @@ export class WithContainerDimensions extends React.Component {
   }
 
   render() {
-    return (
-      this.props.children(this.state.containerWidth, this.state.containerHeight)
-    );
+    return this.props.children({
+      width: this.state.containerWidth,
+      height: this.state.containerHeight
+    });
   }
 }
 
-WithContainerDimensions.propTypes = {
+GridDimensions.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-WithContainerDimensions.contextTypes = {
+GridDimensions.contextTypes = {
   containerSizeProvider: checkInsideGrid(PropTypes.shape({
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
@@ -56,15 +57,31 @@ WithContainerDimensions.contextTypes = {
 };
 
 
-export const withContainerDimensions = (Component) => {
-  const withContainerDimensionsWrapped = props => (
-    <WithContainerDimensions>
-      {(width, height) => (<Component width={width} height={height} {...props} />)}
-    </WithContainerDimensions>);
+export const withGridDimensions = (Component) => {
+  const wrappedComponent = props => (
+    <GridDimensions>
+      {({ width, height }) => (
+        <Component
+          width={width}
+          height={height}
+          {...props}
+        />
+      )}
+    </GridDimensions>
+  );
 
   const componentName = Component.displayName || Component.name || 'UnnamedComponent';
-  withContainerDimensionsWrapped.displayName = `withContainerDimensions(${componentName})`;
+  wrappedComponent.displayName = `withGridDimensions(${componentName})`;
 
-  return withContainerDimensionsWrapped;
+  return wrappedComponent;
 };
 
+export const withContainerDimensions = (Component) => {
+  if (process.env.NODE_ENV === 'development') {
+    warn(
+      true,
+      'We deprecated `withContainerDimensions` HOC and replaced it with `withGridDimensions`. You should either use the new HOC or equivalent `GridDimensions` FaCC.',
+    );
+  }
+  return withGridDimensions(Component);
+}

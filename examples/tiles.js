@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import { ScrollView, Text, View } from 'react-native';
 
 import { Block, Grid, Section } from 'react-native-responsive-layout';
-import { WithContainerDimensions, withContainerDimensions } from 'react-native-responsive-layout/wrappers';
+import { GridDimensions, withGridDimensions } from 'react-native-responsive-layout/wrappers';
 import { calculateStretchLength } from 'react-native-responsive-layout/utils';
 
 const CardFaCC = ({ style }) => (
-  <WithContainerDimensions>
-    {(width) => {
+  <GridDimensions>
+    {({ width }) => {
       const l = calculateStretchLength(width, 120);
       return (
         <View style={[style, { width: l, height: l }]} />
       );
     }}
-  </WithContainerDimensions>
+  </GridDimensions>
 );
 
-const CardHOC = withContainerDimensions(({ width, style }) => {
+const CardHOC = withGridDimensions(({ width, style }) => {
   const l = calculateStretchLength(width, 120);
   return (
     <View style={[style, { width: l, height: l }]} />
