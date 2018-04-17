@@ -53,7 +53,7 @@ export const isHidden = (sizeNames, activeSize, props) => {
  * @param {Array<string>} sizeNames that grid supports ordered from smallest
  * @param {string} activeSize that is determined by grid
  * @param {Object} props object use as reference for values
- * @return {*}
+ * @return {any}
  */
 const getSize = (sizeNames, activeSize, props) => {
   const initialValue = (props.size || '1');

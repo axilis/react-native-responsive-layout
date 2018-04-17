@@ -3,9 +3,16 @@ import PropTypes from 'prop-types';
 
 import { checkInsideGrid, warn } from '../../utils';
 
+/**
+ * @typedef {Object} Dimensions
+ * @property {number} width
+ * @property {number} height
+ */
 
 /**
  * Provides `width` and `height` of parent `Grid` container
+ *
+ * @augments {React.Component<{children: function(Dimensions): React.ReactNode}>}
  */
 export class GridDimensions extends React.Component {
   constructor(props) {
@@ -16,6 +23,7 @@ export class GridDimensions extends React.Component {
       containerHeight: 0,
     };
   }
+
   componentDidMount() {
     this.context.containerSizeProvider.subscribe(this.handler);
   }
@@ -57,7 +65,13 @@ GridDimensions.contextTypes = {
 };
 
 
+/**
+ * Provides `width` and `height` of parent `Grid` container
+ *
+ * @param {React.ComponentType<Dimensions>} Component
+ */
 export const withGridDimensions = (Component) => {
+  /** @type {React.StatelessComponent} */
   const wrappedComponent = props => (
     <GridDimensions>
       {({ width, height }) => (
@@ -76,6 +90,12 @@ export const withGridDimensions = (Component) => {
   return wrappedComponent;
 };
 
+/**
+ * Provides `width` and `height` of parent `Grid` container
+ *
+ * @deprecated Use either `withGridDimensions` HOC or equivalent `GridDimensions` FaCC.
+ * @param {React.ComponentType<Dimensions>} Component
+ */
 export const withContainerDimensions = (Component) => {
   if (process.env.NODE_ENV === 'development') {
     warn(

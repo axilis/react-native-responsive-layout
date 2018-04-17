@@ -21,9 +21,9 @@ export const roundForPercentage = percent => (
  * @param {Array<string>} sizeNames array of grid sizes
  * @param {string} activeSize active grid size
  * @param {Object} props object containing values for sizes
- * @param {*} initialValue default value if none matches
+ * @param {any} initialValue default value if none matches
  * @param {function(string): string} keySelector function that generates key to access value
- * @returns {*}
+ * @returns {any}
  */
 export const valueForSize = (sizeNames, activeSize, props, initialValue, keySelector) => {
   let value = initialValue;

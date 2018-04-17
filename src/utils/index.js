@@ -36,8 +36,8 @@ export const warn = (shouldWarn, message) => {
  * are rendered inside grid, by validating that they have expected context
  * props available.
  *
- * @param {*} ProvidedProp validation to run in case prop exists
- * @returns {function(Object, string, string): *}
+ * @param {any} ProvidedProp validation to run in case prop exists
+ * @returns {function(Object, string, string): any}
  */
 export const checkInsideGrid = ProvidedProp => (props, propName, componentName) => {
   const prop = props[propName];

@@ -6,6 +6,11 @@ import { ContainerSizeProp } from '../../shared/props';
 import { checkInsideGrid, warn } from '../../utils';
 import { getSize } from './methods';
 
+/**
+ * @typedef {Object} Info
+ * @property {string} size
+ * @property {function(Object): any} sizeSelector
+ */
 
 /**
  * Function as child component that provides:
@@ -13,6 +18,8 @@ import { getSize } from './methods';
  * - `sizeSelector` - function which takes object that contains sizes as keys
  *  and returns closest size that is relevant, this enables style selection to
  *  match grid size
+ *
+ * @type {React.StatelessComponent<{children: function(Info): React.ReactElement}>}
  */
 export const SizeInfo = ({ children }, { containerSizeClass: size }) => {
   const sizeSelector = values => getSize(SIZE_NAMES, size, values);
@@ -37,9 +44,10 @@ SizeInfo.contextTypes = {
  *  and returns closest size that is relevant, this enables style selection to
  *  match grid size
  *
- * @param { React.ComponentType<{size: string, sizeSelector: function(Object): *}> } Component
+ * @param { React.ComponentType<Info> } Component
  */
 export const withSizeInfo = (Component) => {
+  /** @type {React.StatelessComponent} */
   const wrappedComponent = props => (
     <SizeInfo>
       {({ size, sizeSelector }) => (
@@ -58,6 +66,16 @@ export const withSizeInfo = (Component) => {
   return wrappedComponent;
 };
 
+/**
+ * Wraps provided component and provides:
+ * - `size` - which corresponds to currently active size of grid
+ * - `sizeSelector` - function which takes object that contains sizes as keys
+ *  and returns closest size that is relevant, this enables style selection to
+ *  match grid size
+ *
+ * @deprecated Use either `withSizeInfo` HOC or equivalent `SizeInfo` FaCC.
+ * @param { React.ComponentType<Info> } Component
+ */
 export const withSizeClass = (Component) => {
   if (process.env.NODE_ENV === 'development') {
     warn(
