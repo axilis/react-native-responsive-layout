@@ -25,7 +25,7 @@ export const SizeInfo = ({ children }, { containerSizeClass: size }) => {
   const sizeSelector = values => getSize(SIZE_NAMES, size, values);
   return children({
     size,
-    sizeSelector
+    sizeSelector,
   });
 };
 
@@ -84,4 +84,4 @@ export const withSizeClass = (Component) => {
     );
   }
   return withSizeInfo(Component);
-}
+};

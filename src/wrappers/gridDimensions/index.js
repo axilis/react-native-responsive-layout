@@ -48,7 +48,7 @@ export class GridDimensions extends React.Component {
   render() {
     return this.props.children({
       width: this.state.containerWidth,
-      height: this.state.containerHeight
+      height: this.state.containerHeight,
     });
   }
 }
@@ -104,4 +104,4 @@ export const withContainerDimensions = (Component) => {
     );
   }
   return withGridDimensions(Component);
-}
+};
