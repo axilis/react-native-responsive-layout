@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { withContainerDimensions, WithContainerDimensions } from 'react-native-responsive-layout/wrappers';
+import { GridDimensions, withGridDimensions } from 'react-native-responsive-layout/wrappers';
 
 const styles = StyleSheet.create({
   text: {
@@ -22,21 +22,21 @@ const styles = StyleSheet.create({
 // Our original component is provided with original props and it will
 // additionally receive width and height once rendered inside grid.
 // Default values are fallback if rendered outside grid.
-const InfoHOC = withContainerDimensions(({ width, height }) => (
+const InfoHOC = withGridDimensions(({ width, height }) => (
   <Text style={styles.text}>
     {width}pt x {height}pt
   </Text>
 ));
 
-// Same component implemented using function as a child component pattern.
+// Same component implemented using function as child component pattern.
 const InfoFaCC = () => (
-  <WithContainerDimensions>
-    {(width, height) => (
+  <GridDimensions>
+    {({ width, height }) => (
       <Text style={styles.text}>
         {width}pt x {height}pt
       </Text>
     )}
-  </WithContainerDimensions>
+  </GridDimensions>
 );
 
 
@@ -49,7 +49,7 @@ export default () => (
       <Section>
         <Block>
 
-          {/* When nesting grids, withContainerDimensions points to first
+          {/* When nesting grids, withGridDimensions and GridDimensions point to first
               parent's relative object */}
           <Grid relativeTo="self">
             <Section>
@@ -70,7 +70,7 @@ export default () => (
       </Section>
       <Section>
         <Block>
-          <View style={[{ backgroundColor: '#777' }, styles.container]}>
+          <View style={[{ backgroundColor: '#777' }]}>
             <InfoHOC />
           </View>
         </Block>

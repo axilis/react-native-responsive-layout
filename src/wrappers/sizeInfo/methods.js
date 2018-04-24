@@ -8,7 +8,7 @@ import { valueForSize } from '../../shared/methods';
  * @param {Array<string>} sizeNames array of grid sizes
  * @param {string} activeSize active grid size
  * @param {Object} props object containing values for sizes
- * @returns {*}
+ * @returns {any}
  */
 export const getSize = (sizeNames, activeSize, props) => {
   const initialValue = (props[sizeNames[0]] || props.default || undefined);

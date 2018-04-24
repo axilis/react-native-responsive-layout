@@ -150,12 +150,12 @@ This [example](examples/4-fixed-size-elements.js) shows how to fill the remainin
 
 ### Conditionally Rendering Styles/Components
 
-To enable changing other properties, such as styles, you can wrap your component with [`withSizeClass`](docs/api/README.md#withsizeclasscomponent) HOC or FaCC. They provide a `sizeSelector` function that makes it easy to select a value depending on current target size.
+To enable changing other properties, such as styles, you can wrap your component with [`SizeInfo`](docs/api/README.md#sizeinfo) FaCC or equivalent [`withSizeInfo`](docs/api/README.md#withsizeinfocomponent--component) HOC. They provide a `sizeSelector` function that makes it easy to select a value depending on current target size.
 
 This [example](examples/5-conditional-styling.js) shows how to render a component with a different style depending on target size. However, `sizeSelector` is not limited to just styles, its values can be any object. Therefore you can even render a completely different component.
 
 ```jsx
-const WrappedComponent = withSizeClass(({ sizeSelector }) => {
+const WrappedComponent = withSizeInfo(({ sizeSelector }) => {
   const style = sizeSelector({
     xs: styles.lightBackground,
     sm: styles.darkBackground,

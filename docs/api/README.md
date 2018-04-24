@@ -40,9 +40,9 @@ The smallest building block of grid elements. It renders itself depending on gri
 
 ## Wrappers
 
-### WithSizeClass
+### SizeInfo
 
-Function as a child component that provides size class that is determined by parent grid.
+Function as child component that provides an object with currently active size class that is determined by parent grid, as well as a size selector function.
 
 - **size** - provides outer grid's size class (eg. `sm`, `lg`...)
 - **sizeSelector** - depending on current grid size, selects relevant value from object that contains sizes as keys; it is possible to provide only some of them and it will fallback to first smaller that satisfies criteria; especially useful when using with styles since it enables selection of appropriate style to match the block size (eg. you can create matching `lgSize` and `lg` style).
@@ -51,8 +51,8 @@ This way we can simply create button that would look great on all device sizes w
 
 ```javascript
 const ResponsiveButton = (props) => (
-    <WithSizeClass>
-      {(size, sizeSelector) => {
+    <SizeInfo>
+      {({ sizeSelector }) => {
         // Use provided method to select appropriate object
         const style = sizeSelector({
           xs: styles.smallButton,
@@ -67,13 +67,13 @@ const ResponsiveButton = (props) => (
           </TouchableOpacity>
         );
       }}
-    </WithSizeClass>
+    </SizeInfo>
 );
 
 ```
-### withSizeClass(Component) → Component
+### withSizeInfo(Component) → Component
 
-Higher order component that provides size class that is determined by parent grid.
+Higher order component that provides prop values for currently active size class that is determined by parent grid, as well as a size selector function.
 
 - **size** - provides outer grid's size class (eg. `sm`, `lg`...)
 - **sizeSelector** - depending on current grid size, selects relevant value from object, that contains sizes as keys; it is possible to provide only some of them and it will fallback to first smaller that satisfies criteria; especially useful when using with styles since it enables selection of appropriate style to match the block size (eg. you can create matching `lgSize` and `lg` style).
@@ -81,7 +81,7 @@ Higher order component that provides size class that is determined by parent gri
 This way we can simply create button that would look great on all device sizes when rendered inside the grid:
 
 ```javascript
-const ResponsiveButton = withSizeClass(({ sizeSelector, ...props}) => {
+const ResponsiveButton = withSizeInfo(({ sizeSelector, ...props}) => {
   // Use provided method to select appropriate object
   const style = sizeSelector({
     xs: styles.smallButton,
@@ -99,30 +99,30 @@ const ResponsiveButton = withSizeClass(({ sizeSelector, ...props}) => {
 
 ```
 
-![Tiles Demo](../images/withSizeClass.gif)
+![Tiles Demo](../images/withSizeInfo.gif)
 
-You can find the full [example here](../../examples/withSizeClass.js).
+You can find the full [example here](../../examples/withSizeInfo.js).
 
 If you only want to hide or show specific components on specific size classes, please check [Block](#block)'s `Hidden` props that conditionally hide component.
 
-### WithContainerDimensions
+### GridDimensions
 
 Provides current `width` and `height` of first outer grid.
 
 - **width** - grid component width
 - **height** - grid component height
 
-If you do not care about exact dimensions, rather size class, it is better to use [WithSizeClass](#withsizeclass) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
+If you do not care about exact dimensions, rather size class, it is better to use [SizeInfo](#sizeinfo) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
-// height provided by WithContainerDimensions FaCC:
+// height provided by GridDimensions FaCC:
 const Info = () => (
-  <WithContainerDimensions>
-    {(width, height) => (
+  <GridDimensions>
+    {({ width, height }) => (
       <Text>{width}pt x {height}pt</Text>
     )}
-  </WithContainerDimensions>
+  </GridDimensions>
 );
 
 // when it is rendered inside Grid your component is provided with values.
@@ -132,19 +132,19 @@ const Info = () => (
 // ...
 ```
 
-### withContainerDimensions (Component) → Component
+### withGridDimensions (Component) → Component
 
-HOC that offers same functionality as WithContainerDimensions. Provides current `width` and `height` of the first outer grid.
+HOC that offers same functionality as GridDimensions. Provides current `width` and `height` of the first outer grid.
 
 - **width** - grid component width
 - **height** - grid component height
 
-If you do not care about exact dimensions, rather size class, it is better to use [withSizeClass](#withsizeclasscomponent--component) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
+If you do not care about exact dimensions, rather size class, it is better to use [withSizeInfo](#withsizeinfocomponent--component) since it causes re-rendering only when class changes rather than when any of provided dimensions change.
 
 ```javascript
 // To make use of width and height in our component, we just access width and 
-// height provided by withContainerDimensions HOC:
-const Info = withContainerDimensions(({width, height})  => (
+// height provided by withGridDimensions HOC:
+const Info = withGridDimensions(({ width, height })  => (
   <Text>{width}pt x {height}pt</Text>
 ));
 
@@ -155,9 +155,9 @@ const Info = withContainerDimensions(({width, height})  => (
 // ...
 ```
 
-![Tiles Demo](../images/withContainerDimensions.gif)
+![Tiles Demo](../images/withGridDimensions.gif)
 
-For complete code along with how grid nesting works along with it take a look at the [full example](../../examples/withContainerDimensions.js).
+For complete code along with how grid nesting works along with it take a look at the [full example](../../examples/withGridDimensions.js).
 
 
 ## Utility Functions
@@ -166,24 +166,24 @@ For complete code along with how grid nesting works along with it take a look at
 
 Calculates minimum length larger or equal to provided that enables elements to be proportionally stretched in a provided total length. This is useful for building grids that have objects of equal width/height and have the specific minimum size. This way element will never be stretched more than twice the size (since then two of them would fit using smaller length). 
 
-Most obvious usage of this function would be to build HOC that represents tiles in a gallery; this is especially useful in combination with `WithContainerDimensions` since it enables us to get grids width:
+Most obvious usage of this function would be to build component that represents tiles in a gallery; this is especially useful in combination with `GridDimensions` since it enables us to get grids width:
 
 ```javascript
 const Card = () => (
-    <WithContainerDimensions>
-      {(width) => {
+    <GridDimensions>
+      {({ width }) => {
         const l = calculateStretchLength(width, 120);
         return (
           <View style={{ width: l, height: l }} />
         )
       }}
-    </WithContainerDimensions>
+    </GridDimensions>
   );
 ```
 
 When using images, keep in mind that calculated length will always be between minimal element length and double the minimal element length, so you can pick reasonable value depending on the resolution of thumbnails.
 
-If grid spans entire width, it makes more sense to use `relativeTo='window'` (default value) to avoid unneeded re-rendering.
+If grid spans entire width, it makes more sense to use `relativeTo="window"` (default value) to avoid unneeded re-rendering.
 
 ![Tiles Demo](../images/tiles.gif)
 

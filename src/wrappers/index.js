@@ -1,2 +1,2 @@
-export { WithSizeClass, withSizeClass } from './withSizeClass';
-export { WithContainerDimensions, withContainerDimensions } from './withContainerDimensions';
+export { SizeInfo, withSizeInfo, withSizeClass } from './sizeInfo';
+export { GridDimensions, withGridDimensions, withContainerDimensions } from './gridDimensions';
