@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 
-import { DirectionProp } from '../../shared/props';
+import { SIZE_NAMES } from '../../shared/constants';
+
+import { ContainerSizeProp, DirectionProp } from '../../shared/props';
+import { getStyle } from '../../shared/methods';
 import { checkInsideGrid, warn } from '../../utils';
 
 
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
  *
  * @type {React.StatelessComponent<{stretch: boolean, style: any, children: any}>}
  */
-const Section = ({ children, style, stretch }, { contentDirection, containerStretch }) => {
+const Section = ({ children, stretch, ...props }, { contentDirection, containerSizeClass, containerStretch }) => {
   if (process.env.NODE_ENV === 'development') {
     warn(
       !containerStretch && !!stretch,
@@ -41,7 +44,7 @@ const Section = ({ children, style, stretch }, { contentDirection, containerStre
       style={[
         (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
         (stretch ? styles.stretch : null),
-        style,
+        getStyle(SIZE_NAMES, containerSizeClass, props),
       ]}
     >
       {children}
@@ -52,6 +55,7 @@ const Section = ({ children, style, stretch }, { contentDirection, containerStre
 
 Section.contextTypes = {
   contentDirection: checkInsideGrid(DirectionProp),
+  containerSizeClass: checkInsideGrid(ContainerSizeProp),
   containerStretch: checkInsideGrid(PropTypes.bool),
 };
 

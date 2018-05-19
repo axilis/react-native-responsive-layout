@@ -18,12 +18,14 @@ A component which contains sections and blocks.
 - **horizontal** - if provided it will flow horizontally, it goes hand in hand with `horizontal` property of `ScrollView`
 - **stretchable** - whether the grid should stretch the available space, this has no effect on sections that do not have the `stretch` property
 - **scrollable** - option which enables scrolling on a grid, if grid content doesn't fit the screen
-- **style** - enables overriding generated style
+- **xsStyle, smStyle, mdStyle, lgStyle, xlStyle, xxlStyle** - style used when specific size class is active; similar to the size in a Block, it will override the style based on the active size.
+- **style** - general style regardless of active size
 
 ### Section
 Container for blocks, in default grid direction (vertical) it behaves the same as a row in web-based grid systems. Its purpose is to group elements (blocks) and enable breaking into the new row.
 - **stretch** - whether section should stretch the available space, only works when grid is `stretchable`
-- **style** - enables overriding generated style
+- **xsStyle, smStyle, mdStyle, lgStyle, xlStyle, xxlStyle** - style used when specific size class is active; similar to the size in a Block, it will override the style based on the active size.
+- **style** - general style regardless of active size
 
 ### Block
 The smallest building block of grid elements. It renders itself depending on grid size.
@@ -36,7 +38,8 @@ The smallest building block of grid elements. It renders itself depending on gri
   - **numeric points**, fixed size in points (eg. `100`)
 - **hidden, xsHidden, smHidden, mdHidden, lgHidden, xlHidden, xxlHidden** - just like sizes, it will hide element attribute depending on current size
 - **visible, xsVisible, smVisible, mdVisible, lgVisible, xlVisible, xxlVisible** - counterparts to the hidden classes
-- **style** - enables overriding generated style
+- **xsStyle, smStyle, mdStyle, lgStyle, xlStyle, xxlStyle** - style used when specific size class is active; similar to the size above, it will override the style based on the active size.
+- **style** - general style regardless of active size
 
 ## Wrappers
 

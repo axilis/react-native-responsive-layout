@@ -10,6 +10,7 @@ import {
 } from '../../shared/constants';
 
 import { ContainerSizeProp, DirectionProp } from '../../shared/props';
+import { getStyle } from '../../shared/methods';
 import { determineSizeClass } from './methods';
 import { BreakpointsProp } from './props';
 import SizeSubscriber from './Subscriber';
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   },
   vertical: {
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   stretchable: {
     flex: 1,
@@ -123,7 +124,7 @@ class Grid extends Component {
         style={[
           (this.props.horizontal ? styles.horizontal : styles.vertical),
           this.props.stretchable ? styles.stretchable : null,
-          this.props.style,
+          getStyle(SIZE_NAMES, this.state.containerSizeClass, this.props)
         ]}
         onLayout={this.onLayoutHandler}
       >

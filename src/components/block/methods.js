@@ -62,7 +62,6 @@ const getSize = (sizeNames, activeSize, props) => {
   return valueForSize(sizeNames, activeSize, props, initialValue, keySelector);
 };
 
-
 /**
  * Determines width percentage of component depended on currently active size.
  *

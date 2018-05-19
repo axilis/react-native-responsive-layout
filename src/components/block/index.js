@@ -8,7 +8,7 @@ import {
   VERTICAL,
 } from '../../shared/constants';
 
-import { roundForPercentage } from '../../shared/methods';
+import { roundForPercentage, getStyle } from '../../shared/methods';
 import { ContainerSizeProp, DirectionProp } from '../../shared/props';
 import { checkInsideGrid } from '../../utils';
 import { determineSize, isHidden } from './methods';
@@ -58,6 +58,7 @@ const Block = ({
   const size = determineSize(SIZE_NAMES, containerSizeClass, props);
   const constantSize = { [styleProperty]: size };
   const sizeStyle = (size === 'stretch') ? style.stretchSize : constantSize;
+  const viewStyle = getStyle(SIZE_NAMES, containerSizeClass, props);
 
   // flexDirection depends on direction
   const directionStyle = {
@@ -65,7 +66,7 @@ const Block = ({
   };
 
   return (
-    <View style={[directionStyle, sizeStyle, props.style]}>
+    <View style={[directionStyle, sizeStyle, viewStyle]}>
       {children}
     </View>
   );
