@@ -44,24 +44,24 @@ const Block = ({
   children,
   ...props
 }, {
-  containerSizeClass,
-  contentDirection,
+  gridSizeClass,
+  gridContentDirection,
 }) => {
-  if (isHidden(SIZE_NAMES, containerSizeClass, props)) {
+  if (isHidden(SIZE_NAMES, gridSizeClass, props)) {
     return null;
   }
 
   // Which attribute we set depends on direction
-  const styleProperty = contentDirection === VERTICAL ? 'width' : 'height';
+  const styleProperty = gridContentDirection === VERTICAL ? 'width' : 'height';
 
   // Determine size
-  const size = determineSize(SIZE_NAMES, containerSizeClass, props);
+  const size = determineSize(SIZE_NAMES, gridSizeClass, props);
   const constantSize = { [styleProperty]: size };
   const sizeStyle = (size === 'stretch') ? style.stretchSize : constantSize;
 
   // flexDirection depends on direction
   const directionStyle = {
-    flexDirection: (contentDirection === VERTICAL ? 'column' : 'row'),
+    flexDirection: (gridContentDirection === VERTICAL ? 'column' : 'row'),
   };
 
   return (
@@ -76,8 +76,8 @@ Block.defaultProps = {
 };
 
 Block.contextTypes = {
-  containerSizeClass: checkInsideGrid(ContainerSizeProp),
-  contentDirection: checkInsideGrid(DirectionProp),
+  gridSizeClass: checkInsideGrid(ContainerSizeProp),
+  gridContentDirection: checkInsideGrid(DirectionProp),
 };
 
 Block.propTypes = {

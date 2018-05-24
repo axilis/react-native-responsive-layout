@@ -21,7 +21,7 @@ import { getSize } from './methods';
  *
  * @type {React.StatelessComponent<{children: function(Info): React.ReactElement}>}
  */
-export const SizeInfo = ({ children }, { containerSizeClass: size }) => {
+export const SizeInfo = ({ children }, { gridSizeClass: size }) => {
   const sizeSelector = values => getSize(SIZE_NAMES, size, values);
   return children({
     size,
@@ -34,7 +34,7 @@ SizeInfo.propTypes = {
 };
 
 SizeInfo.contextTypes = {
-  containerSizeClass: checkInsideGrid(ContainerSizeProp),
+  gridSizeClass: checkInsideGrid(ContainerSizeProp),
 };
 
 /**
