@@ -25,11 +25,11 @@ export class GridDimensions extends React.Component {
   }
 
   componentDidMount() {
-    this.context.containerSizeProvider.subscribe(this.handler);
+    this.context.gridSizeProvider.subscribe(this.handler);
   }
 
   componentWillUnmount() {
-    this.context.containerSizeProvider.unsubscribe(this.handler);
+    this.context.gridSizeProvider.unsubscribe(this.handler);
   }
 
   handler = (width, height) => {
@@ -58,7 +58,7 @@ GridDimensions.propTypes = {
 };
 
 GridDimensions.contextTypes = {
-  containerSizeProvider: checkInsideGrid(PropTypes.shape({
+  gridSizeProvider: checkInsideGrid(PropTypes.shape({
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
   })),

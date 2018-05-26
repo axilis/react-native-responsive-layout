@@ -254,9 +254,10 @@ If you require more control over `ScrollView`, you can always wrap the grid manu
 
 ![Scrollable grid demonstration.](docs/images/8-scrollable-grid.png)
 
+
 ### Nested Grid
 
-When nesting grid, block sizes will be based on space inside which it is placed. 
+When nesting grid, block sizes will be based on space inside which it is placed.
 
 This [example](examples/9-nested-grid.js) shows how nesting works. When placing a grid inside a half-width block, the maximum width will be based on that space. That means that nested block with half-width will be rendered as fourth-width.
 
