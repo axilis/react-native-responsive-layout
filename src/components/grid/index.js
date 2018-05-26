@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
  * Using `relativeTo` set to 'self' can have performance impact since it must
  * determine whether children components are impacted by resize.
  *
- * @augments {Component<{breakpoints: Object, horizontal: boolean, scrollable: boolean, relativeTo: 'window' | 'self', stretchable: boolean, style: any, children: any}>}
+ * @augments {Component<{breakpoints: Object, horizontal: boolean, scrollable: boolean, relativeTo: 'window' | 'self' | 'parent', stretchable: boolean, style: any, children: any}>}
  */
 /* eslint-enable */
 class Grid extends Component {
@@ -52,7 +52,7 @@ class Grid extends Component {
     let height = 0;
 
     // Subscriber for components nested inside that that take grid size.
-    const gridComponentSizeProvider = new SizeSubscriber(this.props.name);
+    const gridComponentSizeProvider = new SizeSubscriber();
     // Create subscriber used to resolve parent size dependencies in children.
     let childrenReferenceSizeSubscriber;
 
@@ -117,14 +117,12 @@ class Grid extends Component {
     // Subscribe to parent updates if they provide them and parent provides them
     if (this.props.relativeTo === 'parent') {
       if (this.context.referenceSizeProvider) {
-        console.log(this.props.name, "parent rss: ", this.context.referenceSizeProvider);
         this.context.referenceSizeProvider.subscribe(this.updateSizeClass);
       }
     }
   }
 
   componentWillUnmount() {
-    console.log(this.props.name, "UNMOUNTING GRID!");
     Dimensions.removeEventListener('change', this.windowResizeHandler);
 
     // On unmount we need to unsubscribe from parent subscriber.
@@ -137,7 +135,6 @@ class Grid extends Component {
 
   onLayoutHandler = ({ nativeEvent: { layout: { width, height } } }) => {
     if (this.props.relativeTo === 'self') {
-      console.log(this.props.name, "CALLED ON SELF!");
       this.updateSizeClass(width, height);
     }
     this.updateSizeProvider(width, height);
@@ -156,14 +153,11 @@ class Grid extends Component {
    * Handler for window size changes when grid is relative to it.
    */
   windowResizeHandler = ({ window: { width, height } }) => {
-    console.log(this.props.name, width, height);
-
     // Look into constructor to find more details about this implementation.
     if (
       (this.props.relativeTo === 'window') ||
       (this.props.relativeTo === 'parent' && this.context.referenceSizeProvider === null)
     ) {
-      console.log(this.props.name, "Updating size:", this.props.relativeTo, this.context.referenceSizeProvider);
       this.updateSizeClass(width, height);
     }
   };
@@ -175,7 +169,6 @@ class Grid extends Component {
   updateSizeClass = (width, height) => {
     const size = this.determineSize(this.props.breakpoints, this.props.horizontal, width, height);
     if (size !== this.state.gridSizeClass) {
-      console.log(this.props.name, "UPDATE", this.props.relativeTo, width, height);
       this.setState({ gridSizeClass: size });
     }
   }
