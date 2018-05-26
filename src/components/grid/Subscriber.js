@@ -3,14 +3,9 @@
  * Subscriber pattern implementation.
  */
 class SizeSubscriber {
-  name;
   observers = [];
   width = 0;
   height = 0;
-
-  constructor(name = undefined) {
-    this.name = name;
-  }
 
   /**
    * Add an observer which will be notified on size changes.

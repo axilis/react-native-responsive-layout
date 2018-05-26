@@ -212,7 +212,7 @@ Grid.propTypes = {
   breakpoints: BreakpointsProp,
   horizontal: PropTypes.bool,
   scrollable: PropTypes.bool,
-  relativeTo: PropTypes.oneOf(['window', 'self', 'parent']),
+  relativeTo: PropTypes.oneOf(['parent', 'self', 'window']),
   style: PropTypes.shape({}),
   stretchable: PropTypes.bool,
 
