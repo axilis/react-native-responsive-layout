@@ -42,38 +42,96 @@ const styles = StyleSheet.create({
  * Using `relativeTo` set to 'self' can have performance impact since it must
  * determine whether children components are impacted by resize.
  *
- * @augments {Component<{breakpoints: Object, horizontal: boolean, scrollable: boolean, relativeTo: 'window' | 'self', stretchable: boolean, style: any, children: any}>}
+ * @augments {Component<{breakpoints: Object, horizontal: boolean, scrollable: boolean, relativeTo: 'window' | 'self' | 'parent', stretchable: boolean, style: any, children: any}>}
  */
 /* eslint-enable */
 class Grid extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     let width = 0;
     let height = 0;
+
+    // Subscriber for components nested inside that that take grid size.
+    const gridComponentSizeProvider = new SizeSubscriber();
+    // Create subscriber used to resolve parent size dependencies in children.
+    let childrenReferenceSizeSubscriber;
+
+    /*
+      Regarding inheritance of reference size provider:
+      This table shows depending on current grid and parent grid what should
+      be provided further down the chain.
+
+             (parent -- first outer grid)
+             | parent |  self  | window |
+      -------|--------------------------|
+      parent | parent | parent | parent |
+        self |  self  |  self  |  self  |
+      window |  null  |  null  |  null  |
+      -------|--------------------------|
+
+    */
+
     if (props.relativeTo === 'window') {
+      // When size is not inherited from the parent, do not pass anything.
+      childrenReferenceSizeSubscriber = null;
+      // Fetch dimensions immediately and subscribe later.
       ({ width, height } = Dimensions.get('window'));
+    } else if (props.relativeTo === 'self') {
+      // When it is based on current element, pass on the current element.
+      childrenReferenceSizeSubscriber = gridComponentSizeProvider;
+      // Dimensions will be determined once onLayout is called.
+    } else if (props.relativeTo === 'parent') {
+      // When it is based on parent, simply pass it further down the chain.
+      childrenReferenceSizeSubscriber = context.referenceSizeProvider;
+
+      // When parent element is relative to window, we need to fetch dimensions
+      // manually just like in relativeTo='window' case, since it won't get
+      // re-rendered until the orientation changes so it would have the default
+      // values of 0, 0.
+      if (context.referenceSizeProvider === null) {
+        ({ width, height } = Dimensions.get('window'));
+      }
+
+      // When parent element is relative to self, simply the fact that this
+      // component will be rendered will trigger onLayout of parent element.
     }
 
     this.state = {
-      containerSizeClass: this.determineSize(props.breakpoints, props.horizontal, width, height),
-      containerSizeProvider: new SizeSubscriber(),
+      gridSizeClass: this.determineSize(props.breakpoints, props.horizontal, width, height),
+      gridSizeProvider: gridComponentSizeProvider,
+      referenceSizeProvider: childrenReferenceSizeSubscriber,
     };
   }
 
   getChildContext = () => ({
-    contentDirection: (this.props.horizontal ? HORIZONTAL : VERTICAL),
-    containerSizeClass: this.state.containerSizeClass,
-    containerStretch: this.props.stretchable,
-    containerSizeProvider: this.state.containerSizeProvider,
+    gridContentDirection: (this.props.horizontal ? HORIZONTAL : VERTICAL),
+    gridSizeClass: this.state.gridSizeClass,
+    gridStretch: this.props.stretchable,
+    gridSizeProvider: this.state.gridSizeProvider,
+    referenceSizeProvider: this.state.referenceSizeProvider,
   });
 
   componentDidMount() {
     Dimensions.addEventListener('change', this.windowResizeHandler);
+
+    // Subscribe to parent updates if they provide them and parent provides them
+    if (this.props.relativeTo === 'parent') {
+      if (this.context.referenceSizeProvider) {
+        this.context.referenceSizeProvider.subscribe(this.updateSizeClass);
+      }
+    }
   }
 
   componentWillUnmount() {
     Dimensions.removeEventListener('change', this.windowResizeHandler);
+
+    // On unmount we need to unsubscribe from parent subscriber.
+    if (this.props.relativeTo === 'parent') {
+      if (this.context.referenceSizeProvider) {
+        this.context.referenceSizeProvider.unsubscribe(this.updateSizeClass);
+      }
+    }
   }
 
   onLayoutHandler = ({ nativeEvent: { layout: { width, height } } }) => {
@@ -96,7 +154,11 @@ class Grid extends Component {
    * Handler for window size changes when grid is relative to it.
    */
   windowResizeHandler = ({ window: { width, height } }) => {
-    if (this.props.relativeTo === 'window') {
+    // Look into constructor to find more details about this implementation.
+    if (
+      (this.props.relativeTo === 'window') ||
+      (this.props.relativeTo === 'parent' && this.context.referenceSizeProvider === null)
+    ) {
       this.updateSizeClass(width, height);
     }
   };
@@ -107,15 +169,14 @@ class Grid extends Component {
    */
   updateSizeClass = (width, height) => {
     const size = this.determineSize(this.props.breakpoints, this.props.horizontal, width, height);
-
-    if (size !== this.state.containerSizeClass) {
-      this.setState({ containerSizeClass: size });
+    if (size !== this.state.gridSizeClass) {
+      this.setState({ gridSizeClass: size });
     }
   }
 
   updateSizeProvider = (width, height) => {
     // Propagate size change to subscribed entities.
-    this.state.containerSizeProvider.update(width, height);
+    this.state.gridSizeProvider.update(width, height);
   }
 
   render() {
@@ -124,11 +185,11 @@ class Grid extends Component {
         style={[
           (this.props.horizontal ? styles.horizontal : styles.vertical),
           this.props.stretchable ? styles.stretchable : null,
-          getStyle(SIZE_NAMES, this.state.containerSizeClass, this.props)
+          getStyle(SIZE_NAMES, this.state.gridSizeClass, this.props)
         ]}
         onLayout={this.onLayoutHandler}
       >
-        {this.state.containerSizeClass ? this.props.children : null}
+        {this.state.gridSizeClass ? this.props.children : null}
       </View>
     );
 
@@ -152,7 +213,7 @@ Grid.propTypes = {
   breakpoints: BreakpointsProp,
   horizontal: PropTypes.bool,
   scrollable: PropTypes.bool,
-  relativeTo: PropTypes.oneOf(['window', 'self']),
+  relativeTo: PropTypes.oneOf(['parent', 'self', 'window']),
   style: PropTypes.shape({}),
   stretchable: PropTypes.bool,
 
@@ -175,27 +236,42 @@ Grid.defaultProps = {
 
 Grid.childContextTypes = {
   /**
-   * Determines how content should flow in both Section and Block element. It
-   * is always based on provided direction prop.
+   * Determines how content should flow in both Section and Block element.
+   * It is always based on provided direction prop.
    */
-  contentDirection: DirectionProp,
+  gridContentDirection: DirectionProp,
   /**
-   * Grid will determine containerSizeClass that children will receive based
+   * Grid will determine gridSizeClass that children will receive based
    * on current grid size and merge of provided and default breakpoints.
    */
-  containerSizeClass: ContainerSizeProp,
+  gridSizeClass: ContainerSizeProp,
   /**
    * Whether grid should stretch available space.
    */
-  containerStretch: PropTypes.bool,
+  gridStretch: PropTypes.bool,
   /**
-   * Provider of changes in grids width and height.
+   * Provider of width and height changes in containing grids. Components nested
+   * inside grid that depend on its size will subscribe to this.
    */
-  containerSizeProvider: PropTypes.shape({
+  gridSizeProvider: PropTypes.shape({
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
+  }),
+  /**
+   * Provider of width and height changes in grids that refer to parent.
+   * Grids nested inside that are relative to its parent will subscribe to this.
+   */
+  referenceSizeProvider: PropTypes.shape({
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
   }),
 };
 
+Grid.contextTypes = {
+  referenceSizeProvider: PropTypes.shape({
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
+  }),
+};
 
 export default Grid;

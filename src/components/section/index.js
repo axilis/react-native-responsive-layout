@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
  *
  * @type {React.StatelessComponent<{stretch: boolean, style: any, children: any}>}
  */
-const Section = ({ children, stretch, ...props }, { contentDirection, containerSizeClass, containerStretch }) => {
+const Section = ({ children, style, stretch, ...props }, { gridContentDirection, gridSizeClass, gridStretch }) => {
   if (process.env.NODE_ENV === 'development') {
     warn(
-      !containerStretch && !!stretch,
+      !gridStretch && !!stretch,
       'Using `stretch` on `Section` without using `stretchable` on `Grid` has no stretching effect because grid itself won\'t be stretched and section will just collapse so it won\'t be visible.\nPlease make `Grid` stretchable as well.',
     );
   }
@@ -42,9 +42,9 @@ const Section = ({ children, stretch, ...props }, { contentDirection, containerS
   return (
     <View
       style={[
-        (contentDirection === 'vertical' ? styles.vertical : styles.horizontal),
+        (gridContentDirection === 'vertical' ? styles.vertical : styles.horizontal),
         (stretch ? styles.stretch : null),
-        getStyle(SIZE_NAMES, containerSizeClass, props),
+        getStyle(SIZE_NAMES, gridSizeClass, props),
       ]}
     >
       {children}
@@ -54,9 +54,9 @@ const Section = ({ children, stretch, ...props }, { contentDirection, containerS
 
 
 Section.contextTypes = {
-  contentDirection: checkInsideGrid(DirectionProp),
-  containerSizeClass: checkInsideGrid(ContainerSizeProp),
-  containerStretch: checkInsideGrid(PropTypes.bool),
+  gridContentDirection: checkInsideGrid(DirectionProp),
+  gridSizeClass: checkInsideGrid(ContainerSizeProp),
+  gridStretch: checkInsideGrid(PropTypes.bool),
 };
 
 Section.propTypes = {
