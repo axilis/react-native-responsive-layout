@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ViewPropTypes } from 'react-native';
 
 import {
   BREAKPOINT_VALUES,
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   vertical: {
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   stretchable: {
     flex: 1,
@@ -214,7 +214,7 @@ Grid.propTypes = {
   horizontal: PropTypes.bool,
   scrollable: PropTypes.bool,
   relativeTo: PropTypes.oneOf(['parent', 'self', 'window']),
-  style: PropTypes.shape({}),
+  style: ViewPropTypes.style,
   stretchable: PropTypes.bool,
 
   children: PropTypes.oneOfType([
