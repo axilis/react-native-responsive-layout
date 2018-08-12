@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
  *
  * @type {React.StatelessComponent<{stretch: boolean, style: any, children: any}>}
  */
-const Section = ({ children, style, stretch, ...props }, { gridContentDirection, gridSizeClass, gridStretch }) => {
+const Section = ({ children, stretch, ...props }, { gridContentDirection, gridSizeClass, gridStretch }) => {
   if (process.env.NODE_ENV === 'development') {
     warn(
       !gridStretch && !!stretch,
