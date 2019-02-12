@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
  * Using `relativeTo` set to 'self' can have performance impact since it must
  * determine whether children components are impacted by resize.
  *
- * @augments {Component<{breakpoints: Object, horizontal: boolean, scrollable: boolean, relativeTo: 'window' | 'self' | 'parent', stretchable: boolean, style: any, children: any}>}
+ * @augments {Component<{breakpoints?: Object, horizontal?: boolean, scrollable?: boolean, relativeTo?: 'window' | 'self' | 'parent', stretchable?: boolean, style?: any, children: any}>}
  */
 /* eslint-enable */
 class Grid extends Component {
