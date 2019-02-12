@@ -37,7 +37,7 @@ const style = StyleSheet.create({
  * - otherwise it will choose smallest class defined that is applicable based
  *   on sizing of closest outer `Grid` element
  *
- * @type {React.StatelessComponent<{size: string | number, hidden: boolean, visible: boolean, style: any, children: any}>}
+ * @type {React.StatelessComponent<{size?: string | number, hidden?: boolean, visible?: boolean, style?: any, children: any}>}
  */
 /* eslint-enable */
 const Block = ({
