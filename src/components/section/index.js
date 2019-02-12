@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 /**
  * Component used to contain group of Blocks.
  *
- * @type {React.StatelessComponent<{stretch: boolean, style: any, children: any}>}
+ * @type {React.StatelessComponent<{stretch?: boolean, style?: any, children: any}>}
  */
 const Section = ({ children, style, stretch }, { gridContentDirection, gridStretch }) => {
   if (process.env.NODE_ENV === 'development') {
