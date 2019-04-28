@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-
-import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { SizeInfo, withSizeInfo } from 'react-native-responsive-layout/wrappers';
+import { storiesOf } from '@storybook/react-native';
+import { Grid, Section, Block } from '../../';
+import { SizeInfo, withSizeInfo } from '../../wrappers';
 
 
 const styles = StyleSheet.create({
@@ -31,13 +31,14 @@ const WrappedComponent = withSizeInfo(({ sizeSelector }) => {
 });
 
 
-export default () => (
-  <Grid>
-    <Section>
-      <Block>
-        <WrappedComponent />
-        <SizeInfo>
-          {({ sizeSelector }) => {
+storiesOf('react-native-responsive-layout', module)
+  .add('Conditional Styling', () => (
+    <Grid>
+      <Section>
+        <Block>
+          <WrappedComponent />
+          <SizeInfo>
+            {({ sizeSelector }) => {
             const style = sizeSelector({
               xs: styles.lightBackground,
               sm: styles.darkBackground,
@@ -46,8 +47,8 @@ export default () => (
               <View style={[styles.element, style]} />
             );
           }}
-        </SizeInfo>
-      </Block>
-    </Section>
-  </Grid>
-);
+          </SizeInfo>
+        </Block>
+      </Section>
+    </Grid>
+  ));

@@ -1,9 +1,9 @@
 import React from 'react';
+import { storiesOf } from '@storybook/react-native';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
 
-import { Grid, Section, Block } from 'react-native-responsive-layout';
-import { SizeInfo, withSizeInfo } from 'react-native-responsive-layout/wrappers';
+import { Grid, Section, Block } from '../../';
+import { SizeInfo, withSizeInfo } from '../../wrappers';
 
 const styles = StyleSheet.create({
   text: {
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   },
 });
 
+/* eslint-disable-next-line */
 const ResponsiveButtonHOC = withSizeInfo(({ sizeSelector, ...props }) => {
   const style = sizeSelector({
     xs: styles.smallButton,
@@ -47,7 +48,8 @@ const ResponsiveButtonHOC = withSizeInfo(({ sizeSelector, ...props }) => {
   );
 });
 
-const ResponsiveButtonFaCC = props => (
+/* eslint-disable-next-line */
+const ResponsiveButtonFaCC = ({onPress, title}) => (
   <SizeInfo>
     {({ sizeSelector }) => {
       const style = sizeSelector({
@@ -56,9 +58,9 @@ const ResponsiveButtonFaCC = props => (
         md: styles.largeButton,
       });
       return (
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity onPress={onPress}>
           <View style={style}>
-            <Text style={styles.text}>{props.title}</Text>
+            <Text style={styles.text}>{title}</Text>
           </View>
         </TouchableOpacity>
       );
@@ -66,18 +68,18 @@ const ResponsiveButtonFaCC = props => (
   </SizeInfo>
 );
 
-
-export default () => (
-  <View>
-    <Grid>
-      <Section>
-        <Block>
-          <ResponsiveButtonHOC title="First button" onPress={() => { }} />
-          <ResponsiveButtonFaCC title="Second button" onPress={() => { }} />
-          <ResponsiveButtonHOC title="Third button" onPress={() => { }} />
-          <ResponsiveButtonFaCC title="Fourth button" onPress={() => { }} />
-        </Block>
-      </Section>
-    </Grid>
-  </View>
-);
+storiesOf('react-native-responsive-layout', module)
+  .add('withSizeInfo', () => (
+    <View>
+      <Grid>
+        <Section>
+          <Block>
+            <ResponsiveButtonHOC title="First button" onPress={() => { }} />
+            <ResponsiveButtonFaCC title="Second button" onPress={() => { }} />
+            <ResponsiveButtonHOC title="Third button" onPress={() => { }} />
+            <ResponsiveButtonFaCC title="Fourth button" onPress={() => { }} />
+          </Block>
+        </Section>
+      </Grid>
+    </View>
+  ));
