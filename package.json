@@ -46,7 +46,7 @@
     "react-native": "^0.52.2"
   },
   "peerDependencies": {
-    "react-native": ">=0.42.0",
+    "react-native": ">=0.52.2",
     "react": ">=15.0.0"
   }
 }
