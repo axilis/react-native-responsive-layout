@@ -40,13 +40,13 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1",
+    "eslint-plugin-react": "^7.10.0",
     "jest": "^22.1.4",
     "react": "^16.2.0",
     "react-native": "^0.52.2"
   },
   "peerDependencies": {
-    "react-native": ">=0.42.0",
+    "react-native": ">=0.52.2",
     "react": ">=15.0.0"
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewPropTypes } from 'react-native';
 
 import { DirectionProp } from '../../shared/props';
 import { checkInsideGrid, warn } from '../../utils';
@@ -61,7 +61,7 @@ Section.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  style: PropTypes.shape({}),
+  style: ViewPropTypes.style,
   stretch: PropTypes.bool,
 };
 

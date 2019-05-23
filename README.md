@@ -9,8 +9,8 @@ A framework that makes building responsive React Native user interfaces easier b
 
 ## Installation
 
-This package is only **compatible with RN >= 0.42** since older versions do not support percentage-based widths. 
-To install the latest version simply run:
+This package is only **compatible with RN >= 0.52** since older versions do not support percentage-based widths AND the
+correct prop-types for views. To install the latest version simply run:
 
 ```bash
 yarn add react-native-responsive-layout
