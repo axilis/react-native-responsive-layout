@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, ScrollViewProps } from 'react-native';
 
 const styles = StyleSheet.create({
   stretch: {
@@ -13,11 +13,12 @@ const styles = StyleSheet.create({
 /**
  * Component for wrapping scrollable content.
  *
- * @type {React.StatelessComponent<{stretch: boolean, horizontal: boolean, children: any}>}
+ * @type {React.StatelessComponent<{stretch: boolean, horizontal: boolean, children: any, props: ScrollViewProps}>}
  */
 /* eslint-enable */
-const Scrollable = ({ children, stretch, horizontal }) => (
+const Scrollable = ({ children, stretch, horizontal, ...props }) => (
   <ScrollView
+    {...props}
     horizontal={horizontal}
     contentContainerStyle={stretch ? styles.stretch : null}
   >
@@ -33,6 +34,7 @@ Scrollable.propTypes = {
   ]).isRequired,
   stretch: PropTypes.bool,
   horizontal: PropTypes.bool,
+  props: ScrollViewProps
 };
 
 Scrollable.defaultProps = {
