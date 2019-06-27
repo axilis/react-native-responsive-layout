@@ -34,12 +34,13 @@ Scrollable.propTypes = {
   ]).isRequired,
   stretch: PropTypes.bool,
   horizontal: PropTypes.bool,
-  props: ScrollViewProps
+  props: ScrollViewProps,
 };
 
 Scrollable.defaultProps = {
   stretch: false,
   horizontal: false,
+  props: {},
 };
 
 export default Scrollable;
