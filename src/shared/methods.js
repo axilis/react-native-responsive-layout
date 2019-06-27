@@ -45,3 +45,18 @@ export const valueForSize = (sizeNames, activeSize, props, initialValue, keySele
 
   return value;
 };
+
+/**
+ * Determines style of component depended on sizing class.
+ *
+ * @param {Array<string>} sizeNames that grid supports ordered from smallest
+ * @param {string} activeSize that is determined by grid
+ * @param {Object} props object use as reference for values
+ * @return {any}
+ */
+export const getStyle = (sizeNames, activeSize, props) => {
+  const initialValue = props.style;
+  const keySelector = size => `${size}Style`;
+
+  return valueForSize(sizeNames, activeSize, props, initialValue, keySelector);
+};

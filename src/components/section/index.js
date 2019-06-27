@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, ViewPropTypes } from 'react-native';
 
-import { DirectionProp } from '../../shared/props';
+import { SIZE_NAMES } from '../../shared/constants';
+
+import { ContainerSizeProp, DirectionProp } from '../../shared/props';
+import { getStyle } from '../../shared/methods';
 import { checkInsideGrid, warn } from '../../utils';
 
 
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
  *
  * @type {React.StatelessComponent<{stretch?: boolean, style?: any, children: any}>}
  */
-const Section = ({ children, style, stretch }, { gridContentDirection, gridStretch }) => {
+const Section = ({ children, stretch, ...props }, { gridContentDirection, gridSizeClass, gridStretch }) => {
   if (process.env.NODE_ENV === 'development') {
     warn(
       !gridStretch && !!stretch,
@@ -42,7 +45,7 @@ const Section = ({ children, style, stretch }, { gridContentDirection, gridStret
       style={[
         (gridContentDirection === 'vertical' ? styles.vertical : styles.horizontal),
         (stretch ? styles.stretch : null),
-        style,
+        getStyle(SIZE_NAMES, gridSizeClass, props),
       ]}
     >
       {children}
@@ -53,6 +56,7 @@ const Section = ({ children, style, stretch }, { gridContentDirection, gridStret
 
 Section.contextTypes = {
   gridContentDirection: checkInsideGrid(DirectionProp),
+  gridSizeClass: checkInsideGrid(ContainerSizeProp),
   gridStretch: checkInsideGrid(PropTypes.bool),
 };
 
