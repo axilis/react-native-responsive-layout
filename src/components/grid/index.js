@@ -198,6 +198,7 @@ class Grid extends Component {
 
     return (
       <Scrollable
+        {...this.props}
         horizontal={this.props.horizontal}
         stretch={this.props.stretchable}
       >
