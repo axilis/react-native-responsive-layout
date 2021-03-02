@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions, StyleSheet, View, ViewPropTypes } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 import {
   BREAKPOINT_VALUES,
@@ -213,7 +213,7 @@ Grid.propTypes = {
   horizontal: PropTypes.bool,
   scrollable: PropTypes.bool,
   relativeTo: PropTypes.oneOf(['parent', 'self', 'window']),
-  style: ViewPropTypes.style,
+  style: PropTypes.object,
   stretchable: PropTypes.bool,
 
   children: PropTypes.oneOfType([
