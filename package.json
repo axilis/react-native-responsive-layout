@@ -43,7 +43,7 @@
     "eslint-plugin-react": "^7.10.0",
     "jest": "^22.1.4",
     "react": "^16.2.0",
-    "react-native": "^0.52.2"
+    "react-native": "^0.70.2"
   },
   "peerDependencies": {
     "react-native": ">=0.52.2",
