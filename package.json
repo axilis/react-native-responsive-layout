@@ -41,9 +41,9 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.10.0",
-    "jest": "^22.1.4",
+    "jest": "^29.3.1",
     "react": "^16.2.0",
-    "react-native": "^0.52.2"
+    "react-native": "^0.70.6"
   },
   "peerDependencies": {
     "react-native": ">=0.52.2",
